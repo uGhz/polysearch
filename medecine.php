@@ -962,11 +962,14 @@
                         function launchDetailsRetrieval(event) {
                             event.preventDefault();
                             console.log("requestDetails called ! URL : " + this.href);
+                            $(this).closest(".item").find(".dimmer").addClass("active");
                             requestDetails(this);
                         }
 
                         function requestDetails(element) {
-
+                            
+                            
+                            
                             var queryString = element.href;
                             queryString = queryString.slice(queryString.indexOf("?") + 1);
                             console.log("Query String : " + queryString);
@@ -1005,6 +1008,10 @@
                             //$(this).closest(".item").css({ "background-color": "#fed", "border-left": "5px solid #ccc" });
                             var targetUrl = this.href;
                             var currentItem = $(this).closest(".item");
+                            
+                            // $(this).closest(".item").find(".dimmer").addClass("active");
+                            
+                            
                             var currentContainer = currentItem.find(".content");
                             
                             // if (!currentContainer.find(".extra")) {
@@ -1025,19 +1032,21 @@
                                 var vCote = $(this).find('CALLNUMBER>data>text').text();
                                 var vConditions = $(this).find('cell:nth-of-type(5)>data>text').text();
 
-                                $("<div class='detail'>Cote : " + vCote + "</div>").appendTo($("<div class='ui label'>" + vLibrary + "</div>").appendTo(extraElement));
+                                $("<span class='detail'>Cote : " + vCote + "</span>").appendTo($("<span class='ui label'>" + vLibrary + "</span>").appendTo(extraElement));
 
                                 console.log("Details added !");
                             });
 
-                            var catalogButton = $("<div class='ui tiny right floated button'>Voir sur le catalogue<i class='right chevron icon'></i></div>");
+                            var catalogButton = $("<button class='ui tiny right floated button'>Voir dans le catalogue<i class='right chevron icon'></i></button>");
                             catalogButton.click(function () {
                                 window.location.href = targetUrl;
                             });
                             catalogButton.appendTo(extraElement);
                             extraElement.appendTo(currentContainer);
-
+                            
+                            currentItem.find(".dimmer").removeClass("active");
                             console.log("handleDetails is finished !");
+                            
 
                         }
 
@@ -1063,9 +1072,12 @@
                                 if (vDocumentType) {
                                     vDocumentType = vDocumentType.slice(vDocumentType.lastIndexOf(' ') + 1, vDocumentType.length - "$html$".length);
                                 }
-
-                                var currentItem = $("<div class='item'></div>");
+                                
+                                // Création de l'objet "Item".
+                                var currentItem = $("<div class='ui item segment'></div>");
+                                $("<div class='ui inverted dimmer'><div class='ui loader'></div></div>").appendTo(currentItem);
                                 $("<div class='ui tiny image'><img src='images/image.png'></div>").appendTo(currentItem);
+                                
                                 var currentContent = $("<div class='content'></div>");
                                 // currentItem.append(listRoot);
                                 $("<a class='header' href='" + baseUrl + "?uri=" + vFunc + "&amp;source=" + vSourceId + "'>" + vTitle + "</a>").on("click", launchDetailsRetrieval).appendTo(currentContent);
@@ -1091,7 +1103,7 @@
                             console.log("vCurrentPageIndex : " + vCurrentPageIndex);
                             if (Math.ceil(vNResults / 20) > vCurrentPageIndex) {
                                 console.log("There are more results to fetch.");
-                                $("<button class='ui button more-results'>Plus de résultats</button>")
+                                $("<button class='fluid ui button more-results'>Plus de résultats</button>")
                                     .click(function () {
                                         var chosenPage = parseInt($("#hipSearchResults").attr("data-current-page"), 10) + 1;
                                         var url = $("#hipSearchForm").prop("data-current-search-url") + "&page=" + chosenPage;
@@ -1105,7 +1117,11 @@
                             // $(".searchWrapper>.statistic>.value").html(vNResults).css("display", "block");
                             if (vCurrentPageIndex < 2) {
                                 $("#hipSearchResults").empty();
+                                if (vNResults > 0) {
+                                    $("#hipSearchResults").append($("<div class='ui divider'></div>"));
+                                }
                             }
+                            
                             $("#hipSearchResults").append(listRoot);
                             $("#hipSearchResults").attr("data-current-page", vCurrentPageIndex);
 
@@ -1154,37 +1170,7 @@
                             event.preventDefault();
                             $("#hipSearchForm").prop("data-current-search-url", "proxy.php?DonneXML=true&" + $("#hipSearchForm").serialize());
                             
-                            
-                            
                             requestSearchResults($("#hipSearchForm").prop("data-current-search-url"));
-                            
-                            /*
-                            $.ajax({
-
-                                // The URL for the request
-                                // url: "proxy.php?index=.GK&limitbox_1=%24LAB7+%3D+s+or+%24LAB7+%3D+i&limitbox_3=&term=neurology&DonneXML=true",
-                                url: "proxy.php?DonneXML=true&" + $("#hipSearchForm").serialize(),
-
-                                // Whether this is a POST or GET request
-                                type: "GET",
-
-                                // The type of data we expect back
-                                dataType: "xml",
-
-                                // Code to run if the request succeeds;
-                                // the response is passed to the function
-                                success: handleResult,
-
-                                // Code to run if the request fails; the raw request and
-                                // status codes are passed to the function
-                                error: null,
-
-                                // Code to run regardless of success or failure
-                                complete: function (xhr, status) {
-                                    // alert( "The request is complete!" );
-                                }
-                            });
-                            */
                         });
                         
                     </script>
