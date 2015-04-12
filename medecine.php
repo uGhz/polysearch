@@ -1049,6 +1049,7 @@
                             var listRoot = $("<div class='ui items'></div>");
 
                             var vNResults = $(response).find('searchresponse>yoursearch>hits').text();
+                            var vCurrentPageIndex = $(response).find('searchresponse>yoursearch>view>currpage').text();
 
                             $(response).find('searchresponse>summary>searchresults>results>row').each(function () {
                                 var vTitle = $(this).find('TITLE>data>text').text();
@@ -1084,36 +1085,45 @@
                             $(".searchWrapper>.statistic").empty();
                             $("<div class='value'>" + vNResults + "</div>").appendTo(".searchWrapper>.statistic");
                             $("<div class='label'>Résultats</div>").appendTo(".searchWrapper>.statistic");
-
+                            
+                            $("#hipSearchResults").find("button.more-results").remove();
+                            console.log("Math.ceil(vNResults / 20) : " + Math.ceil(vNResults / 20));
+                            console.log("vCurrentPageIndex : " + vCurrentPageIndex);
+                            if (Math.ceil(vNResults / 20) > vCurrentPageIndex) {
+                                console.log("There are more results to fetch.");
+                                $("<button class='ui button more-results'>Plus de résultats</button>")
+                                    .click(function () {
+                                        var chosenPage = parseInt($("#hipSearchResults").attr("data-current-page"), 10) + 1;
+                                        var url = $("#hipSearchForm").prop("data-current-search-url") + "&page=" + chosenPage;
+                                        requestSearchResults(url);        
+                                    })
+                                    .appendTo(listRoot);
+                            } else {
+                                console.log("No more results to fetch.");  
+                            }
+                            
                             // $(".searchWrapper>.statistic>.value").html(vNResults).css("display", "block");
-                            $("#hipSearchResults").empty().append(listRoot);
-
+                            if (vCurrentPageIndex < 2) {
+                                $("#hipSearchResults").empty();
+                            }
+                            $("#hipSearchResults").append(listRoot);
+                            $("#hipSearchResults").attr("data-current-page", vCurrentPageIndex);
 
                             $(".searchWrapper>.dimmer").removeClass("active");
                             // listRoot.appendTo("#hipSearchResults");
 
                         }
-
-
-                        $("#hipSearchForm").submit(function (event) {
-                            console.log("Form submitted. !");
-
-                            event.preventDefault();
-
+                        
+                        function requestSearchResults(urlParam) {
                             $(".searchWrapper>.dimmer").addClass("active");
-
+                            
+                            console.log("requestSearchResults. urlParam : " + urlParam);
+                            
                             $.ajax({
 
                                 // The URL for the request
                                 // url: "proxy.php?index=.GK&limitbox_1=%24LAB7+%3D+s+or+%24LAB7+%3D+i&limitbox_3=&term=neurology&DonneXML=true",
-                                url: "proxy.php?DonneXML=true&" + $("#hipSearchForm").serialize(),
-
-                                // The data to send (will be converted to a query string)
-                                /*
-                    data: {
-                        id: 123
-                    },
-                    */
+                                url: urlParam,
 
                                 // Whether this is a POST or GET request
                                 type: "GET",
@@ -1134,7 +1144,49 @@
                                     // alert( "The request is complete!" );
                                 }
                             });
+                            
+                        }
+
+
+                        $("#hipSearchForm").submit(function (event) {
+                            console.log("Form submitted. !");
+
+                            event.preventDefault();
+                            $("#hipSearchForm").prop("data-current-search-url", "proxy.php?DonneXML=true&" + $("#hipSearchForm").serialize());
+                            
+                            
+                            
+                            requestSearchResults($("#hipSearchForm").prop("data-current-search-url"));
+                            
+                            /*
+                            $.ajax({
+
+                                // The URL for the request
+                                // url: "proxy.php?index=.GK&limitbox_1=%24LAB7+%3D+s+or+%24LAB7+%3D+i&limitbox_3=&term=neurology&DonneXML=true",
+                                url: "proxy.php?DonneXML=true&" + $("#hipSearchForm").serialize(),
+
+                                // Whether this is a POST or GET request
+                                type: "GET",
+
+                                // The type of data we expect back
+                                dataType: "xml",
+
+                                // Code to run if the request succeeds;
+                                // the response is passed to the function
+                                success: handleResult,
+
+                                // Code to run if the request fails; the raw request and
+                                // status codes are passed to the function
+                                error: null,
+
+                                // Code to run regardless of success or failure
+                                complete: function (xhr, status) {
+                                    // alert( "The request is complete!" );
+                                }
+                            });
+                            */
                         });
+                        
                     </script>
 
                     <p>
