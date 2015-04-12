@@ -944,26 +944,93 @@
                         </div>
                         <!-- Fin du formulaire de recherche dans l\'OPAC -->
 
+                       
+                       
+<!--                        <div>
+                            <div class="ui items">
 
+                                </div>
+                            </div>-->
 
                         <div id="hipSearchResults">
                         </div>
 
-                    </div>
-                    <!--// End of .searchWrapper-->
+                    </div><!--// End of .searchWrapper-->
 
                     <script>
-                        /*
-                                    $.get( "foo.php", function( response ) {
-                                        console.log( response ); // server response
-                                    });
-                                    */
+
+                        function launchDetailsRetrieval(event) {
+                            event.preventDefault();
+                            console.log("requestDetails called ! URL : " + this.href);
+                            requestDetails(this);
+                        }
+
+                        function requestDetails(element) {
+
+                            var queryString = element.href;
+                            queryString = queryString.slice(queryString.indexOf("?") + 1);
+                            console.log("Query String : " + queryString);
+                            $.ajax({
+
+                                // The URL for the request
+                                url: "proxy.php?DonneXML=true&" + queryString,
+
+                                // Whether this is a POST or GET request
+                                type: "GET",
+
+                                // The type of data we expect back
+                                dataType: "xml",
+
+                                context: element,
+
+                                // Code to run if the request succeeds;
+                                // the response is passed to the function
+                                success: handleDetails,
+
+                                // Code to run if the request fails; the raw request and
+                                // status codes are passed to the function
+                                error: null,
+
+                                // Code to run regardless of success or failure
+                                complete: function (xhr, status) {
+                                    console.log("The request for details is complete!");
+                                }
+                            });
+
+                        }
+
+                        function handleDetails(response) {
+                            console.log("handleDetails is called !");
+                            console.log("this : " + this);
+                            //$(this).closest(".item").css({ "background-color": "#fed", "border-left": "5px solid #ccc" });
+                            var targetUrl = this.href;
+                            var currentItem = $(this).closest(".item");
+                            var currentContainer = currentItem.find(".content");
+
+                            $(response).find('searchresponse>items>searchresults>results>row').each(function () {
+                                var vLibrary = $(this).find('LOCALLOCATION>data>text').text();
+                                var vPrecisePlace = $(this).find('TEMPORARYLOCATION:first-of-type>data>text').text();
+                                var vCote = $(this).find('CALLNUMBER>data>text').text();
+                                var vConditions = $(this).find('cell:nth-of-type(5)>data>text').text();
+
+                                var extraElement = $("<div class='extra'>" + vLibrary + " &mdash; " + vPrecisePlace + " &mdash; " + vCote + " &mdash; " + vConditions + "</div>");
+                                var catalogButton = $("<div class='ui tiny right floated button'>Voir sur le catalogue<i class='right chevron icon'></i></div>");
+                                catalogButton.click(function () {window.location.href = targetUrl;});
+                                catalogButton.appendTo(extraElement);
+                                extraElement.appendTo(currentContainer);
+                                console.log("Details added !");
+                            });
+
+                            console.log("handleDetails is finished !");
+
+                        }
+
 
                         function handleResult(response) {
                             console.log("Results handled !");
                             // console.log(response);
                             var baseUrl = "http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp";
-                            var listRoot = $("<div class='ui list'></div>");
+                            var listRoot = $("<div class='ui items'></div>");
 
                             var vNResults = $(response).find('searchresponse>yoursearch>hits').text();
 
@@ -984,9 +1051,10 @@
                                 $("<div class='ui tiny image'><img src='images/image.png'></div>").appendTo(currentItem);
                                 var currentContent = $("<div class='content'></div>");
                                 // currentItem.append(listRoot);
-                                $("<a class='header' href='" + baseUrl + "?uri=" + vFunc + "&amp;source=" + vSourceId + "'>" + vTitle + "</a>").appendTo(currentContent);
+                                $("<a class='header' href='" + baseUrl + "?uri=" + vFunc + "&amp;source=" + vSourceId + "'>" + vTitle + "</a>").on("click", launchDetailsRetrieval).appendTo(currentContent);
 
                                 var currentDescription = (vAuthor ? "<em>" + vAuthor + "</em><br />" : "") + vPublisher + ", " + vPublishedDate + ".";
+                                currentDescription = "<p>" + currentDescription + "</p>";
                                 $("<div class='description'></div>")
                                     .html(currentDescription)
                                     .appendTo(currentContent);
@@ -996,7 +1064,7 @@
 
 
                             });
-                            
+
                             $(".searchWrapper>.statistic").empty();
                             $("<div class='value'>" + vNResults + "</div>").appendTo(".searchWrapper>.statistic");
                             $("<div class='label'>Résultats</div>").appendTo(".searchWrapper>.statistic");
@@ -1017,7 +1085,7 @@
                             event.preventDefault();
 
                             $(".searchWrapper>.dimmer").addClass("active");
-                            
+
                             $.ajax({
 
                                 // The URL for the request
