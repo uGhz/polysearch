@@ -944,21 +944,21 @@
                         </div>
                         <!-- Fin du formulaire de recherche dans l\'OPAC -->
 
-                       
-                       
+
+
 <!--                        <div>
                             <div class="ui items">
 
-                                </div>
-                            </div>-->
+                            </div>
+                        </div>-->
 
                         <div id="hipSearchResults">
                         </div>
 
-                    </div><!--// End of .searchWrapper-->
+                    </div>
+                    <!--// End of .searchWrapper-->
 
                     <script>
-
                         function launchDetailsRetrieval(event) {
                             event.preventDefault();
                             console.log("requestDetails called ! URL : " + this.href);
@@ -1006,20 +1006,36 @@
                             var targetUrl = this.href;
                             var currentItem = $(this).closest(".item");
                             var currentContainer = currentItem.find(".content");
+                            
+                            // if (!currentContainer.find(".extra")) {
+                                currentContainer.find(".extra").remove();
+                            // }
+                            var extraElement = $("<div class='extra'></div>");
 
                             $(response).find('searchresponse>items>searchresults>results>row').each(function () {
                                 var vLibrary = $(this).find('LOCALLOCATION>data>text').text();
+                                if (vLibrary.indexOf("Médecine") != -1) {
+                                    vLibrary = "Médecine";
+                                } else if (vLibrary.indexOf("Pharmacie") != -1) {
+                                    vLibrary = "Pharmacie";
+                                } else {
+                                    vLibrary = "";
+                                }
                                 var vPrecisePlace = $(this).find('TEMPORARYLOCATION:first-of-type>data>text').text();
                                 var vCote = $(this).find('CALLNUMBER>data>text').text();
                                 var vConditions = $(this).find('cell:nth-of-type(5)>data>text').text();
 
-                                var extraElement = $("<div class='extra'>" + vLibrary + " &mdash; " + vPrecisePlace + " &mdash; " + vCote + " &mdash; " + vConditions + "</div>");
-                                var catalogButton = $("<div class='ui tiny right floated button'>Voir sur le catalogue<i class='right chevron icon'></i></div>");
-                                catalogButton.click(function () {window.location.href = targetUrl;});
-                                catalogButton.appendTo(extraElement);
-                                extraElement.appendTo(currentContainer);
+                                $("<div class='detail'>Cote : " + vCote + "</div>").appendTo($("<div class='ui label'>" + vLibrary + "</div>").appendTo(extraElement));
+
                                 console.log("Details added !");
                             });
+
+                            var catalogButton = $("<div class='ui tiny right floated button'>Voir sur le catalogue<i class='right chevron icon'></i></div>");
+                            catalogButton.click(function () {
+                                window.location.href = targetUrl;
+                            });
+                            catalogButton.appendTo(extraElement);
+                            extraElement.appendTo(currentContainer);
 
                             console.log("handleDetails is finished !");
 
