@@ -13,7 +13,7 @@ $( document ).ready(function() {
         */
         var searchForm              = $( "#hipSearchForm" );
         var searchAreaContainer     = $( ".searchWrapper" );
-        var searchResultsContainer  = null;
+        var searchResultsContainer  = $("#hipSearchResults");
         var baseUrl = "http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp";
         
         var init = function() {
@@ -22,8 +22,8 @@ $( document ).ready(function() {
                 console.log("Form submitted. !");
                 event.preventDefault();
                 
-                searchForm.prop("data-current-search-url", "proxy.php?DonneXML=true&" + searchForm.serialize());            
-                    launchSearch(searchForm.prop("data-current-search-url"));
+                searchForm.data("current-search-url", "proxy.php?DonneXML=true&" + searchForm.serialize());            
+                launchSearch(searchForm.data("current-search-url"));
             });
         }
         
@@ -76,90 +76,57 @@ $( document ).ready(function() {
             // Ôter le loader
             
             
-            
-             console.log("Results handled !");
-            // console.log(response);
-            // var baseUrl = "http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp";
+            console.log("Results handled !");
+
             var listRoot = $("<div class='ui items'></div>");
 
             var vNResults           = $(response).find('searchresponse>yoursearch>hits').text();
             var vCurrentPageIndex   = $(response).find('searchresponse>yoursearch>view>currpage').text();
 
             $(response).find('searchresponse>summary>searchresults>results>row').each(function () {
-                var vTitle = $(this).find('TITLE>data>text').text();
-                var vAuthor = $(this).find('AUTHOR>data>text').text();
-                var vPublisher = $(this).find('PUBLISHER>data>text').text();
-                var vPublishedDate = $(this).find('PUBDATE>data>text').text();
-                var vSourceId = $(this).find('sourceid').text();
-                var vFunc = $(this).find('TITLE>data>link>func').text();
-                var vDocumentType = $(this).find('cell:nth-of-type(14)>data>text').text();
-
-                if (vDocumentType) {
-                    vDocumentType = vDocumentType.slice(vDocumentType.lastIndexOf(' ') + 1, vDocumentType.length - "$html$".length);
-                }
-
-                // Création de l'objet "Item".
-                var currentItem = $("<div class='ui item segment'></div>");
-                $("<div class='ui inverted dimmer'><div class='ui loader'></div></div>").appendTo(currentItem);
-                $("<div class='ui tiny image'><img src='images/image.png'></div>").appendTo(currentItem);
-
-                var currentContent = $("<div class='content'></div>");
-                // currentItem.append(listRoot);
-                $("<a class='header' href='" + baseUrl + "?uri=" + vFunc + "&amp;source=" + vSourceId + "'>" + vTitle + "</a>").on("click", launchDetailsRetrieval).appendTo(currentContent);
-
-                var currentDescription = (vAuthor ? "<em>" + vAuthor + "</em><br />" : "") + vPublisher + ", " + vPublishedDate + ".";
-                currentDescription = "<p>" + currentDescription + "</p>";
-                $("<div class='description'></div>")
-                    .html(currentDescription)
-                    .appendTo(currentContent);
-
-                currentContent.appendTo(currentItem);
+                var currentItem = buildResultItem($(this));
                 currentItem.appendTo(listRoot);
-
-
             });
-
-            $(".searchWrapper>.statistic").empty();
-            $("<div class='value'>" + vNResults + "</div>").appendTo(".searchWrapper>.statistic");
-            $("<div class='label'>Résultats</div>").appendTo(".searchWrapper>.statistic");
-
-            $("#hipSearchResults").find("button.more-results").remove();
-            console.log("Math.ceil(vNResults / 20) : " + Math.ceil(vNResults / 20));
-            console.log("vCurrentPageIndex : " + vCurrentPageIndex);
+            
+            // Mettre à jour les statistiques de recherche
+            setStats( vNResults );
+            
+            searchResultsContainer.find("button.more-results").remove();
+            // console.log("Math.ceil(vNResults / 20) : " + Math.ceil(vNResults / 20));
+            // console.log("vCurrentPageIndex : " + vCurrentPageIndex);
+            
             if (Math.ceil(vNResults / 20) > vCurrentPageIndex) {
                 console.log("There are more results to fetch.");
                 $("<button class='fluid ui button more-results'>Plus de résultats</button>")
                     .click(function () {
-                        var chosenPage = parseInt($("#hipSearchResults").attr("data-current-page"), 10) + 1;
-                        var url = $("#hipSearchForm").prop("data-current-search-url") + "&page=" + chosenPage;
-                        requestSearchResults(url);        
+                        var chosenPage = parseInt(searchResultsContainer.attr("data-current-page"), 10) + 1;
+                        var url = searchForm.data("current-search-url") + "&page=" + chosenPage;
+                        launchSearch(url);        
                     })
                     .appendTo(listRoot);
             } else {
                 console.log("No more results to fetch.");  
             }
 
-            // $(".searchWrapper>.statistic>.value").html(vNResults).css("display", "block");
             if (vCurrentPageIndex < 2) {
-                $("#hipSearchResults").empty();
+                searchResultsContainer.empty();
                 if (vNResults > 0) {
-                    $("#hipSearchResults").append($("<div class='ui divider'></div>"));
+                    searchResultsContainer.append($("<div class='ui divider'></div>"));
                 }
             }
 
-            $("#hipSearchResults").append(listRoot);
-            $("#hipSearchResults").attr("data-current-page", vCurrentPageIndex);
-
-            // $(".searchWrapper>.dimmer").removeClass("active");
-            // listRoot.appendTo("#hipSearchResults");
-
-            
+            searchResultsContainer.append(listRoot);
+            searchResultsContainer.attr("data-current-page", vCurrentPageIndex);
             
         }
         
         var setStats = function( nResults ) {
             // Créer au besoin les éléments nécessaires à l'affichage des stats
             // Mettre à jour ces éléments
+            var statsContainer = searchAreaContainer.children(".statistic");
+            statsContainer.empty();
+            $("<div class='value'>" + nResults + "</div>").appendTo(statsContainer);
+            $("<div class='label'>Résultats</div>").appendTo(statsContainer);  
         }
             
         var setLoadingStateOn = function() {
@@ -170,8 +137,39 @@ $( document ).ready(function() {
             searchAreaContainer.children(".dimmer").removeClass("active");
         }
         
-        var newResultItem = function() {
+        var buildResultItem = function( rawXmlData ) {
+            var vTitle          = rawXmlData.find('TITLE>data>text').text();
+            var vAuthor         = rawXmlData.find('AUTHOR>data>text').text();
+            var vPublisher      = rawXmlData.find('PUBLISHER>data>text').text();
+            var vPublishedDate  = rawXmlData.find('PUBDATE>data>text').text();
+            var vSourceId       = rawXmlData.find('sourceid').text();
+            var vFunc           = rawXmlData.find('TITLE>data>link>func').text();
+            var vDocumentType   = rawXmlData.find('cell:nth-of-type(14)>data>text').text();
             
+            if (vDocumentType) {
+                vDocumentType = vDocumentType.slice(vDocumentType.lastIndexOf(' ') + 1, vDocumentType.length - "$html$".length);
+            }
+            
+            // Création de l'objet "Item".
+            var currentItem = $("<div class='ui item segment'></div>");
+            $("<div class='ui inverted dimmer'><div class='ui loader'></div></div>").appendTo(currentItem);
+            $("<div class='ui tiny image'><img src='images/image.png'></div>").appendTo(currentItem);
+            
+            var currentContent = $("<div class='content'></div>");
+            $("<a class='header' href='" + baseUrl + "?uri=" + vFunc + "&amp;source=" + vSourceId + "'>" + vTitle + "</a>")
+                .on("click", launchDetailsRetrieval)
+                .appendTo(currentContent);
+
+            var currentDescription = (vAuthor ? "<em>" + vAuthor + "</em><br />" : "") + vPublisher + ", " + vPublishedDate + ".";
+            currentDescription = "<p>" + currentDescription + "</p>";
+            
+            $("<div class='description'></div>")
+                .html(currentDescription)
+                .appendTo(currentContent);
+            
+            currentContent.appendTo(currentItem);
+            
+            return currentItem;
         }
         
         
@@ -220,12 +218,9 @@ $( document ).ready(function() {
         var handleDetails = function( response ) {
             console.log("handleDetails is called !");
             console.log("this : " + this);
-            //$(this).closest(".item").css({ "background-color": "#fed", "border-left": "5px solid #ccc" });
+ 
             var targetUrl = this.href;
             var currentItem = $(this).closest(".item");
-
-            // $(this).closest(".item").find(".dimmer").addClass("active");
-
 
             var currentContainer = currentItem.find(".content");
 
