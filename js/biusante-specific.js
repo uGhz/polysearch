@@ -40,7 +40,7 @@ function CatalogResultSet() {
 }
     
 function CatalogDataProvider() {
-    var baseUrl = "http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp";
+    this.baseUrl = "http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp";
 }
 
 CatalogDataProvider.prototype = {
@@ -76,8 +76,8 @@ CatalogDataProvider.prototype = {
                 error: null,
 
                 // Code to run regardless of success or failure
-                complete: function (xhr, status) {
-                    // alert( "The request is complete!" );
+                complete: function () {
+                    console.log( "The request for getSearchResults is complete!" );
                     // mySrv.setLoadingStateOff();
                 }
             });
@@ -118,7 +118,7 @@ CatalogDataProvider.prototype = {
             error: null,
 
             // Code to run regardless of success or failure
-            complete: function (xhr, status) {
+            complete: function () {
                 console.log("The request for details is complete!");
             }
         });
@@ -139,7 +139,7 @@ CatalogDataProvider.prototype = {
         
         var _self = this;
         $(rawXmlData).find('searchresponse>summary>searchresults>results>row').each(function (index, value) {
-            console.log("this : " + _self)
+            console.log("this : " + _self);
             tempDataItem = _self.buildDataItem($(value));
             tempItems.push(tempDataItem);
         });
@@ -264,6 +264,21 @@ function SearchResultsView(resultsContainer, form, statsContainer, currentReques
         
         console.log("askForSearchResults is ending ! URL : " + this.href);
     };
+    
+    this.askForNextSearchResults = function ( event ) {
+        console.log("Next results asked !");
+
+        event.preventDefault();
+        
+        _self.setLoadingStateOn();
+        
+        var chosenPage = _self._currentResultsPage + 1;
+        var url = _self._currentRequest + "&page=" + chosenPage;
+        
+        _self._catalogDataProvider.getSearchResults(url, _self); 
+        
+        console.log("askForSearchResults is ending ! URL : " + this.href);
+    };
 }
 
 SearchResultsView.prototype = {
@@ -344,7 +359,8 @@ SearchResultsView.prototype = {
     updateItem : function(copiesArray, domItem) {
         console.log("updateItem has been called !");
  
-        var targetUrl = domItem.find("a").first().href;
+        var targetUrl = domItem.find("a").prop("href");
+        console.log("targetUrl : " + targetUrl);
 
         var currentContainer = domItem.find(".content");
 
@@ -399,7 +415,6 @@ SearchResultsView.prototype = {
         console.log("vCurrentPageIndex : " + vCurrentPageIndex);
         
         // Récupérer, ligne à ligne, les données, les mettre en forme et les attacher à la liste
-        var tempDataItem = null;
         var tempDomItem = null;
         
         var resultsArray = resultSet.results;
@@ -417,13 +432,14 @@ SearchResultsView.prototype = {
         // S'il existe des résultats non encore affichés, insérer le bouton "Plus de résultats"
         if (Math.ceil(vNResults / 20) > vCurrentPageIndex) {
             console.log("There are more results to fetch.");
+            
+            var _self = this;
             $("<button class='fluid ui button more-results'>Plus de résultats</button>")
-                .click(function () {
-                    var chosenPage = this._currentResultsPage + 1;
-                    var url = this._currentRequest + "&page=" + chosenPage;
-                    this.askForSearchResults(url);        
-                })
+                .click(function ( event ) {
+                    _self.askForNextSearchResults( event );  
+                    })
                 .appendTo(listRoot);
+
         } else {
             console.log("No more results to fetch.");  
         }
@@ -455,153 +471,7 @@ var mySrv = new SearchResultsView(  $(".searchWrapper"),
                                         null,
                                         myCdp);
     
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    /* ANCIEN CODE */
-    
-    
-    var feature = (function() {
-        
-        /**
-            Eléments utiles à stocker :
-            - Pointeur vers le formulaire
-            - Pointeur vers le conteneur englobant le formulaire et la zone d'affichage des résultats
-            - L'URL de base permettant les requêtes
-        */
-        var searchForm              = $( "#hipSearchForm" );
-        var searchResultsContainer  = $("#hipSearchResults");
-        /*
-        var init = function() {
-            // Attacher à l'évènement "submit" du formulaire de recherche le gestionnaire approprié.
-            searchForm.submit(function (event) {
-                console.log("Form submitted. !");
-                event.preventDefault();
-                
-                mySrv.updateCurrentRequest();
-                launchSearch(mySrv._currentRequest);
-            });
-        };
-        */
-        
-        /*
-        var launchSearch = function(urlParam) {
-            // Récupérer les données saisies par l'utilisateur
-            // Invoquer et paramétrer Ajax
-            
-            // $(".searchWrapper>.dimmer").addClass("active");
-            // setLoadingStateOn();
-            mySrv.setLoadingStateOn();
-                            
-            console.log("requestSearchResults. urlParam : " + urlParam);
-                            
-            $.ajax({
-                // The URL for the request
-                // url: "proxy.php?index=.GK&limitbox_1=%24LAB7+%3D+s+or+%24LAB7+%3D+i&limitbox_3=&term=neurology&DonneXML=true",
-                url: urlParam,
-                
-                // Whether this is a POST or GET request
-                type: "GET",
-                
-                // The type of data we expect back
-                dataType: "xml",
-
-                // Code to run if the request succeeds;
-                // the response is passed to the function
-                success: handleResults,
-
-                // Code to run if the request fails; the raw request and
-                // status codes are passed to the function
-                error: null,
-
-                // Code to run regardless of success or failure
-                complete: function (xhr, status) {
-                    // alert( "The request is complete!" );
-                    mySrv.setLoadingStateOff();
-                }
-            });
-            
-        };
-        */
-        
-        /*
-        var handleResults = function( response ) {
-            // Effacer les résultats précédents s'ils existent
-            // Effacer les statistiques de recherche précédentes si elles existent
-            // Afficher un loader
-            // Lancer la requête Ajax
-            // Traiter la réponse du catalogue
-            //   - Mettre à jour les statistiques
-            //   - Créer si besoin  un conteneur de résultats
-            //   - Créer si besoin les items de résultats
-            // Ôter le loader
-            
-            
-            console.log("Results handled !");
-
-            var listRoot = $("<div class='ui items'></div>");
-
-            var vNResults           = $(response).find('searchresponse>yoursearch>hits').text();
-            var vCurrentPageIndex   = $(response).find('searchresponse>yoursearch>view>currpage').text();
-            
-            // Récupérer, ligne à ligne, les données, les mettre en forme et les attacher à la liste
-            var tempDataItem = null;
-            var tempDomItem = null;
-            $(response).find('searchresponse>summary>searchresults>results>row').each(function () {
-                tempDataItem = myCdp.buildDataItem($(this));
-
-                tempDomItem = mySrv.buildResultItem(tempDataItem);
-
-                tempDomItem.appendTo(listRoot);
-            });
-            
-            // Mettre à jour les statistiques de recherche
-            mySrv.setStats( vNResults );
-            
-            searchResultsContainer.find("button.more-results").remove();
-            
-            // S'il existe des résultats non encore affichés, insérer le bouton "Plus de résultats"
-            if (Math.ceil(vNResults / 20) > vCurrentPageIndex) {
-                console.log("There are more results to fetch.");
-                $("<button class='fluid ui button more-results'>Plus de résultats</button>")
-                    .click(function () {
-                        var chosenPage = mySrv._currentResultsPage + 1;
-                        var url = mySrv._currentRequest + "&page=" + chosenPage;
-                        launchSearch(url);        
-                    })
-                    .appendTo(listRoot);
-            } else {
-                console.log("No more results to fetch.");  
-            }
-            
-            // S'il s'agit d'un nouvel ensemble de résultats, réinitialiser le conteneur de résultats
-            if (vCurrentPageIndex < 2) {
-                searchResultsContainer.empty();
-                if (vNResults > 0) {
-                    searchResultsContainer.append($("<div class='ui divider'></div>"));
-                }
-            }
-
-            searchResultsContainer.append(listRoot);
-            mySrv._currentResultsPage = vCurrentPageIndex;
-            
-        };
-        */
-        // init();
-        
-
-    })();
- 
-    // feature.showItemByIndex( 0 );
-    mySrv.init();
+mySrv.init();
 });
 
 
