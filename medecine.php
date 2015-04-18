@@ -911,7 +911,6 @@
                     </p>
                     <p>
 
-
                         <!-- Formulaire de recherche dans l\'OPAC -->
                     </p>
                     <div class="searchWrapper ui segment">
@@ -1149,7 +1148,7 @@
     </div>
                          
                          
-                         <script src="biusante-specific.js"></script>
+                         <script src="js/biusante-specific.js"></script>
                          
 </body>
 
