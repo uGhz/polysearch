@@ -33,7 +33,7 @@ function CatalogItem() {
     this.catalogUrl     = null;
 }
     
-function CatalogResultsSet() {
+function CatalogResultSet() {
     this.currentPage        = null;
     this.numberOfResults    = null;
     this.results            = null;
@@ -44,8 +44,45 @@ function CatalogDataProvider() {
 }
 
 CatalogDataProvider.prototype = {
-    getSearchResults : function(queryString) {
-    
+    getSearchResults : function(queryString, searchResultView) {
+        
+            console.log("getSearchResults. urlParam : " + queryString);
+                            
+            $.ajax({
+                // The URL for the request
+                // url: "proxy.php?index=.GK&limitbox_1=%24LAB7+%3D+s+or+%24LAB7+%3D+i&limitbox_3=&term=neurology&DonneXML=true",
+                url: queryString,
+                
+                // Whether this is a POST or GET request
+                type: "GET",
+                
+                // The type of data we expect back
+                dataType: "xml",
+
+                context: this,
+                
+                // Code to run if the request succeeds;
+                // the response is passed to the function
+                success:  function(response) {
+                    console.log("Inside Ajax success !");
+                    console.log("this : " + this);
+                    var resultSet = this.buildResultSet(response);
+                    console.log("Records found !");
+                    searchResultView.updateSearchResults( resultSet );
+                },
+
+                // Code to run if the request fails; the raw request and
+                // status codes are passed to the function
+                error: null,
+
+                // Code to run regardless of success or failure
+                complete: function (xhr, status) {
+                    // alert( "The request is complete!" );
+                    // mySrv.setLoadingStateOff();
+                }
+            });
+        
+        
     },
 
     getItemDetails : function(url, domItem, searchResultView) {
@@ -85,6 +122,31 @@ CatalogDataProvider.prototype = {
                 console.log("The request for details is complete!");
             }
         });
+    },
+    
+    buildResultSet : function ( rawXmlData ) {
+        console.log("Results set building !");
+
+        // var listRoot = $("<div class='ui items'></div>");
+        var resultSet = new CatalogResultSet();
+
+        resultSet.numberOfResults   = $(rawXmlData).find('searchresponse>yoursearch>hits').text();
+        resultSet.currentPage       = $(rawXmlData).find('searchresponse>yoursearch>view>currpage').text();
+
+        // Récupérer, ligne à ligne, les données, les mettre en forme et les attacher à la liste
+        var tempItems = [];
+        var tempDataItem = null;
+        
+        var _self = this;
+        $(rawXmlData).find('searchresponse>summary>searchresults>results>row').each(function (index, value) {
+            console.log("this : " + _self)
+            tempDataItem = _self.buildDataItem($(value));
+            tempItems.push(tempDataItem);
+        });
+        
+        resultSet.results = tempItems;
+        console.log("Results set is built !");
+        return resultSet;
     },
     
     buildDataItem : function ( rawXmlData ) {
@@ -184,8 +246,23 @@ function SearchResultsView(resultsContainer, form, statsContainer, currentReques
         
         _self._catalogDataProvider.getItemDetails(this.href, domItem, _self);
 
-        console.log("requestDetails called ! URL : " + this.href);
+        console.log("askForItemDetails is ending ! URL : " + this.href);
         
+    };
+    
+    this.askForSearchResults = function ( event ) {
+        console.log("Form submitted. !");
+
+        event.preventDefault();
+        console.log("Inside askForSearchResults");
+        
+        _self.setLoadingStateOn();
+        
+        _self.updateCurrentRequest();
+        
+        _self._catalogDataProvider.getSearchResults(_self._currentRequest, _self);
+        
+        console.log("askForSearchResults is ending ! URL : " + this.href);
     };
 }
 
@@ -215,7 +292,7 @@ SearchResultsView.prototype = {
     },
     
     init : function() {
-        
+        this._form.submit(this.askForSearchResults);
     },
     
     
@@ -296,6 +373,73 @@ SearchResultsView.prototype = {
         // domItem.find(".dimmer").removeClass("active");
         console.log("handleDetails is finished !");
 
+    },
+    
+    updateSearchResults : function( resultSet ) {
+        console.log("updateSearchResults has been called !");
+        
+        // Effacer les résultats précédents s'ils existent
+        // Effacer les statistiques de recherche précédentes si elles existent
+        // Afficher un loader
+        // Lancer la requête Ajax
+        // Traiter la réponse du catalogue
+        //   - Mettre à jour les statistiques
+        //   - Créer si besoin  un conteneur de résultats
+        //   - Créer si besoin les items de résultats
+        // Ôter le loader
+
+        console.log("Results handled !");
+
+        var listRoot = $("<div class='ui items'></div>");
+
+        var vNResults           = resultSet.numberOfResults;
+        var vCurrentPageIndex   = resultSet.currentPage;
+
+        console.log("vNResults : " + vNResults);
+        console.log("vCurrentPageIndex : " + vCurrentPageIndex);
+        
+        // Récupérer, ligne à ligne, les données, les mettre en forme et les attacher à la liste
+        var tempDataItem = null;
+        var tempDomItem = null;
+        
+        var resultsArray = resultSet.results;
+        for(var i= 0; i < resultsArray.length; i++) {
+            tempDomItem = this.buildResultItem(resultsArray[i]);
+            tempDomItem.appendTo(listRoot);
+        }
+
+        // Mettre à jour les statistiques de recherche
+        this.setStats( vNResults );
+
+        var searchResultsContainer  = $("#hipSearchResults");
+        searchResultsContainer.find("button.more-results").remove();
+
+        // S'il existe des résultats non encore affichés, insérer le bouton "Plus de résultats"
+        if (Math.ceil(vNResults / 20) > vCurrentPageIndex) {
+            console.log("There are more results to fetch.");
+            $("<button class='fluid ui button more-results'>Plus de résultats</button>")
+                .click(function () {
+                    var chosenPage = this._currentResultsPage + 1;
+                    var url = this._currentRequest + "&page=" + chosenPage;
+                    this.askForSearchResults(url);        
+                })
+                .appendTo(listRoot);
+        } else {
+            console.log("No more results to fetch.");  
+        }
+
+        // S'il s'agit d'un nouvel ensemble de résultats, réinitialiser le conteneur de résultats
+        if (vCurrentPageIndex < 2) {
+            searchResultsContainer.empty();
+            if (vNResults > 0) {
+                searchResultsContainer.append($("<div class='ui divider'></div>"));
+            }
+        }
+
+        searchResultsContainer.append(listRoot);
+        this._currentResultsPage = vCurrentPageIndex;
+        this.setLoadingStateOff();
+        
     }
 };
 
@@ -335,7 +479,7 @@ var mySrv = new SearchResultsView(  $(".searchWrapper"),
         */
         var searchForm              = $( "#hipSearchForm" );
         var searchResultsContainer  = $("#hipSearchResults");
-        
+        /*
         var init = function() {
             // Attacher à l'évènement "submit" du formulaire de recherche le gestionnaire approprié.
             searchForm.submit(function (event) {
@@ -346,7 +490,9 @@ var mySrv = new SearchResultsView(  $(".searchWrapper"),
                 launchSearch(mySrv._currentRequest);
             });
         };
+        */
         
+        /*
         var launchSearch = function(urlParam) {
             // Récupérer les données saisies par l'utilisateur
             // Invoquer et paramétrer Ajax
@@ -384,7 +530,9 @@ var mySrv = new SearchResultsView(  $(".searchWrapper"),
             });
             
         };
+        */
         
+        /*
         var handleResults = function( response ) {
             // Effacer les résultats précédents s'ils existent
             // Effacer les statistiques de recherche précédentes si elles existent
@@ -446,8 +594,8 @@ var mySrv = new SearchResultsView(  $(".searchWrapper"),
             mySrv._currentResultsPage = vCurrentPageIndex;
             
         };
-        
-        init();
+        */
+        // init();
         
 
     })();
