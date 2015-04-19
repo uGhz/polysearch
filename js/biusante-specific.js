@@ -67,7 +67,7 @@ $(document).ready(function () {
                     console.log("this : " + this);
                     var resultSet = this.buildResultSet(response);
                     console.log("Records found !");
-                    searchResultView.updateSearchResults(resultSet);
+                    searchResultView.receiveNewSearchResults(resultSet);
                 },
 
                 // Code to run if the request fails; the raw request and
@@ -109,7 +109,7 @@ $(document).ready(function () {
                     console.log("this : " + this);
                     var copies = this.buildDetailedDataItem(response);
                     console.log("Copies found !");
-                    searchResultView.updateItem(copies, domItem);
+                    searchResultView.receiveNewItemDetails(copies, domItem);
                 },
 
                 // Code to run if the request fails; the raw request and
@@ -216,18 +216,21 @@ $(document).ready(function () {
             - updateCurrentRequest // Récupère et stocke la requête saisie par l'utilisateur
             - askForItemDetails
             - askForSearchResults
-            - updateItem
-            - updateSearchResults
+            - receiveNewItemDetails
+            - receiveNewSearchResults
     */
-    function SearchResultsView(resultsContainer, form, statsContainer, currentRequest, currentTotalResults, currentResultsPage, oneCatalogDataProvider) {
-        this._resultsContainer = resultsContainer;
-        this._form = form;
-        this._statsContainer = statsContainer;
-        this._currentRequest = currentRequest;
-        this._currentTotalResults = currentTotalResults;
-        this._currentResultsPage = currentResultsPage;
-        this._catalogDataProvider = oneCatalogDataProvider;
-
+    function SearchResultsView() {
+        this._searchArea            = $("#hipSearchArea");
+        this._form                  = $("#hipSearchForm");
+        this._statsContainer        = $("#hipSearchArea").children(".statistic");
+        this._searchResultsContainer= $("#hipSearchResults");
+        this._currentRequest        = "";
+        this._currentTotalResults   = null;
+        this._currentResultsPage    = null;
+        this._catalogDataProvider   = new CatalogDataProvider();
+        
+        
+        
         var _self = this;
 
         this.askForItemDetails = function (event) {
@@ -241,9 +244,9 @@ $(document).ready(function () {
 
             _self.setItemLoadingStateOn(domItem);
 
-            _self._catalogDataProvider.getItemDetails(this.href, domItem, _self);
+            _self._catalogDataProvider.getItemDetails(domItem.data("catalog-url"), domItem, _self);
 
-            console.log("askForItemDetails is ending ! URL : " + this.href);
+            console.log("askForItemDetails is ending ! URL : " + domItem.data("catalog-url"));
 
         };
 
@@ -262,6 +265,7 @@ $(document).ready(function () {
             console.log("askForSearchResults is ending ! URL : " + this.href);
         };
 
+        
         this.askForNextSearchResults = function (event) {
             console.log("Next results asked !");
 
@@ -276,27 +280,32 @@ $(document).ready(function () {
 
             console.log("askForSearchResults is ending ! URL : " + this.href);
         };
+    
+        this.redirectToCatalogDetailPage = function () {
+            var domItem = $(this).closest(".item");
+            window.location.href = domItem.data("catalog-url");
+        };
     }
 
     SearchResultsView.prototype = {
 
         setLoadingStateOn: function () {
-            this._resultsContainer.children(".dimmer").addClass("active");
+            this._searchArea.children(".dimmer").addClass("active");
         },
 
         setLoadingStateOff: function () {
-            this._resultsContainer.children(".dimmer").removeClass("active");
+            this._searchArea.children(".dimmer").removeClass("active");
         },
 
         setStats: function (nResults) {
             // Créer au besoin les éléments nécessaires à l'affichage des stats
             // Mettre à jour ces éléments
-            var statsContainer = this._resultsContainer.children(".statistic");
+            var statsContainer = this._searchArea.children(".statistic");
             statsContainer.detach();
             statsContainer.empty();
             $("<div class='value'>" + nResults + "</div>").appendTo(statsContainer);
             $("<div class='label'>Résultats</div>").appendTo(statsContainer);
-            statsContainer.prependTo(this._resultsContainer);
+            statsContainer.prependTo(this._searchArea);
         },
 
         updateCurrentRequest: function () {
@@ -313,23 +322,25 @@ $(document).ready(function () {
             var vAuthor = dataItem.author;
             var vPublisher = dataItem.publisher;
             var vPublishedDate = dataItem.publishedDate;
-            var vSourceId = dataItem.sourceId;
+            /*var vSourceId = dataItem.sourceId;
             var vFunc = dataItem.func;
             var vDocumentType = dataItem.documentType;
-            var vIsbn = dataItem.isbn;
+            var vIsbn = dataItem.isbn;*/
 
             // Création de l'objet "Item".
             var newDomItem = $("<div class='ui item segment'></div>");
             $("<div class='ui inverted dimmer'><div class='ui loader'></div></div>").appendTo(newDomItem);
             $("<div class='ui tiny image'><img src='images/image.png'></div>").appendTo(newDomItem);
             // $("<div class='ui tiny image'><span title='ISBN:" +  + "' class='gbsthumbnail'></span></div>").appendTo(newDomItem);
-
+            
+            // Stockage de données spécifique à l'item
+            newDomItem.data("catalog-url", dataItem.catalogUrl);
+            
             var currentContent = $("<div class='content'></div>");
-
-            $("<a class='header' href='" + dataItem.catalogUrl + "'>" + vTitle + "</a>")
-                .on("click", this.askForItemDetails)
+            
+            $("<a class='header' href='" + newDomItem.data("catalog-url") + "'>" + vTitle + "</a>")
                 .appendTo(currentContent);
-
+            
             var currentDescription = (vAuthor ? "<em>" + vAuthor + "</em><br />" : "") + vPublisher + ", " + vPublishedDate + ".";
             currentDescription = "<p>" + currentDescription + "</p>";
 
@@ -350,8 +361,8 @@ $(document).ready(function () {
             domItem.find(".dimmer").removeClass("active");
         },
 
-        updateItem: function (copiesArray, domItem) {
-            console.log("updateItem has been called !");
+        receiveNewItemDetails: function (copiesArray, domItem) {
+            console.log("receiveNewItemDetails has been called !");
 
             var currentContainer = domItem.find(".content");
 
@@ -369,29 +380,17 @@ $(document).ready(function () {
             }
             console.log("Details added !");
 
-            var catalogButton = this.buildItemCatalogButton(domItem);
-            catalogButton.appendTo(extraElement);
+            $("<button class='ui tiny right floated button catalog-detail-link'>Voir dans le catalogue<i class='right chevron icon'></i></button>").appendTo(extraElement);
 
             extraElement.appendTo(currentContainer);
 
             this.setItemLoadingStateOff(domItem);
-            // domItem.find(".dimmer").removeClass("active");
+            
             console.log("handleDetails is finished !");
-
         },
 
-        buildItemCatalogButton: function (domItem) {
-            var targetUrl = domItem.find("a").prop("href");
-            var catalogButton = $("<button class='ui tiny right floated button'>Voir dans le catalogue<i class='right chevron icon'></i></button>");
-            catalogButton.click(function () {
-                window.location.href = targetUrl;
-            });
-
-            return catalogButton;
-        },
-
-        updateSearchResults: function (resultSet) {
-            console.log("updateSearchResults has been called !");
+        receiveNewSearchResults: function (resultSet) {
+            console.log("receiveNewSearchResults has been called !");
 
             // Effacer les résultats précédents s'ils existent
             // Effacer les statistiques de recherche précédentes si elles existent
@@ -425,50 +424,37 @@ $(document).ready(function () {
             // Mettre à jour les statistiques de recherche
             this.setStats(vNResults);
 
-            var searchResultsContainer = $("#hipSearchResults");
-            searchResultsContainer.find("button.more-results").remove();
+            // Supprimer le bouton "Plus de résultats".
+            this._searchResultsContainer.find("button.more-results").remove();
 
             // S'il existe des résultats non encore affichés, insérer le bouton "Plus de résultats"
             if (Math.ceil(vNResults / 20) > vCurrentPageIndex) {
-                console.log("There are more results to fetch.");
-
-                var _self = this;
-                $("<button class='fluid ui button more-results'>Plus de résultats</button>")
-                    .click(function (event) {
-                        _self.askForNextSearchResults(event);
-                    })
-                    .appendTo(listRoot);
-
-            } else {
-                console.log("No more results to fetch.");
+                $("<button class='fluid ui button more-results'>Plus de résultats</button>").appendTo(listRoot);
             }
 
             // S'il s'agit d'un nouvel ensemble de résultats, réinitialiser le conteneur de résultats
             if (vCurrentPageIndex < 2) {
-                searchResultsContainer.empty();
+                this._searchResultsContainer.empty();
                 if (vNResults > 0) {
-                    searchResultsContainer.append($("<div class='ui divider'></div>"));
+                    listRoot.prepend($("<div class='ui divider'></div>"));
                 }
             }
+            
+            // Attacher les gestionnaires d'évènements à la liste
+            listRoot.on("click", "a.header", this.askForItemDetails);
+            listRoot.on("click", "button.catalog-detail-link", this.redirectToCatalogDetailPage);
+            listRoot.on("click", "button.more-results", this.askForNextSearchResults);
+            
+            // redirectToCatalogDetailPage
 
-            searchResultsContainer.append(listRoot);
+            this._searchResultsContainer.append(listRoot);
             this._currentResultsPage = vCurrentPageIndex;
             this.setLoadingStateOff();
 
         }
     };
 
-    var myCdp = new CatalogDataProvider();
-
-    var mySrv = new SearchResultsView($(".searchWrapper"),
-        $("#hipSearchForm"),
-        $(".searchWrapper").children(".statistic"),
-        "",
-        null,
-        null,
-        myCdp);
-
-
+    var mySrv = new SearchResultsView();
     mySrv.init();
 
 });

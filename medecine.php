@@ -913,7 +913,7 @@
 
                         <!-- Formulaire de recherche dans l\'OPAC -->
                     </p>
-                    <div class="searchWrapper ui segment">
+                    <div id="hipSearchArea" class="searchWrapper ui segment">
                         <div class="ui inverted dimmer">
                             <div class="ui text loader">Interrogation du catalogue...</div>
                         </div>
@@ -941,8 +941,6 @@
                             </form>
                         </div>
                         <!-- Fin du formulaire de recherche dans l\'OPAC -->
-
-
 
 <!--                        <div>
                             <div class="ui items">
