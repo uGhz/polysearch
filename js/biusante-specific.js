@@ -44,41 +44,25 @@ $(document).ready(function () {
 
     CatalogDataProvider.prototype = {
         getSearchResults: function (queryString, searchResultView) {
-
+            
+            var _self = this;
             console.log("getSearchResults. urlParam : " + queryString);
 
-            $.ajax({
+            var ajaxPromise = $.ajax({
                 // The URL for the request
                 // url: "proxy.php?index=.GK&limitbox_1=%24LAB7+%3D+s+or+%24LAB7+%3D+i&limitbox_3=&term=neurology&DonneXML=true",
                 url: queryString,
-
-                // Whether this is a POST or GET request
-                type: "GET",
-
-                // The type of data we expect back
                 dataType: "xml",
-
-                context: this,
-
-                // Code to run if the request succeeds;
-                // the response is passed to the function
-                success: function (response) {
-                    console.log("Inside Ajax success !");
-                    console.log("this : " + this);
-                    var resultSet = this.buildResultSet(response);
+            });
+            
+            ajaxPromise.done(function (response) {
+                    var resultSet = _self.buildResultSet(response);
                     console.log("Records found !");
                     searchResultView.receiveNewSearchResults(resultSet);
-                },
-
-                // Code to run if the request fails; the raw request and
-                // status codes are passed to the function
-                error: null,
-
-                // Code to run regardless of success or failure
-                complete: function () {
+            });
+            
+            ajaxPromise.always(function () {
                     console.log("The request for getSearchResults is complete!");
-                    // mySrv.setLoadingStateOff();
-                }
             });
 
 
@@ -86,41 +70,27 @@ $(document).ready(function () {
 
         getItemDetails: function (url, domItem, searchResultView) {
 
-            // var queryString = element.href;
+            var _self = this;
             var queryString = url.slice(url.indexOf("?") + 1);
             console.log("Query String : " + queryString);
-            $.ajax({
-
-                // The URL for the request
+            
+            var ajaxPromise = $.ajax({
                 url: "proxy.php?DonneXML=true&" + queryString,
-
-                // Whether this is a POST or GET request
-                type: "GET",
-
-                // The type of data we expect back
-                dataType: "xml",
-
-                context: this,
-
-                // Code to run if the request succeeds;
-                // the response is passed to the function
-                success: function (response) {
-                    console.log("Inside Ajax success !");
-                    console.log("this : " + this);
-                    var copies = this.buildDetailedDataItem(response);
+                dataType: "xml"
+            });
+            
+            
+            ajaxPromise.done(function (response) {
+                    var copies = _self.buildDetailedDataItem(response);
                     console.log("Copies found !");
                     searchResultView.receiveNewItemDetails(copies, domItem);
-                },
-
-                // Code to run if the request fails; the raw request and
-                // status codes are passed to the function
-                error: null,
-
-                // Code to run regardless of success or failure
-                complete: function () {
-                    console.log("The request for details is complete!");
-                }
             });
+            
+            
+            ajaxPromise.always(function () {
+                console.log("Within callback of promise.");
+            });
+            
         },
 
         buildResultSet: function (rawXmlData) {
@@ -151,16 +121,16 @@ $(document).ready(function () {
         buildDataItem: function (rawXmlData) {
             var item = new CatalogItem();
 
-            item.title = rawXmlData.find('TITLE>data>text').text();
-            item.author = rawXmlData.find('AUTHOR>data>text').text();
-            item.publisher = rawXmlData.find('PUBLISHER>data>text').text();
-            item.publishedDate = rawXmlData.find('PUBDATE>data>text').text();
-            item.sourceId = rawXmlData.find('sourceid').text();
-            item.func = rawXmlData.find('TITLE>data>link>func').text();
-            item.isbn = rawXmlData.find('isbn').text();
-            item.catalogUrl = this.baseUrl + "?uri=" + item.func + "&amp;source=" + item.sourceId;
+            item.title          = rawXmlData.find('TITLE>data>text').text();
+            item.author         = rawXmlData.find('AUTHOR>data>text').text();
+            item.publisher      = rawXmlData.find('PUBLISHER>data>text').text();
+            item.publishedDate  = rawXmlData.find('PUBDATE>data>text').text();
+            item.sourceId       = rawXmlData.find('sourceid').text();
+            item.func           = rawXmlData.find('TITLE>data>link>func').text();
+            item.isbn           = rawXmlData.find('isbn').text();
+            item.catalogUrl     = this.baseUrl + "?uri=" + item.func + "&amp;source=" + item.sourceId;
 
-            var vDocumentType = rawXmlData.find('cell:nth-of-type(14)>data>text').text();
+            var vDocumentType   = rawXmlData.find('cell:nth-of-type(14)>data>text').text();
             if (vDocumentType) {
                 item.documentType = vDocumentType.slice(vDocumentType.lastIndexOf(' ') + 1, vDocumentType.length - "$html$".length);
             }
@@ -173,10 +143,14 @@ $(document).ready(function () {
             var copies = [];
             var currentCopy = null;
             var tempString = "";
+            
             $(rawXmlData).find('searchresponse>items>searchresults>results>row').each(function () {
+                
+                var currentNode = $(this);
                 currentCopy = {};
 
-                tempString = $(this).find('LOCALLOCATION>data>text').text();
+                tempString = currentNode.find('LOCALLOCATION>data>text').text();
+                
                 if (tempString.indexOf("Médecine") != -1) {
                     tempString = "Médecine";
                 } else if (tempString.indexOf("Pharmacie") != -1) {
@@ -184,12 +158,11 @@ $(document).ready(function () {
                 } else {
                     tempString = "";
                 }
-
                 currentCopy.library = tempString;
 
-                currentCopy.precisePlace = $(this).find('TEMPORARYLOCATION:first-of-type>data>text').text();
-                currentCopy.cote = $(this).find('CALLNUMBER>data>text').text();
-                currentCopy.conditions = $(this).find('cell:nth-of-type(5)>data>text').text();
+                currentCopy.precisePlace    = currentNode.find('TEMPORARYLOCATION:first-of-type>data>text').text();
+                currentCopy.cote            = currentNode.find('CALLNUMBER>data>text').text();
+                currentCopy.conditions      = currentNode.find('cell:nth-of-type(5)>data>text').text();
 
                 copies.push(currentCopy);
                 console.log("Details added !");
@@ -338,11 +311,14 @@ $(document).ready(function () {
             
             var currentContent = $("<div class='content'></div>");
             
-            $("<a class='header' href='" + newDomItem.data("catalog-url") + "'>" + vTitle + "</a>")
+            $(["<a class='header' href='", newDomItem.data("catalog-url"), "'>", vTitle, "</a>"].join(""))
                 .appendTo(currentContent);
             
-            var currentDescription = (vAuthor ? "<em>" + vAuthor + "</em><br />" : "") + vPublisher + ", " + vPublishedDate + ".";
-            currentDescription = "<p>" + currentDescription + "</p>";
+            var currentDescription = ["<p>"];
+            if (vAuthor) {
+                currentDescription = currentDescription.concat(["<em>", vAuthor, "</em><br />"]);
+            }
+            currentDescription = currentDescription.concat([vPublisher, ", ", vPublishedDate, ".</p>"]).join("");
 
             $("<div class='description'></div>")
                 .html(currentDescription)
