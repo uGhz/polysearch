@@ -343,17 +343,22 @@ $(document).ready(function () {
             var currentContainer = domItem.find(".content");
 
             currentContainer.find(".extra").remove();
+            
             var extraElement = $("<div class='extra'></div>");
-
+            var detailsMarkup = [];
             for (var i = 0, len = copiesArray.length; i < len; i++) {
                 if (copiesArray[i]) {
-
-                    $("<span class='detail'>Cote : " + copiesArray[i].cote + "</span>")
-                        .appendTo($("<span class='ui label'>" + copiesArray[i].library + "</span>")
-                            .appendTo(extraElement));
-
+                    
+                    detailsMarkup = detailsMarkup.concat(
+                            ["<span class='ui label'>",
+                             copiesArray[i].library,
+                             "<span class='detail'>Cote : ",
+                             copiesArray[i].cote,
+                             "</span></span>"]);
                 }
             }
+            
+            extraElement.html(detailsMarkup.join(""));
             console.log("Details added !");
 
             $("<button class='ui tiny right floated button catalog-detail-link'>Voir dans le catalogue<i class='right chevron icon'></i></button>").appendTo(extraElement);
