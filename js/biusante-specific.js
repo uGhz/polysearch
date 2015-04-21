@@ -43,11 +43,13 @@ $(document).ready(function () {
     }
 
     CatalogDataProvider.prototype = {
-        getSearchResults: function (queryString, searchResultView) {
+        getSearchResults: function (queryString) {
             
             var _self = this;
             console.log("getSearchResults. urlParam : " + queryString);
-
+            
+            var promisedResults = $.Deferred();
+            
             var ajaxPromise = $.ajax({
                 // The URL for the request
                 // url: "proxy.php?index=.GK&limitbox_1=%24LAB7+%3D+s+or+%24LAB7+%3D+i&limitbox_3=&term=neurology&DonneXML=true",
@@ -58,14 +60,15 @@ $(document).ready(function () {
             ajaxPromise.done(function (response) {
                     var resultSet = _self.buildResultSet(response);
                     console.log("Records found !");
-                    searchResultView.receiveNewSearchResults(resultSet);
+                    promisedResults.resolve(resultSet);
+                    // searchResultView.receiveNewSearchResults(resultSet);
             });
             
             ajaxPromise.always(function () {
                     console.log("The request for getSearchResults is complete!");
             });
 
-
+            return promisedResults;
         },
 
         getItemDetails: function (url, domItem, searchResultView) {
@@ -188,7 +191,7 @@ $(document).ready(function () {
             - setStats
             - updateCurrentRequest // Récupère et stocke la requête saisie par l'utilisateur
             - askForItemDetails
-            - askForSearchResults
+            - askForNewResultSet
             - receiveNewItemDetails
             - receiveNewSearchResults
     */
@@ -223,35 +226,42 @@ $(document).ready(function () {
 
         };
 
-        this.askForSearchResults = function (event) {
+        this.askForNewResultSet = function (event) {
             console.log("Form submitted. !");
 
             event.preventDefault();
-            console.log("Inside askForSearchResults");
-
-            _self.setLoadingStateOn();
-
+            console.log("Inside askForNewResultSet");
+            
             _self.updateCurrentRequest();
-
-            _self._catalogDataProvider.getSearchResults(_self._currentRequest, _self);
-
-            console.log("askForSearchResults is ending ! URL : " + this.href);
+            
+            _self.askForResults(_self._currentRequest);
+            console.log("askForNewResultSet is ending ! URL : " + this.href);
         };
 
         
-        this.askForNextSearchResults = function (event) {
+        this.askForMoreResults = function (event) {
             console.log("Next results asked !");
 
             event.preventDefault();
 
-            _self.setLoadingStateOn();
-
-            var chosenPage = _self._currentResultsPage + 1;
+            var chosenPage = parseInt(_self._currentResultsPage, 10) + 1;
             var url = _self._currentRequest + "&page=" + chosenPage;
-
-            _self._catalogDataProvider.getSearchResults(url, _self);
-
-            console.log("askForSearchResults is ending ! URL : " + this.href);
+            
+            _self.askForResults( url );
+            
+            console.log("askForNewResultSet is ending ! URL : " + this.href);
+        };
+        
+        this.askForResults = function( request ) {
+            _self.setLoadingStateOn();
+            var promisedResults = _self._catalogDataProvider.getSearchResults(request);
+            
+            promisedResults.done(function( results ) {
+                _self.receiveNewSearchResults( results );
+                _self.setLoadingStateOff();
+            });
+            
+            console.log("askForResults is ending ! URL : " + this.href);
         };
     
         this.redirectToCatalogDetailPage = function () {
@@ -286,7 +296,7 @@ $(document).ready(function () {
         },
 
         init: function () {
-            this._form.submit(this.askForSearchResults);
+            this._form.submit(this.askForNewResultSet);
         },
 
         buildResultItem: function (dataItem) {
@@ -424,13 +434,13 @@ $(document).ready(function () {
             // Attacher les gestionnaires d'évènements à la liste
             listRoot.on("click", "a.header", this.askForItemDetails);
             listRoot.on("click", "button.catalog-detail-link", this.redirectToCatalogDetailPage);
-            listRoot.on("click", "button.more-results", this.askForNextSearchResults);
+            listRoot.on("click", "button.more-results", this.askForMoreResults);
             
             // redirectToCatalogDetailPage
 
             this._searchResultsContainer.append(listRoot);
             this._currentResultsPage = vCurrentPageIndex;
-            this.setLoadingStateOff();
+            // this.setLoadingStateOff();
 
         }
     };
