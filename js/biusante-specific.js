@@ -254,7 +254,6 @@ $(document).ready(function () {
         this._currentRequest        = "";
         this._currentTotalResults   = null;
         this._currentResultsPage    = null;
-        this._catalogDataProvider   = new CatalogDataProvider();
         
         var _self = this;
         
@@ -268,7 +267,8 @@ $(document).ready(function () {
 
             _self.setItemLoadingStateOn(domItem);
 
-            var promisedResults = _self._catalogDataProvider.getItemDetails(domItem.data("catalog-url"));
+            var cdp = new CatalogDataProvider();
+            var promisedResults = cdp.getItemDetails(domItem.data("catalog-url"));
             
             promisedResults.done(function ( results ) {   
                 _self.handleNewItemDetails(results, domItem);
@@ -304,7 +304,9 @@ $(document).ready(function () {
         
         this.askForResults = function( request ) {
             _self.setLoadingStateOn();
-            var promisedResults = _self._catalogDataProvider.getSearchResults(request);
+            
+            var cdp = new CatalogDataProvider();
+            var promisedResults = cdp.getSearchResults(request);
             
             promisedResults.done(function( results ) {
                 _self.handleNewResultSet( results );
@@ -361,28 +363,30 @@ $(document).ready(function () {
             var vDocumentType = dataItem.documentType;*/
 
             // Création de l'objet "Item".
-            var newDomItem = $("<div class='ui item segment'></div>");
+            var newDomItem = $("<div class='ui item dimmable'></div>");
             $("<div class='ui inverted dimmer'><div class='ui loader'></div></div>").appendTo(newDomItem);
             $("<div class='ui tiny image'><img src='images/image.png'></div>").appendTo(newDomItem);
-            // $("<div class='ui tiny image'><span title='ISBN:" +  + "' class='gbsthumbnail'></span></div>").appendTo(newDomItem);
             
-            // Stockage de données spécifique à l'item
+            // Stockage de données spécifiques à l'item
             newDomItem.data("catalog-url", dataItem.catalogUrl);
             newDomItem.data("isbn", dataItem.isbn);
             
             var currentContent = $("<div class='content'></div>");
             
-            $(["<a class='header' href='", newDomItem.data("catalog-url"), "'>", vTitle, "</a>"].join(""))
+            $(["<a class='ui header' href='", newDomItem.data("catalog-url"), "'>", vTitle, "</a>"].join(""))
                 .appendTo(currentContent);
             
             var currentDescription = ["<p>"];
             if (vAuthor) {
                 currentDescription = currentDescription.concat(["<em>", vAuthor, "</em><br />"]);
             }
-            currentDescription = currentDescription.concat([vPublisher, ", ", vPublishedDate, ".</p>"]).join("");
-
+            if (vPublisher || vPublishedDate) {
+                currentDescription = currentDescription.concat([
+                                                        [vPublisher, vPublishedDate].join(", "), "."]);
+            }
+            currentDescription.push("</p>");
             $("<div class='description'></div>")
-                .html(currentDescription)
+                .html(currentDescription.join(""))
                 .appendTo(currentContent);
 
             currentContent.appendTo(newDomItem);
@@ -499,7 +503,7 @@ $(document).ready(function () {
             var isbnArray = [];
             
             lastDomItems.each(
-                function (index, element) {
+                function () {
                     isbnArray.push($(this).data("isbn"));
                 }
             );
@@ -513,14 +517,15 @@ $(document).ready(function () {
                 
                 var tempIsbn = "";
                 var tempUrl = "";
+                var currentItem = null;
                 lastDomItems.each(
-                    function (index, element) {
-                        
-                        tempIsbn = $(this).data("isbn");
-                        if (tempIsbn) {
+                    function () {
+                        currentItem = $(this);
+                        tempIsbn = currentItem.data("isbn");
+                        if ( tempIsbn ) {
                             tempUrl = results[tempIsbn];
                             if ( tempUrl ) {
-                                $(this).children(".image").children("img").attr("src", tempUrl);
+                                currentItem.children(".image").children("img").attr("src", tempUrl);
                             }
                         }
                     }
@@ -533,7 +538,4 @@ $(document).ready(function () {
     var mySrv = new SearchResultsView();
     mySrv.init();
 
-    
-    var gbsd = new GoogleBooksDataProvider();
-    gbsd.getThumbnailsUrl( ["0596000278","00-invalid-isbn","ISBN0765304368","0439554934"]);
 });
