@@ -4,6 +4,54 @@
 $(document).ready(function () {
     "use strict";
 
+    function GoogleBooksDataProvider() {
+
+    }
+    
+    GoogleBooksDataProvider.prototype = {
+        
+        /**
+        getThumbnailsUrl récupère les URL des thumbnails correspondant à des ISBN
+        
+        @param Un tableau d'ISBN
+        @return Une map "ISBN:url de thumbnail";
+        */
+        getThumbnailsUrl: function ( isbnArray ) {
+            var requestUri = ["http://books.google.com/books?jscmd=viewapi&bibkeys=",
+                              isbnArray.join(","),
+                              "&callback=ProcessGBSBookInfo"].join("");
+            
+            var promisedUrls = $.Deferred();
+            
+            var ajaxPromise = $.ajax({
+                // The URL for the request
+                // url: "proxy.php?index=.GK&limitbox_1=%24LAB7+%3D+s+or+%24LAB7+%3D+i&limitbox_3=&term=neurology&DonneXML=true",
+                url: requestUri,
+                dataType: "jsonp"
+            });
+            
+            ajaxPromise.done(function ( response ) {
+                console.log("--- Réponse ---");
+                console.log(response);
+                
+                var resultMap = {};
+                
+
+                
+                for (var refKey in response) {
+                    resultMap[refKey] = response[refKey].thumbnail_url;
+                }
+                console.log("--- resultMap ---");
+                console.log(resultMap);
+                
+                promisedUrls.resolve(resultMap);
+            });
+            
+            return promisedUrls;
+        }
+    };
+    
+    
     /**
     - Possède une URL d'accès
     
@@ -61,7 +109,7 @@ $(document).ready(function () {
                     var resultSet = _self.buildResultSet(response);
                     console.log("Records found !");
                     promisedResults.resolve(resultSet);
-                    // searchResultView.receiveNewSearchResults(resultSet);
+                    // searchResultView.handleNewResultSet(resultSet);
             });
             
             ajaxPromise.always(function () {
@@ -194,22 +242,22 @@ $(document).ready(function () {
             - updateCurrentRequest // Récupère et stocke la requête saisie par l'utilisateur
             - askForItemDetails
             - askForNewResultSet
-            - receiveNewItemDetails
-            - receiveNewSearchResults
+            - handleNewItemDetails
+            - handleNewResultSet
     */
     function SearchResultsView() {
         this._searchArea            = $("#hipSearchArea");
         this._form                  = $("#hipSearchForm");
         this._statsContainer        = $("#hipSearchArea").children(".statistic");
         this._searchResultsContainer= $("#hipSearchResults");
+        
         this._currentRequest        = "";
         this._currentTotalResults   = null;
         this._currentResultsPage    = null;
         this._catalogDataProvider   = new CatalogDataProvider();
         
-        
-        
         var _self = this;
+        
 
         this.askForItemDetails = function (event) {
 
@@ -223,7 +271,7 @@ $(document).ready(function () {
             var promisedResults = _self._catalogDataProvider.getItemDetails(domItem.data("catalog-url"));
             
             promisedResults.done(function ( results ) {   
-                _self.receiveNewItemDetails(results, domItem);
+                _self.handleNewItemDetails(results, domItem);
                 _self.setItemLoadingStateOff(domItem);
             });
             
@@ -240,7 +288,6 @@ $(document).ready(function () {
             
             console.log("askForNewResultSet is ending !");
         };
-
         
         this.askForMoreResults = function (event) {
             console.log("More results wanted !");
@@ -260,8 +307,9 @@ $(document).ready(function () {
             var promisedResults = _self._catalogDataProvider.getSearchResults(request);
             
             promisedResults.done(function( results ) {
-                _self.receiveNewSearchResults( results );
+                _self.handleNewResultSet( results );
                 _self.setLoadingStateOff();
+                _self.askForThumbnailUrl();
             });
             
             console.log("askForResults is ending ! URL : " + this.href);
@@ -310,8 +358,7 @@ $(document).ready(function () {
             var vPublishedDate = dataItem.publishedDate;
             /*var vSourceId = dataItem.sourceId;
             var vFunc = dataItem.func;
-            var vDocumentType = dataItem.documentType;
-            var vIsbn = dataItem.isbn;*/
+            var vDocumentType = dataItem.documentType;*/
 
             // Création de l'objet "Item".
             var newDomItem = $("<div class='ui item segment'></div>");
@@ -321,6 +368,7 @@ $(document).ready(function () {
             
             // Stockage de données spécifique à l'item
             newDomItem.data("catalog-url", dataItem.catalogUrl);
+            newDomItem.data("isbn", dataItem.isbn);
             
             var currentContent = $("<div class='content'></div>");
             
@@ -350,8 +398,8 @@ $(document).ready(function () {
             domItem.find(".dimmer").removeClass("active");
         },
 
-        receiveNewItemDetails: function (copiesArray, domItem) {
-            console.log("receiveNewItemDetails has been called !");
+        handleNewItemDetails: function (copiesArray, domItem) {
+            console.log("handleNewItemDetails has been called !");
 
             var currentContainer = domItem.find(".content");
 
@@ -381,8 +429,8 @@ $(document).ready(function () {
             console.log("handleDetails is finished !");
         },
 
-        receiveNewSearchResults: function (resultSet) {
-            console.log("receiveNewSearchResults has been called !");
+        handleNewResultSet: function (resultSet) {
+            console.log("handleNewResultSet has been called !");
 
             // Effacer les résultats précédents s'ils existent
             // Effacer les statistiques de recherche précédentes si elles existent
@@ -443,10 +491,49 @@ $(document).ready(function () {
             this._currentResultsPage = vCurrentPageIndex;
             // this.setLoadingStateOff();
 
+        },
+        
+        askForThumbnailUrl: function() {
+            var lastDomItems = this._searchResultsContainer.children(".items").last().children(".item");
+            
+            var isbnArray = [];
+            
+            lastDomItems.each(
+                function (index, element) {
+                    isbnArray.push($(this).data("isbn"));
+                }
+            );
+            
+            var gbdp = new GoogleBooksDataProvider();
+            var promisedResults = gbdp.getThumbnailsUrl(isbnArray);
+            
+            promisedResults.done(function( results ) {
+                console.log("askForThumbnailUrl Results");
+                console.log(results);
+                
+                var tempIsbn = "";
+                var tempUrl = "";
+                lastDomItems.each(
+                    function (index, element) {
+                        
+                        tempIsbn = $(this).data("isbn");
+                        if (tempIsbn) {
+                            tempUrl = results[tempIsbn];
+                            if ( tempUrl ) {
+                                $(this).children(".image").children("img").attr("src", tempUrl);
+                            }
+                        }
+                    }
+                );
+
+            });
         }
     };
 
     var mySrv = new SearchResultsView();
     mySrv.init();
 
+    
+    var gbsd = new GoogleBooksDataProvider();
+    gbsd.getThumbnailsUrl( ["0596000278","00-invalid-isbn","ISBN0765304368","0439554934"]);
 });
