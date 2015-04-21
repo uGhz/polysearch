@@ -71,9 +71,11 @@ $(document).ready(function () {
             return promisedResults;
         },
 
-        getItemDetails: function (url, domItem, searchResultView) {
+        getItemDetails: function ( url ) {
 
             var _self = this;
+            var promisedResults = $.Deferred();
+            
             var queryString = url.slice(url.indexOf("?") + 1);
             console.log("Query String : " + queryString);
             
@@ -86,7 +88,7 @@ $(document).ready(function () {
             ajaxPromise.done(function (response) {
                     var copies = _self.buildDetailedDataItem(response);
                     console.log("Copies found !");
-                    searchResultView.receiveNewItemDetails(copies, domItem);
+                    promisedResults.resolve(copies);
             });
             
             
@@ -94,6 +96,7 @@ $(document).ready(function () {
                 console.log("Within callback of promise.");
             });
             
+            return promisedResults;
         },
 
         buildResultSet: function (rawXmlData) {
@@ -111,7 +114,6 @@ $(document).ready(function () {
 
             var _self = this;
             $(rawXmlData).find('searchresponse>summary>searchresults>results>row').each(function (index, value) {
-                console.log("this : " + _self);
                 tempDataItem = _self.buildDataItem($(value));
                 tempItems.push(tempDataItem);
             });
@@ -213,34 +215,35 @@ $(document).ready(function () {
 
             event.preventDefault();
             console.log("Inside askForItemDetails");
-            console.log("this : " + this);
-            console.log("event : " + event);
 
             var domItem = $(this).closest(".item");
 
             _self.setItemLoadingStateOn(domItem);
 
-            _self._catalogDataProvider.getItemDetails(domItem.data("catalog-url"), domItem, _self);
-
-            console.log("askForItemDetails is ending ! URL : " + domItem.data("catalog-url"));
+            var promisedResults = _self._catalogDataProvider.getItemDetails(domItem.data("catalog-url"));
+            
+            promisedResults.done(function ( results ) {   
+                _self.receiveNewItemDetails(results, domItem);
+                _self.setItemLoadingStateOff(domItem);
+            });
+            
+            console.log("askForItemDetails is ending !");
 
         };
 
         this.askForNewResultSet = function (event) {
-            console.log("Form submitted. !");
-
-            event.preventDefault();
             console.log("Inside askForNewResultSet");
+            event.preventDefault();
             
             _self.updateCurrentRequest();
-            
             _self.askForResults(_self._currentRequest);
-            console.log("askForNewResultSet is ending ! URL : " + this.href);
+            
+            console.log("askForNewResultSet is ending !");
         };
 
         
         this.askForMoreResults = function (event) {
-            console.log("Next results asked !");
+            console.log("More results wanted !");
 
             event.preventDefault();
 
@@ -249,7 +252,7 @@ $(document).ready(function () {
             
             _self.askForResults( url );
             
-            console.log("askForNewResultSet is ending ! URL : " + this.href);
+            console.log("askForMoreResults is ending !");
         };
         
         this.askForResults = function( request ) {
@@ -374,8 +377,6 @@ $(document).ready(function () {
             $("<button class='ui tiny right floated button catalog-detail-link'>Voir dans le catalogue<i class='right chevron icon'></i></button>").appendTo(extraElement);
 
             extraElement.appendTo(currentContainer);
-
-            this.setItemLoadingStateOff(domItem);
             
             console.log("handleDetails is finished !");
         },
