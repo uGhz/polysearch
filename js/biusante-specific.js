@@ -365,8 +365,10 @@ $(document).ready(function () {
             // Création de l'objet "Item".
             var newDomItem = $("<div class='ui item dimmable'></div>");
             $("<div class='ui inverted dimmer'><div class='ui loader'></div></div>").appendTo(newDomItem);
-            $("<div class='ui tiny image'><img src='images/image.png'></div>").appendTo(newDomItem);
+            // var image = $("<div class='ui tiny image'><img src='images/image.png'></div>").appendTo(newDomItem);
             
+            $("<div class='ui tiny image'><img src='images/image.png'></div>").appendTo(newDomItem);
+
             // Stockage de données spécifiques à l'item
             newDomItem.data("catalog-url", dataItem.catalogUrl);
             newDomItem.data("isbn", dataItem.isbn);
@@ -415,7 +417,9 @@ $(document).ready(function () {
                 if (copiesArray[i]) {
                     
                     detailsMarkup = detailsMarkup.concat(
-                            ["<span class='ui label'>",
+                            ["<span class='ui label' data-title='Conditions de consultation' data-content='",
+                             copiesArray[i].conditions,
+                             "'>",
                              copiesArray[i].library,
                              "<span class='detail'>Cote : ",
                              copiesArray[i].cote,
@@ -423,7 +427,10 @@ $(document).ready(function () {
                 }
             }
             
+            
             extraElement.html(detailsMarkup.join(""));
+            
+            extraElement.children("span.label").popup();
             console.log("Details added !");
 
             $("<button class='ui tiny right floated button catalog-detail-link'>Voir dans le catalogue<i class='right chevron icon'></i></button>").appendTo(extraElement);

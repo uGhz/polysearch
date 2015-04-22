@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="http://www.biusante.parisdescartes.fr/_migration/developpement-1/ressources/js/highslide/highslide.css">
 
     <link rel="stylesheet" href="semantic-ui/semantic.min.css">
+    <link rel="stylesheet" href="semantic-ui/components/popup.css">
 
     <!-- Scripts -->
     <!-- jQuery  -->
@@ -22,6 +23,9 @@
     <script async="" src="./Médecine, ressources pluridisciplinaires — BIU Santé, Paris_files/cse.js"></script>
     <script async="" src="./Médecine, ressources pluridisciplinaires — BIU Santé, Paris_files/ga.js"></script>
     <script src="./Médecine, ressources pluridisciplinaires — BIU Santé, Paris_files/jquery.min.js"></script>
+    
+    <script src="semantic-ui/semantic.min.js"></script>
+    <script src="semantic-ui/components/popup.js"></script>
 
     <!-- Highslide  -->
     <script src="./Médecine, ressources pluridisciplinaires — BIU Santé, Paris_files/highslide-full.min.js"></script>
