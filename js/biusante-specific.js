@@ -94,8 +94,16 @@ $(document).ready(function () {
         
         buildRequest: function (searchString) {
             
-            var url = "proxy.php?DonneXML=true&index=.GL&limitbox_1=$LAB7 = a or $LAB7 = c or $LAB7 = i or $LAB7 = m not $TH = *&term=" +
-                        searchString;
+            var urlArray = [
+                "proxy.php?DonneXML=true&index=",
+                encodeURIComponent(".GK"),
+                "&limitbox_1=",
+                encodeURIComponent("$LAB7 = a or $LAB7 = c or $LAB7 = i or $LAB7 = m not $TH = *"),
+                "&limitbox_3=",
+                "&term=",
+                encodeURIComponent(searchString)
+            ];
+            var url = urlArray.join("");
             
             return url;
         },
@@ -120,6 +128,7 @@ $(document).ready(function () {
             ajaxPromise.done(function (response) {
                     var resultSet = _self.buildResultSet(response);
                     console.log("Records found !");
+                    console.log("resultSet : " + resultSet);
                     promisedResults.resolve(resultSet);
                     // searchResultView.handleNewResultSet(resultSet);
             });
@@ -238,6 +247,79 @@ $(document).ready(function () {
         }
 
     };
+    
+    
+    /**
+        Classe gérant le formulaire de recherche et englobant les différentes ResultsArea
+    */
+    function SearchArea() {
+        this._container             = $("#hipSearchArea");
+        this._form                  = $("#hipSearchForm");
+        // this._statsContainer        = $("#hipSearchArea").children(".statistic");
+        this._searchResultsContainer= $("#hipSearchResults");
+        
+        this._statsContainer        = $("<div class='ui horizontal statistic' style='float:right;margin:1em;'><div class='value'>0</div><div class='label'>Résultats</div></div>").prependTo(this._container);
+        
+        this._currentRequest        = "";
+        this._resultAreas            = [];
+        
+        var _self = this;
+        
+        this.init = function () {
+            _self._form.submit(_self.updateCurrentRequest);
+            _self._resultAreas.push(new ResultsArea(this));
+        };
+        
+        
+        this.updateCurrentRequest = function ( event ) {
+            event.preventDefault();
+            
+            _self._currentRequest = _self._form.find("input[type='text']").val();
+            // Notifier la chose aux ResultAreas
+            var tempResultArea = null;
+            for(var i=0 ; i<_self._resultAreas.length ; i++) {
+                tempResultArea = _self._resultAreas[i];
+                if (tempResultArea) {
+                    tempResultArea.queryUpdated();   
+                }
+            }
+        };
+        
+        this.setStats = function ( number ) {
+            // Créer au besoin les éléments nécessaires à l'affichage des stats
+            // Mettre à jour ces éléments
+            var statsContainer = this._statsContainer;
+            statsContainer.detach();
+            statsContainer.empty();
+            $("<div class='value'>" + number + "</div>").appendTo(statsContainer);
+            $("<div class='label'>Résultats</div>").appendTo(statsContainer);
+            statsContainer.prependTo(this._container);
+        };
+        
+        // Fonction publique, que les ResultAreas sont susceptibles d'appeler. 
+        this.getSearchString = function () {
+            return this._currentRequest;
+        };
+        
+        // Fonction publique, que les ResultAreas sont susceptibles d'appeler. 
+        this.getResultsContainer = function () {
+            return this._searchResultsContainer;
+        };
+        
+        // Fonction publique, que les ResultAreas sont susceptibles d'appeler. 
+        this.updateStats = function () {
+            var totalOfResults = 0;
+            var tempResultArea = null;
+            for(var i=0 ; i<_self._resultAreas.length ; i++) {
+                tempResultArea = _self._resultAreas[i];
+                if (tempResultArea) {
+                    totalOfResults += tempResultArea.getStats();   
+                }
+            }
+            this.setStats(totalOfResults);
+        };
+
+    }
 
     /*
         - Possède un pointeur dans le DOM vers le conteneur de la liste de résultats
@@ -257,15 +339,20 @@ $(document).ready(function () {
             - handleNewItemDetails
             - handleNewResultSet
     */
-    function SearchResultsView() {
-        this._searchArea            = $("#hipSearchArea");
-        this._form                  = $("#hipSearchForm");
-        this._statsContainer        = $("#hipSearchArea").children(".statistic");
+    function ResultsArea( searchArea ) {
+        // this._searchArea            = $("#hipSearchArea");
+        // this._form                  = $("#hipSearchForm");
         this._searchResultsContainer= $("#hipSearchResults");
         
-        this._currentRequest        = "";
+        // this._currentRequest        = "";
         this._currentTotalResults   = null;
         this._currentResultsPage    = null;
+        
+        this._searchArea = searchArea;
+        this._container = $("<div class='ui dimmable items'></div>").appendTo(this._searchArea.getResultsContainer());
+        this._statsContainer        = $("<div class='ui horizontal statistic' style='float:right;margin:1em;'><div class='value'>0</div><div class='label'>Résultats</div></div>").prependTo(this._container);
+        
+        $("<div class='ui inverted dimmer'><div class='ui text loader'>Interrogation du catalogue...</div></div>").appendTo(this._container);
         
         var _self = this;
         
@@ -290,16 +377,6 @@ $(document).ready(function () {
             console.log("askForItemDetails is ending !");
 
         };
-
-        this.askForNewResultSet = function (event) {
-            console.log("Inside askForNewResultSet");
-            event.preventDefault();
-            
-            _self.updateCurrentRequest();
-            _self.askForResults(_self._currentRequest);
-            
-            console.log("askForNewResultSet is ending !");
-        };
         
         this.askForMoreResults = function (event) {
             console.log("More results wanted !");
@@ -307,7 +384,7 @@ $(document).ready(function () {
             event.preventDefault();
 
             var chosenPage = parseInt(_self._currentResultsPage, 10) + 1;
-            var url = _self._currentRequest + "&page=" + chosenPage;
+            var url = _self._searchArea.getSearchString() + "&page=" + chosenPage;
             
             _self.askForResults( url );
             
@@ -335,34 +412,32 @@ $(document).ready(function () {
         };
     }
 
-    SearchResultsView.prototype = {
-
+    ResultsArea.prototype = {
+        
+        queryUpdated: function () {
+            this.askForResults(this._searchArea.getSearchString());
+        },
+        
         setLoadingStateOn: function () {
-            this._searchArea.children(".dimmer").addClass("active");
+            this._container.children(".dimmer").addClass("active");
         },
 
         setLoadingStateOff: function () {
-            this._searchArea.children(".dimmer").removeClass("active");
+            this._container.children(".dimmer").removeClass("active");
         },
 
         setStats: function (nResults) {
             // Créer au besoin les éléments nécessaires à l'affichage des stats
             // Mettre à jour ces éléments
-            var statsContainer = this._searchArea.children(".statistic");
-            statsContainer.detach();
-            statsContainer.empty();
-            $("<div class='value'>" + nResults + "</div>").appendTo(statsContainer);
-            $("<div class='label'>Résultats</div>").appendTo(statsContainer);
-            statsContainer.prependTo(this._searchArea);
-        },
+            console.log("setStats called ! nResults : " + nResults);
 
-        updateCurrentRequest: function () {
-            // this._currentRequest = "proxy.php?DonneXML=true&" + this._form.serialize();
-            this._currentRequest = this._form.find("input[type='text']").val();
+            this._statsContainer.children(".value").text(nResults);
+            this._searchArea.updateStats();
         },
-
-        init: function () {
-            this._form.submit(this.askForNewResultSet);
+        
+        // Fonction publique, que les SearchArea sont susceptibles d'appeler. 
+        getStats: function () {
+            return this._currentTotalResults;
         },
 
         buildResultItem: function (dataItem) {
@@ -485,9 +560,6 @@ $(document).ready(function () {
                 tempDomItem.appendTo(listRoot);
             }
 
-            // Mettre à jour les statistiques de recherche
-            this.setStats(vNResults);
-
             // Supprimer le bouton "Plus de résultats".
             this._searchResultsContainer.find("button.more-results").remove();
 
@@ -508,10 +580,12 @@ $(document).ready(function () {
             listRoot.on("click", "a.header", this.askForItemDetails);
             listRoot.on("click", "button.catalog-detail-link", this.redirectToCatalogDetailPage);
             listRoot.on("click", "button.more-results", this.askForMoreResults);
-            
-            // redirectToCatalogDetailPage
 
             this._searchResultsContainer.append(listRoot);
+            
+            // Mettre à jour les statistiques de recherche
+            this.setStats(vNResults);
+            
             this._currentResultsPage = vCurrentPageIndex;
             // this.setLoadingStateOff();
 
@@ -554,8 +628,8 @@ $(document).ready(function () {
             });
         }
     };
-
-    var mySrv = new SearchResultsView();
-    mySrv.init();
+    
+    var mySa = new SearchArea();
+    mySa.init();
 
 });
