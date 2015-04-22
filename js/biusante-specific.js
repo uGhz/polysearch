@@ -91,17 +91,29 @@ $(document).ready(function () {
     }
 
     CatalogDataProvider.prototype = {
-        getSearchResults: function (queryString) {
+        
+        buildRequest: function (searchString) {
+            
+            var url = "proxy.php?DonneXML=true&index=.GL&limitbox_1=$LAB7 = a or $LAB7 = c or $LAB7 = i or $LAB7 = m not $TH = *&term=" +
+                        searchString;
+            
+            return url;
+        },
+        
+        getSearchResults: function (searchString) {
             
             var _self = this;
-            console.log("getSearchResults. urlParam : " + queryString);
+            console.log("getSearchResults. searchString : " + searchString);
+            
+            var queryUrl = _self.buildRequest(searchString);
+            console.log("getSearchResults. queryUrl : " + queryUrl);
             
             var promisedResults = $.Deferred();
             
             var ajaxPromise = $.ajax({
                 // The URL for the request
                 // url: "proxy.php?index=.GK&limitbox_1=%24LAB7+%3D+s+or+%24LAB7+%3D+i&limitbox_3=&term=neurology&DonneXML=true",
-                url: queryString,
+                url: queryUrl,
                 dataType: "xml",
             });
             
@@ -345,7 +357,8 @@ $(document).ready(function () {
         },
 
         updateCurrentRequest: function () {
-            this._currentRequest = "proxy.php?DonneXML=true&" + this._form.serialize();
+            // this._currentRequest = "proxy.php?DonneXML=true&" + this._form.serialize();
+            this._currentRequest = this._form.find("input[type='text']").val();
         },
 
         init: function () {
