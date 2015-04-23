@@ -4,6 +4,10 @@
 $(document).ready(function () {
     "use strict";
 
+    /*********************************
+    *   CLASS GoogleDataProvider
+    *
+    */
     function GoogleBooksDataProvider() {
 
     }
@@ -52,21 +56,6 @@ $(document).ready(function () {
     };
     
     
-    /**
-    - Possède une URL d'accès
-    
-    - Possède les méthodes :
-    
-        - getSearchResults
-            @param string request // Fragment de query string HTTP
-            @return Array d'Items
-            @return int currentPage
-            @return int nTotalResults
-            
-        - getItemDetails
-            @param string documentId // ou url, domItem...
-            @return EnhancedItem
-*/
 
     function CatalogItem() {
         this.author = null;
@@ -86,34 +75,38 @@ $(document).ready(function () {
         this.results = null;
     }
 
+    
+    /*********************************
+    *   CLASS CatalogDataProvider
+    *
+    
+    - Possède une URL d'accès
+    
+    - Possède les méthodes :
+    
+        - getSearchResults
+            @param string request // Fragment de query string HTTP
+            @return Array d'Items
+            @return int currentPage
+            @return int nTotalResults
+            
+        - getItemDetails
+            @param string documentId // ou url, domItem...
+            @return EnhancedItem
+    */
     function CatalogDataProvider() {
         this.baseUrl = "http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp";
     }
 
     CatalogDataProvider.prototype = {
         
-        buildRequest: function (searchString) {
-            
-            var urlArray = [
-                "proxy.php?DonneXML=true&index=",
-                encodeURIComponent(".GK"),
-                "&limitbox_1=",
-                encodeURIComponent("$LAB7 = a or $LAB7 = c or $LAB7 = i or $LAB7 = m not $TH = *"),
-                "&limitbox_3=",
-                "&term=",
-                encodeURIComponent(searchString)
-            ];
-            var url = urlArray.join("");
-            
-            return url;
-        },
-        
-        getSearchResults: function (searchString) {
+        // Fonction publique, que les ResultAreas sont susceptibles d'appeler.
+        getSearchResults: function (searchString, pageNumber) {
             
             var _self = this;
             console.log("getSearchResults. searchString : " + searchString);
             
-            var queryUrl = _self.buildRequest(searchString);
+            var queryUrl = _self.buildRequest(searchString, pageNumber);
             console.log("getSearchResults. queryUrl : " + queryUrl);
             
             var promisedResults = $.Deferred();
@@ -139,7 +132,8 @@ $(document).ready(function () {
 
             return promisedResults;
         },
-
+    
+        // Fonction publique, que les ResultAreas sont susceptibles d'appeler.
         getItemDetails: function ( url ) {
 
             var _self = this;
@@ -166,6 +160,30 @@ $(document).ready(function () {
             });
             
             return promisedResults;
+        },
+        
+        buildRequest: function (searchString, pageNumber) {
+            
+            var urlArray = [
+                "proxy.php?DonneXML=true&index=",
+                encodeURIComponent(".GK"),
+                "&limitbox_1=",
+                encodeURIComponent("$LAB7 = a or $LAB7 = c or $LAB7 = i or $LAB7 = m not $TH = *"),
+                "&limitbox_3=",
+                "&term=",
+                encodeURIComponent(searchString)
+            ];
+            
+            if (pageNumber) {
+                urlArray = urlArray.concat([
+                    "&page=",
+                    encodeURIComponent(pageNumber)
+                ]);
+            }
+            
+            var url = urlArray.join("");
+            
+            return url;
         },
 
         buildResultSet: function (rawXmlData) {
@@ -249,13 +267,15 @@ $(document).ready(function () {
     };
     
     
-    /**
+    /*********************************
+    *   CLASS SearchArea
+    *
+    *
         Classe gérant le formulaire de recherche et englobant les différentes ResultsArea
     */
     function SearchArea() {
         this._container             = $("#hipSearchArea");
         this._form                  = $("#hipSearchForm");
-        // this._statsContainer        = $("#hipSearchArea").children(".statistic");
         this._searchResultsContainer= $("#hipSearchResults");
         
         this._statsContainer        = $("<div class='ui horizontal statistic' style='float:right;margin:1em;'><div class='value'>0</div><div class='label'>Résultats</div></div>").prependTo(this._container);
@@ -268,32 +288,7 @@ $(document).ready(function () {
         this.init = function () {
             _self._form.submit(_self.updateCurrentRequest);
             _self._resultAreas.push(new ResultsArea(this));
-        };
-        
-        
-        this.updateCurrentRequest = function ( event ) {
-            event.preventDefault();
-            
-            _self._currentRequest = _self._form.find("input[type='text']").val();
-            // Notifier la chose aux ResultAreas
-            var tempResultArea = null;
-            for(var i=0 ; i<_self._resultAreas.length ; i++) {
-                tempResultArea = _self._resultAreas[i];
-                if (tempResultArea) {
-                    tempResultArea.queryUpdated();   
-                }
-            }
-        };
-        
-        this.setStats = function ( number ) {
-            // Créer au besoin les éléments nécessaires à l'affichage des stats
-            // Mettre à jour ces éléments
-            var statsContainer = this._statsContainer;
-            statsContainer.detach();
-            statsContainer.empty();
-            $("<div class='value'>" + number + "</div>").appendTo(statsContainer);
-            $("<div class='label'>Résultats</div>").appendTo(statsContainer);
-            statsContainer.prependTo(this._container);
+            _self._resultAreas.push(new ResultsArea(this));
         };
         
         // Fonction publique, que les ResultAreas sont susceptibles d'appeler. 
@@ -318,10 +313,32 @@ $(document).ready(function () {
             }
             this.setStats(totalOfResults);
         };
-
+        
+        this.updateCurrentRequest = function ( event ) {
+            event.preventDefault();
+            
+            _self._currentRequest = _self._form.find("input[type='text']").val();
+            // Notifier la chose aux ResultAreas
+            var tempResultArea = null;
+            for(var i=0 ; i<_self._resultAreas.length ; i++) {
+                tempResultArea = _self._resultAreas[i];
+                if (tempResultArea) {
+                    tempResultArea.queryUpdated();   
+                }
+            }
+        };
+        
+        this.setStats = function ( number ) {
+            // Créer au besoin les éléments nécessaires à l'affichage des stats
+            // Mettre à jour ces éléments
+            this._statsContainer.children(".value").text(number);
+        };
+        
     }
 
-    /*
+    /*********************************
+    *   CLASS ResultsArea
+    *
         - Possède un pointeur dans le DOM vers le conteneur de la liste de résultats
         - Possède un pointeur dans le DOM vers le formulaire HTML de recherche
         - Possède un pointeur dans le DOM vers le conteneur des statistiques de recherche
@@ -329,30 +346,35 @@ $(document).ready(function () {
         - Stocke le nombre de résultats de la requête en cours
         - Stocke le numéro de la page de résultats en cours
         
-        - Possède les méthodes :
-            - setLoadingStateOn
-            - setLoadingStateOff
-            - setStats
-            - updateCurrentRequest // Récupère et stocke la requête saisie par l'utilisateur
-            - askForItemDetails
-            - askForNewResultSet
-            - handleNewItemDetails
-            - handleNewResultSet
+        - Méthodes :
+            - Publiques :
+            --- updateCurrentRequest // Récupère la requête saisie par l'utilisateur
+            --- setLoadingStateOn
+            --- setLoadingStateOff
+            --- setStats
+
+            --- askForItemDetails
+            --- askForNewResultSet
+            --- handleNewItemDetails
+            --- handleNewResultSet
     */
     function ResultsArea( searchArea ) {
-        // this._searchArea            = $("#hipSearchArea");
-        // this._form                  = $("#hipSearchForm");
-        this._searchResultsContainer= $("#hipSearchResults");
-        
-        // this._currentRequest        = "";
         this._currentTotalResults   = null;
         this._currentResultsPage    = null;
         
-        this._searchArea = searchArea;
-        this._container = $("<div class='ui dimmable items'></div>").appendTo(this._searchArea.getResultsContainer());
-        this._statsContainer        = $("<div class='ui horizontal statistic' style='float:right;margin:1em;'><div class='value'>0</div><div class='label'>Résultats</div></div>").prependTo(this._container);
+        this._searchArea    = searchArea;
+        this._container     = $("<div class='segment dimmable'></div>");
+                      
+        this._statsContainer = $("<div class='ui horizontal statistic' style='float:right;margin:1em;'></div>");
+        this._statsContainer.append($("<div class='value'>0</div>"));
+        this._statsContainer.append($("<div class='label'>Résultats</div>"));
         
-        $("<div class='ui inverted dimmer'><div class='ui text loader'>Interrogation du catalogue...</div></div>").appendTo(this._container);
+        this._container.append(this._statsContainer);
+        
+        this._container.append($("<div class='ui items'></div>"));
+        
+        this._container.append($("<div class='ui inverted dimmer'><div class='ui text loader'>Interrogation du catalogue...</div></div>"));
+
         
         var _self = this;
         
@@ -384,38 +406,55 @@ $(document).ready(function () {
             event.preventDefault();
 
             var chosenPage = parseInt(_self._currentResultsPage, 10) + 1;
-            var url = _self._searchArea.getSearchString() + "&page=" + chosenPage;
+            // var url = _self._searchArea.getSearchString() + "&page=" + chosenPage;
             
-            _self.askForResults( url );
+            _self.askForResults( _self._searchArea.getSearchString(), chosenPage );
             
             console.log("askForMoreResults is ending !");
         };
         
-        this.askForResults = function( request ) {
+        this.askForResults = function( request, pageNumber ) {
             _self.setLoadingStateOn();
             
             var cdp = new CatalogDataProvider();
-            var promisedResults = cdp.getSearchResults(request);
+
+            var promisedResults = cdp.getSearchResults(request, pageNumber);
             
             promisedResults.done(function( results ) {
+                console.log("askForResults received results : " + results);
                 _self.handleNewResultSet( results );
                 _self.setLoadingStateOff();
                 _self.askForThumbnailUrl();
             });
             
-            console.log("askForResults is ending ! URL : " + this.href);
+            console.log("askForResults is ending !");
         };
     
         this.redirectToCatalogDetailPage = function () {
             var domItem = $(this).closest(".item");
             window.location.href = domItem.data("catalog-url");
         };
+        
+        this.init = function () {
+            // Attacher les gestionnaires d'évènements à la liste
+            _self._container.on("click", "a.header",                     _self.askForItemDetails);
+            _self._container.on("click", "button.catalog-detail-link",   _self.redirectToCatalogDetailPage);
+            _self._container.on("click", "button.more-results",          _self.askForMoreResults);
+            
+            _self._container.appendTo(_self._searchArea.getResultsContainer());
+        }();
     }
 
     ResultsArea.prototype = {
         
+        // Fonction publique, que les SearchArea sont susceptibles d'appeler.
         queryUpdated: function () {
-            this.askForResults(this._searchArea.getSearchString());
+            this.askForResults(this._searchArea.getSearchString(), 1);
+        },
+        
+        // Fonction publique, que les SearchArea sont susceptibles d'appeler. 
+        getStats: function () {
+            return this._currentTotalResults;
         },
         
         setLoadingStateOn: function () {
@@ -434,11 +473,6 @@ $(document).ready(function () {
             this._statsContainer.children(".value").text(nResults);
             this._searchArea.updateStats();
         },
-        
-        // Fonction publique, que les SearchArea sont susceptibles d'appeler. 
-        getStats: function () {
-            return this._currentTotalResults;
-        },
 
         buildResultItem: function (dataItem) {
 
@@ -453,8 +487,6 @@ $(document).ready(function () {
             // Création de l'objet "Item".
             var newDomItem = $("<div class='ui item dimmable'></div>");
             $("<div class='ui inverted dimmer'><div class='ui loader'></div></div>").appendTo(newDomItem);
-            // var image = $("<div class='ui tiny image'><img src='images/image.png'></div>").appendTo(newDomItem);
-            
             $("<div class='ui tiny image'><img src='images/image.png'></div>").appendTo(newDomItem);
 
             // Stockage de données spécifiques à l'item
@@ -531,68 +563,59 @@ $(document).ready(function () {
         handleNewResultSet: function (resultSet) {
             console.log("handleNewResultSet has been called !");
 
-            // Effacer les résultats précédents s'ils existent
-            // Effacer les statistiques de recherche précédentes si elles existent
-            // Afficher un loader
-            // Lancer la requête Ajax
-            // Traiter la réponse du catalogue
-            //   - Mettre à jour les statistiques
-            //   - Créer si besoin  un conteneur de résultats
-            //   - Créer si besoin les items de résultats
-            // Ôter le loader
+            // Construire les items
+            // Supprimer les items précédents
+            // Attacher les nouveaux items à leur conteneur
+            // Mettre à jour les statistiques
 
             console.log("Results handled !");
 
-            var listRoot = $("<div class='ui items'></div>");
+            this._currentTotalResults  = parseInt(resultSet.numberOfResults, 10);
+            this._currentResultsPage   = resultSet.currentPage;
 
-            var vNResults = resultSet.numberOfResults;
-            var vCurrentPageIndex = resultSet.currentPage;
+            console.log("this._currentTotalResults : "  + this._currentTotalResults);
+            console.log("this._currentResultsPage : "   + this._currentResultsPage);
 
-            console.log("vNResults : " + vNResults);
-            console.log("vCurrentPageIndex : " + vCurrentPageIndex);
-
-            // Récupérer, ligne à ligne, les données, les mettre en forme et les attacher à la liste
+            // Récupérer, ligne à ligne, les données,
+            // les mettre en forme et les attacher au conteneur d'items
             var tempDomItem = null;
-
+            
+            var listRoot = $("<div class='ui items'></div>");
             var resultsArray = resultSet.results;
             for (var i = 0, len = resultsArray.length; i < len; i++) {
                 tempDomItem = this.buildResultItem(resultsArray[i]);
                 tempDomItem.appendTo(listRoot);
             }
 
-            // Supprimer le bouton "Plus de résultats".
-            this._searchResultsContainer.find("button.more-results").remove();
-
-            // S'il existe des résultats non encore affichés, insérer le bouton "Plus de résultats"
-            if (Math.ceil(vNResults / 20) > vCurrentPageIndex) {
-                $("<button class='fluid ui button more-results'>Plus de résultats</button>").appendTo(listRoot);
-            }
-
             // S'il s'agit d'un nouvel ensemble de résultats, réinitialiser le conteneur de résultats
-            if (vCurrentPageIndex < 2) {
-                this._searchResultsContainer.empty();
-                if (vNResults > 0) {
+            if (this._currentResultsPage < 2) {
+                this._container.children(".items").empty();
+                if (this._currentTotalResults > 0) {
                     listRoot.prepend($("<div class='ui divider'></div>"));
                 }
             }
             
-            // Attacher les gestionnaires d'évènements à la liste
-            listRoot.on("click", "a.header", this.askForItemDetails);
-            listRoot.on("click", "button.catalog-detail-link", this.redirectToCatalogDetailPage);
-            listRoot.on("click", "button.more-results", this.askForMoreResults);
+            if (this._currentResultsPage > 1) {
+                this._container.find(".items").append(listRoot.children(".item"));
+            } else {
+                this._container.find(".items").replaceWith(listRoot);
+            }
+            
+            //Mettre à jour le bouton "Plus de résultats"
+            // Supprimer le bouton "Plus de résultats".
+            this._container.find("button.more-results").remove();
 
-            this._searchResultsContainer.append(listRoot);
+            // S'il existe des résultats non encore affichés, insérer le bouton "Plus de résultats"
+            if (Math.ceil(this._currentTotalResults / 20) > this._currentResultsPage) {
+                $("<button class='fluid ui button more-results'>Plus de résultats</button>").appendTo(this._container);
+            }
             
             // Mettre à jour les statistiques de recherche
-            this.setStats(vNResults);
-            
-            this._currentResultsPage = vCurrentPageIndex;
-            // this.setLoadingStateOff();
-
+            this.setStats(this._currentTotalResults);
         },
         
         askForThumbnailUrl: function() {
-            var lastDomItems = this._searchResultsContainer.children(".items").last().children(".item");
+            var lastDomItems = this._container.children(".items").last().children(".item");
             
             var isbnArray = [];
             
