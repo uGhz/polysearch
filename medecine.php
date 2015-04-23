@@ -952,7 +952,7 @@
                             </div>
                         </div>-->
 
-                        <div id="hipSearchResults">
+                        <div id="hipSearchResults" class="ui segment">
                         </div>
 
                     </div>

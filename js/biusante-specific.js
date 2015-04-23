@@ -58,15 +58,15 @@ $(document).ready(function () {
     
 
     function CatalogItem() {
-        this.author = null;
-        this.title = null;
-        this.publisher = null;
-        this.publishedDate = null;
-        this.func = null;
-        this.sourceId = null;
-        this.documentType = null;
-        this.isbn = null;
-        this.catalogUrl = null;
+        this.author         = null;
+        this.title          = null;
+        this.publisher      = null;
+        this.publishedDate  = null;
+        this.func           = null;
+        this.sourceId       = null;
+        this.documentType   = null;
+        this.isbn           = null;
+        this.catalogUrl     = null;
     }
 
     function CatalogResultSet() {
@@ -82,17 +82,16 @@ $(document).ready(function () {
     
     - Possède une URL d'accès
     
-    - Possède les méthodes :
-    
-        - getSearchResults
-            @param string request // Fragment de query string HTTP
-            @return Array d'Items
-            @return int currentPage
-            @return int nTotalResults
-            
-        - getItemDetails
-            @param string documentId // ou url, domItem...
-            @return EnhancedItem
+    - Méthodes :
+        - Publiques :
+        --- getSearchResults
+            @param  searchString  // La chaîne de recherche saisie.
+            @param  pageNumber    // La page de résultats attendue
+            @return resultSet     // Un objet CatalogResultSet
+        --- getItemDetails
+            @param  url           // Pointant sur une représentation distante et détaillée de la ressource
+            @return copies        // Un tableau d'informations sur des exemplaires de la ressources
+
     */
     function CatalogDataProvider() {
         this.baseUrl = "http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp";
@@ -287,8 +286,12 @@ $(document).ready(function () {
         
         this.init = function () {
             _self._form.submit(_self.updateCurrentRequest);
-            _self._resultAreas.push(new ResultsArea(this));
-            _self._resultAreas.push(new ResultsArea(this));
+            _self._resultAreas.push(
+                    new ResultsArea("Catalogue papier", this, new CatalogDataProvider())
+            );
+            _self._resultAreas.push(
+                    new ResultsArea("Horizon/HIP", this, new CatalogDataProvider())
+            );
         };
         
         // Fonction publique, que les ResultAreas sont susceptibles d'appeler. 
@@ -358,18 +361,35 @@ $(document).ready(function () {
             --- handleNewItemDetails
             --- handleNewResultSet
     */
-    function ResultsArea( searchArea ) {
+    function ResultsArea(title, searchArea, dataProvider ) {
         this._currentTotalResults   = null;
         this._currentResultsPage    = null;
         
         this._searchArea    = searchArea;
-        this._container     = $("<div class='segment dimmable'></div>");
-                      
-        this._statsContainer = $("<div class='ui horizontal statistic' style='float:right;margin:1em;'></div>");
+        this._dataProvider  = dataProvider;
+        this._title         = title;
+        this._container     = $("<div class='ui vertical segment dimmable'></div>");
+        
+        var titleElement    = $("<h3 class='ui header'><i class='book icon'></i>" + this._title + "</h3>");
+        
+        this._container.append(titleElement);
+        
+        this._statsContainer = $("<div class='ui tiny right floated statistic'></div>");
         this._statsContainer.append($("<div class='value'>0</div>"));
         this._statsContainer.append($("<div class='label'>Résultats</div>"));
         
-        this._container.append(this._statsContainer);
+        var temp = $("<div class='ui grid'></div>");
+            temp.append($("<div class='twelve wide column'></div>")
+                        .append(titleElement))
+                .append($("<div class='four wide column'></div>")
+                        .append(this._statsContainer));
+        temp.appendTo(this._container);
+        
+/*        var _divider = $("<h4 class='ui horizontal header divider'><i class='bar chart icon'></i>Specifications</h4>");
+        _divider.append(this._statsContainer);
+        this._container.append(_divider);*/
+        
+        //this._container.append(this._statsContainer);
         
         this._container.append($("<div class='ui items'></div>"));
         
@@ -388,8 +408,7 @@ $(document).ready(function () {
 
             _self.setItemLoadingStateOn(domItem);
 
-            var cdp = new CatalogDataProvider();
-            var promisedResults = cdp.getItemDetails(domItem.data("catalog-url"));
+            var promisedResults = _self._dataProvider.getItemDetails(domItem.data("catalog-url"));
             
             promisedResults.done(function ( results ) {   
                 _self.handleNewItemDetails(results, domItem);
@@ -414,11 +433,10 @@ $(document).ready(function () {
         };
         
         this.askForResults = function( request, pageNumber ) {
-            _self.setLoadingStateOn();
             
-            var cdp = new CatalogDataProvider();
+            _self.setLoadingStateOn();
 
-            var promisedResults = cdp.getSearchResults(request, pageNumber);
+            var promisedResults = _self._dataProvider.getSearchResults(request, pageNumber);
             
             promisedResults.done(function( results ) {
                 console.log("askForResults received results : " + results);
@@ -591,7 +609,7 @@ $(document).ready(function () {
             if (this._currentResultsPage < 2) {
                 this._container.children(".items").empty();
                 if (this._currentTotalResults > 0) {
-                    listRoot.prepend($("<div class='ui divider'></div>"));
+                    // listRoot.prepend($("<div class='ui divider'></div>"));
                 }
             }
             
