@@ -18,7 +18,7 @@ $(document).ready(function () {
         @param Un tableau d'ISBN
         @return Une map "ISBN:url de thumbnail";
         */
-        getThumbnailsUrl: function ( isbnArray ) {
+        getThumbnailsUrl: function (isbnArray) {
             var requestUri = ["http://books.google.com/books?jscmd=viewapi&bibkeys=",
                               isbnArray.join(","),
                               "&callback=ProcessGBSBookInfo"].join("");
@@ -32,7 +32,7 @@ $(document).ready(function () {
                 dataType: "jsonp"
             });
             
-            ajaxPromise.done(function ( response ) {
+            ajaxPromise.done(function (response) {
                 console.log("--- Réponse ---");
                 console.log(response);
                 
@@ -65,6 +65,14 @@ $(document).ready(function () {
         this.documentType   = null;
         this.isbn           = null;
         this.catalogUrl     = null;
+    }
+    
+    CatalogItem.prototype = {
+        mustacheTemplate: function () {
+            var template = $('#catalog-item-template').html();
+            Mustache.parse(template);
+            return template;
+        }()
     }
 
     function CatalogResultSet() {
@@ -525,48 +533,18 @@ $(document).ready(function () {
             console.log("_setStats called ! nResults : " + nResults);
             this._statsContainer.children(".value").text(nResults);
         },
-
+        
         _buildResultItem: function (dataItem) {
-
-            var vTitle = dataItem.title;
-            var vAuthor = dataItem.author;
-            var vPublisher = dataItem.publisher;
-            var vPublishedDate = dataItem.publishedDate;
-            /*var vSourceId = dataItem.sourceId;
-            var vFunc = dataItem.func;
-            var vDocumentType = dataItem.documentType;*/
-
-            // Création de l'objet "Item".
-            var newDomItem = $("<div class='ui item dimmable'></div>");
-            $("<div class='ui inverted dimmer'><div class='ui loader'></div></div>").appendTo(newDomItem);
-            $("<div class='ui tiny image'><img src='images/image.png'></div>").appendTo(newDomItem);
-
+            
+            var newDomItem = $(Mustache.render(dataItem.mustacheTemplate, dataItem));
+            
             // Stockage de données spécifiques à l'item
             newDomItem.data("catalog-url", dataItem.catalogUrl);
             newDomItem.data("isbn", dataItem.isbn);
-            
-            var currentContent = $("<div class='content'></div>");
-            
-            $(["<a class='ui header' href='", newDomItem.data("catalog-url"), "'>", vTitle, "</a>"].join(""))
-                .appendTo(currentContent);
-            
-            var currentDescription = ["<p>"];
-            if (vAuthor) {
-                currentDescription = currentDescription.concat(["<em>", vAuthor, "</em><br />"]);
-            }
-            if (vPublisher || vPublishedDate) {
-                currentDescription = currentDescription.concat([
-                                                        [vPublisher, vPublishedDate].join(", "), "."]);
-            }
-            currentDescription.push("</p>");
-            $("<div class='description'></div>")
-                .html(currentDescription.join(""))
-                .appendTo(currentContent);
 
-            currentContent.appendTo(newDomItem);
-
-            return newDomItem;
+            return $(newDomItem);
         },
+        
 
         _setItemLoadingStateOn: function (domItem) {
             domItem.find(".dimmer").addClass("active");

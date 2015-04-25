@@ -17,7 +17,7 @@
 
     <!-- endbower -->
     <!-- endbuild -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,300&subset=latin,vietnamese" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,300&amp;subset=latin,vietnamese" rel="stylesheet" type="text/css">
 
     <!-- build:css styles/main.css -->
     <link rel="stylesheet" href="main.css">
@@ -34,7 +34,7 @@
         <div class="right menu">
             <div class="item">
                 <div class="ui input">
-                    <input type="input" placeholder="Email">
+                    <input type="text" placeholder="Email">
                 </div>
             </div>
             <div class="item">
@@ -98,7 +98,25 @@
         </div>
     </div>
 
-
+    <script id="catalog-item-template" type="mustache/x-tmpl-mustache">
+        <div class="ui item dimmable">
+            <div class="ui inverted dimmer"><div class="ui loader"></div></div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="{{ catalogUrl }}">{{ title }}</a>
+                <div class="description">
+                    <p> 
+                        {{ #author }}
+                        <em>{{ author }}</em><br />
+                        {{ /author }}
+                        {{publisher}}, {{publishedDate}}.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </script>
+    
+    <script src="mustache/mustache.min.js"></script>
     <script src="js/biusante-specific.js"></script>
 </body>
 
