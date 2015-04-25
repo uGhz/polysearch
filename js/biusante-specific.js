@@ -278,7 +278,7 @@ $(document).ready(function () {
         this._form                  = $("#hipSearchForm");
         this._searchResultsContainer= $("#hipSearchResults");
         
-        this._statsContainer        = $("<span class='ui right floated horizontal statistic'><div class='value'>0</div><div class='label'>Résultats</div></span>").insertAfter(this._form);
+        this._statsContainer        = this._form.find(".statistic");
         
         this._currentRequest        = "";
         this._resultAreas           = [];
