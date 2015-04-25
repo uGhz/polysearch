@@ -3,14 +3,18 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Jumbotron</title>
+    <title>BIU Santé &mdash; PolySearch Project</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="mobile-web-app-capable" content="yes">
 
     <!-- build:css styles/vendor.css -->
     <!-- bower:css -->
-    <link rel="stylesheet" href="semantic-ui/semantic.min.css">
+    <!-- <link rel="stylesheet" href="semantic-ui/semantic.min.css"> -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.12.0/semantic.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.12.0/components/popup.css">
+    
+    
     <!-- endbower -->
     <!-- endbuild -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,300&subset=latin,vietnamese" rel="stylesheet" type="text/css">
@@ -18,11 +22,15 @@
     <!-- build:css styles/main.css -->
     <link rel="stylesheet" href="main.css">
     <!-- endbuild -->
+    
+     <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+     <script src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.12.0/semantic.min.js"></script>
+     <script src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.12.0/components/popup.js"></script>
 </head>
 
 <body>
     <nav class="ui menu inverted navbar page grid" style="margin-bottom: 0px">
-        <a href="" class="brand item">Project Name</a>
+        <a href="" class="brand item">BIU Santé &mdash; PolySearch Project</a>
         <div class="right menu">
             <div class="item">
                 <div class="ui input">
@@ -42,17 +50,22 @@
     <div class="ui grid">
         <div class="row">
             <div class="column padding-reset">
-                <div class="ui huge message page grid">
+                <div id="hipSearchArea" class="ui huge message page grid">
                     <h1 class="ui huge header">Cherchez dans nos collections !</h1>
-                    <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+                    <p>Proin vitae facilisis purus, non commodo urna. Sed porttitor ante a nunc varius, blandit feugiat nisi semper. Phasellus ut pharetra purus. Donec nibh augue, tincidunt non fringilla nec, imperdiet vitae est. Donec eleifend sapien quis lorem mattis porta. Mauris laoreet vehicula dui eu luctus.</p>
                     <div class="ui search">
-                        <div class="ui remote huge search focus">
-                            <div class="ui icon huge input">
-                                <input type="text" placeholder="Remote search..." class="prompt" autocomplete="off">
-                                <i class="search icon"></i>
+                        <form id="hipSearchForm" action="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp" method="get">
+                            <div class="ui remote huge search focus">
+                                <div class="ui icon huge input">
+                                    <input name="term" type="text" placeholder="Entrez ici vos termes de recherche..." class="prompt" autocomplete="off">
+                                    <i class="search icon"></i>
+                                </div>
+                                <button class="btn" type="submit">
+                                    <i class="icon-search"></i>
+                                </button>
+                                <div class="results"></div>
                             </div>
-                            <div class="results"></div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -66,16 +79,6 @@
                 <p class="ui segment">Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.</p>
                 <button class="ui tiny button m-top-10">View details &raquo;</button>
             </div>
-            <div class="column">
-                <h2 class="ui header">Heading</h2>
-                <p class="ui segment">Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.</p>
-                <button class="ui tiny button m-top-10">View details &raquo;</button>
-            </div>
-            <div class="column">
-                <h2 class="ui header">Heading</h2>
-                <p class="ui segment">Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.</p>
-                <button class="ui tiny button m-top-10">View details &raquo;</button>
-            </div>
         </div>
         <div class="row">
             <div class="column">
@@ -84,6 +87,9 @@
             </div>
         </div>
     </div>
+
+
+    <script src="js/biusante-specific.js"></script>
 </body>
 
 </html>

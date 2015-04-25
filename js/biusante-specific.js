@@ -278,10 +278,10 @@ $(document).ready(function () {
         this._form                  = $("#hipSearchForm");
         this._searchResultsContainer= $("#hipSearchResults");
         
-        this._statsContainer        = $("<div class='ui horizontal statistic' style='float:right;margin:1em;'><div class='value'>0</div><div class='label'>Résultats</div></div>").prependTo(this._container);
+        this._statsContainer        = $("<span class='ui right floated horizontal statistic'><div class='value'>0</div><div class='label'>Résultats</div></span>").insertAfter(this._form);
         
         this._currentRequest        = "";
-        this._resultAreas            = [];
+        this._resultAreas           = [];
         
         // Créer et attacher les ResultAreas
         this._resultAreas.push(
@@ -308,16 +308,21 @@ $(document).ready(function () {
         },
         
         // Fonction publique, que les ResultAreas sont susceptibles d'appeler. 
-        updateStats: function () {
+        update: function () {
             var totalOfResults = 0;
             var tempResultArea = null;
-            for(var i=0 ; i<this._resultAreas.length ; i++) {
+            var oneIsLoading = false;
+            for(var i=0, len=this._resultAreas.length ; i < len ; i++) {
                 tempResultArea = this._resultAreas[i];
                 if (tempResultArea) {
-                    totalOfResults += tempResultArea.getStats();   
+                    totalOfResults += tempResultArea.getStats();
+                    if (tempResultArea.isLoading()) oneIsLoading = true;
+                    console.log(tempResultArea._title + "is loading : " + tempResultArea._isLoading);
                 }
             }
             this._setStats(totalOfResults);
+            console.log("One ResultArea is loading : " + oneIsLoading);
+            if (!oneIsLoading) this._setLoadingStateOff();
         },
         
         
@@ -327,12 +332,14 @@ $(document).ready(function () {
             this._currentRequest = this._form.find("input[type='text']").val();
             // Notifier la chose aux ResultAreas
             var tempResultArea = null;
-            for(var i=0 ; i<this._resultAreas.length ; i++) {
+            for(var i=0, len=this._resultAreas.length; i < len ; i++) {
                 tempResultArea = this._resultAreas[i];
                 if (tempResultArea) {
                     tempResultArea.queryUpdated();   
                 }
             }
+            
+            this._setLoadingStateOn();
         },
         
         
@@ -340,6 +347,14 @@ $(document).ready(function () {
             // Créer au besoin les éléments nécessaires à l'affichage des stats
             // Mettre à jour ces éléments
             this._statsContainer.children(".value").text(number);
+        },
+        
+        _setLoadingStateOn: function () {
+            this._form.children(".ui.search").addClass("loading");
+        },
+        
+        _setLoadingStateOff: function() {
+            this._form.children(".ui.search").removeClass("loading");
         }
     };
 
@@ -376,12 +391,13 @@ $(document).ready(function () {
         this._currentTotalResults   = null;
         this._currentResultsPage    = null;
         this._container             = null;
-        this._statsContainer        = null; 
+        this._statsContainer        = null;
+        this._isLoading             = false;
         
         // Construire le balisage HTML/CSS
-        this._container     = $("<div class='ui vertical segment dimmable'></div>");
+        this._container     = $("<div class='ui column dimmable'></div>");
         
-        var titleElement    = $("<h3 class='ui header'><i class='book icon'></i>" + this._title + "</h3>");
+        var titleElement    = $("<h2 class='ui header'><i class='book icon'></i>" + this._title + "</h2>");
         
         this._container.append(titleElement);
         
@@ -402,7 +418,7 @@ $(document).ready(function () {
         
         //this._container.append(this._statsContainer);
         
-        this._container.append($("<div class='ui items'></div>"));
+        this._container.append($("<div class='ui segment items'></div>"));
         
         this._container.append($("<div class='ui inverted dimmer'><div class='ui text loader'>Interrogation du catalogue...</div></div>"));
         
@@ -428,16 +444,29 @@ $(document).ready(function () {
             return this._currentTotalResults;
         },
         
+        // Fonction publique, que les SearchArea sont susceptibles d'appeler. 
+        isLoading: function () {
+            return this._isLoading;
+        },
+        
         _askForResults: function( request, pageNumber ) {
             
+            this._isLoading = true;
             this._setLoadingStateOn();
 
             var promisedResults = this._dataProvider.getSearchResults(request, pageNumber);
             var _self = this;
             promisedResults.done(function( results ) {
                 console.log("_askForResults received results : " + results);
+                
                 _self._handleNewResultSet( results );
+                
+                _self._isLoading = false;
                 _self._setLoadingStateOff();
+
+                
+                _self._searchArea.update();
+                
                 _self._askForThumbnailUrl();
             });
             
@@ -494,9 +523,7 @@ $(document).ready(function () {
             // Créer au besoin les éléments nécessaires à l'affichage des stats
             // Mettre à jour ces éléments
             console.log("_setStats called ! nResults : " + nResults);
-
             this._statsContainer.children(".value").text(nResults);
-            this._searchArea.updateStats();
         },
 
         _buildResultItem: function (dataItem) {
