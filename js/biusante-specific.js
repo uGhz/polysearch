@@ -65,6 +65,7 @@ $(document).ready(function () {
         this.documentType   = null;
         this.isbn           = null;
         this.catalogUrl     = null;
+        this.accessUrl      = null;
     }
     
     CatalogItem.prototype = {
@@ -110,10 +111,10 @@ $(document).ready(function () {
         getSearchResults: function (searchString, pageNumber) {
             
             var _self = this;
-            console.log("getSearchResults. searchString : " + searchString);
+            // console.log("getSearchResults. searchString : " + searchString);
             
             var queryUrl = _self._buildRequest(searchString, pageNumber);
-            console.log("getSearchResults. queryUrl : " + queryUrl);
+            // console.log("getSearchResults. queryUrl : " + queryUrl);
             
             var promisedResults = $.Deferred();
             
@@ -126,14 +127,14 @@ $(document).ready(function () {
             
             ajaxPromise.done(function (response) {
                     var resultSet = _self._buildResultSet(response);
-                    console.log("Records found !");
-                    console.log("resultSet : " + resultSet);
+                    // console.log("Records found !");
+                    // console.log("resultSet : " + resultSet);
                     promisedResults.resolve(resultSet);
                     // searchResultView._handleNewResultSet(resultSet);
             });
             
             ajaxPromise.always(function () {
-                    console.log("The request for getSearchResults is complete!");
+                    // console.log("The request for getSearchResults is complete!");
             });
 
             return promisedResults;
@@ -146,7 +147,7 @@ $(document).ready(function () {
             var promisedResults = $.Deferred();
             
             var queryString = url.slice(url.indexOf("?") + 1);
-            console.log("Query String : " + queryString);
+            // console.log("Query String : " + queryString);
             
             var ajaxPromise = $.ajax({
                 url: "proxy.php?DonneXML=true&" + queryString,
@@ -156,13 +157,13 @@ $(document).ready(function () {
             
             ajaxPromise.done(function (response) {
                     var copies = _self._buildDetailedDataItem(response);
-                    console.log("Copies found !");
+                    // console.log("Copies found !");
                     promisedResults.resolve(copies);
             });
             
             
             ajaxPromise.always(function () {
-                console.log("Within callback of promise.");
+                // console.log("Within callback of promise.");
             });
             
             return promisedResults;
@@ -193,7 +194,7 @@ $(document).ready(function () {
         },
 
         _buildResultSet: function (rawXmlData) {
-            console.log("Results set building !");
+            // console.log("Results set building !");
 
             // var listRoot = $("<div class='ui items'></div>");
             var resultSet = new CatalogResultSet();
@@ -212,7 +213,7 @@ $(document).ready(function () {
             });
 
             resultSet.results = tempItems;
-            console.log("Results set is built !");
+            // console.log("Results set is built !");
             return resultSet;
         },
 
@@ -263,6 +264,221 @@ $(document).ready(function () {
                 currentCopy.conditions      = currentNode.find('cell:nth-of-type(5)>data>text').text();
 
                 copies.push(currentCopy);
+                // console.log("Details added !");
+            });
+
+            return copies;
+
+        }
+
+    };
+    
+    
+        /*********************************
+    *   CLASS EBookDataProvider
+    *
+    */
+    function EBookDataProvider() {}
+
+    EBookDataProvider.prototype = {
+        
+        // Propriété constante
+        _BASE_URL: "http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp",
+        // @todo change this.
+        //http://www2.biusante.parisdescartes.fr/signets2015/index.las?specif=livelec&acces=&tri=alp&form=o&tout=rein&dsi_cle=
+        _authorRegex: /Par\s(.*)\s*\.[A-Z]{3,}/g,
+        
+        // Fonction publique, que les ResultAreas sont susceptibles d'appeler.
+        getSearchResults: function (searchString, pageNumber) {
+            
+            var _self = this;
+            console.log("getSearchResults. searchString : " + searchString);
+            
+            var queryUrl = _self._buildRequest(searchString, pageNumber);
+            console.log("getSearchResults. queryUrl : " + queryUrl);
+            
+            var promisedResults = $.Deferred();
+            
+            var ajaxPromise = $.ajax({
+                // The URL for the request
+                // url: "proxy.php?index=.GK&limitbox_1=%24LAB7+%3D+s+or+%24LAB7+%3D+i&limitbox_3=&term=neurology&DonneXML=true",
+                url: queryUrl,
+                dataType: "html",
+            });
+            
+            ajaxPromise.done(function (response) {
+                    var resultSet = _self._buildResultSet(response);
+                    console.log("Records found !");
+                    console.log("resultSet : " + resultSet);
+                    promisedResults.resolve(resultSet);
+                    // searchResultView._handleNewResultSet(resultSet);
+            });
+            
+            ajaxPromise.always(function () {
+                    console.log("The request for getSearchResults is complete!");
+            });
+
+            return promisedResults;
+        },
+    
+        // Fonction publique, que les ResultAreas sont susceptibles d'appeler.
+        getItemDetails: function ( url ) {
+
+            var _self = this;
+            var promisedResults = $.Deferred();
+            
+            var queryString = url.slice(url.indexOf("?") + 1);
+            console.log("Query String : " + queryString);
+            
+            var ajaxPromise = $.ajax({
+                url: "proxy.php?DonneXML=true&" + queryString,
+                dataType: "xml"
+            });
+            
+            
+            ajaxPromise.done(function (response) {
+                    var copies = _self._buildDetailedDataItem(response);
+                    console.log("Copies found !");
+                    promisedResults.resolve(copies);
+            });
+            
+            
+            ajaxPromise.always(function () {
+                console.log("Within callback of promise.");
+            });
+            
+            return promisedResults;
+        },
+        
+        _buildRequest: function (searchString, pageNumber) {
+            
+            var urlArray = [
+                "proxy-signets.php?specif=",
+                encodeURIComponent("livelec"),
+                "&tri=alp&form=o",
+                "&tout=",
+                encodeURIComponent(searchString)
+            ];
+            
+            if (pageNumber) {
+                urlArray = urlArray.concat([
+                    "&p=",
+                    encodeURIComponent(pageNumber)
+                ]);
+            }
+            
+            var url = urlArray.join("");
+            
+            return url;
+        },
+
+        _buildResultSet: function (rawXmlData) {
+            console.log("Beginning of _buildResultSet. Results set building !");
+
+            var resultSet = new CatalogResultSet();
+
+            var wrappingTable = $(rawXmlData).find("#table247");
+            console.log("wrappingTable : " + wrappingTable);
+            
+            var tempText = wrappingTable.find('tr:nth-child(2)>td>p').text();
+            // /:\s(\d+)\s/g
+            // console.log("tempText : " + tempText);
+            var regexResult = /:\s(\d+)\s/g.exec(tempText)[1]
+            // console.log("regexResult : " + regexResult);
+            resultSet.numberOfResults   = regexResult;
+            console.log("resultSet.numberOfResults : " + resultSet.numberOfResults);
+            resultSet.currentPage       = 25;
+
+            // Récupérer, ligne à ligne, les données, les mettre en forme et les attacher à la liste
+            var tempItems = [];
+            var tempDataItem = null;
+
+            var _self = this;
+            wrappingTable.find('tr').each(function (index, value) {
+                if (index > 6) { // Il faut aussi exclure le dernier TR
+                    tempDataItem = _self._buildDataItem($(value));
+                    tempItems.push(tempDataItem);
+                }
+            });
+            tempItems.pop();
+
+            resultSet.results = tempItems;
+            console.log("Results set is built !");
+            return resultSet;
+        },
+
+        
+            /*
+             * 
+             * $("#table247"), 2ème ligne tr, 1er td, 1er p, text, pageNumber après "Nombre de réponses : " et avant le 1er "&"
+             * Si table247 possède moins de 4 lignes tr, la recherche n'a ramené aucun résultat.
+             * #table247, chaque tr[x] (3 < x < tr.length) correspond à une référence d'ouvrage
+             * chaque tr :
+             * - 1er td : Type de document / d'accès
+             * -2ème td :
+             *      - p > a > b.text -> Titre,
+             *      - p> a.href -> URL d'accès en ligne
+             *      - div.text -> Auteurs, entre "Par " et " . " (?)
+             *      - div > font.text -> Tag (plusieurs occurrences)
+             *
+            */
+        _buildDataItem: function (rawXmlData) {
+            var item = new CatalogItem();
+            
+            console.log("Row : " + rawXmlData);
+            
+            var cell2 = rawXmlData.find('td:nth-child(2)');
+            
+            item.title          = cell2.find('p>a>b').text();
+            var regexResult = /Par\s(.*?)\s?\.?(PAYS|LANGUE)/g.exec(cell2.find('div').text());
+            console.log("regexResult : " + regexResult)
+            item.author         = (regexResult) ? regexResult[1] : "";
+            item.publisher      = rawXmlData.find('PUBLISHER>data>text').text();
+            
+            regexResult = /(\d{4})\.?/g.exec(cell2.find('div').text());
+            item.publishedDate  = (regexResult) ? regexResult[1] : "";
+            // item.sourceId       = rawXmlData.find('sourceid').text();
+            // item.func           = rawXmlData.find('TITLE>data>link>func').text();
+            // item.isbn           = rawXmlData.find('isbn').text();
+            item.catalogUrl     = this._BASE_URL + "?uri=" + item.func + "&amp;source=" + item.sourceId;
+            item.accessUrl      = cell2.find('p > a').attr("href");
+        
+
+            var vDocumentType   = rawXmlData.find('cell:nth-of-type(14)>data>text').text();
+            if (vDocumentType) {
+                item.documentType = vDocumentType.slice(vDocumentType.lastIndexOf(' ') + 1, vDocumentType.length - "$html$".length);
+            }
+
+            return item;
+        },
+
+        _buildDetailedDataItem: function (rawXmlData) {
+
+            var copies = [];
+            var currentCopy = null;
+            var tempString = "";
+            
+            $(rawXmlData).find('searchresponse>items>searchresults>results>row').each(function () {
+                
+                var currentNode = $(this);
+                currentCopy = {};
+
+                tempString = currentNode.find('LOCALLOCATION>data>text').text();
+                
+                if (tempString.indexOf("Médecine") != -1) {
+                    tempString = "Médecine";
+                } else if (tempString.indexOf("Pharmacie") != -1) {
+                    tempString = "Pharmacie";
+                } else {
+                    tempString = "";
+                }
+                currentCopy.library = tempString;
+
+                currentCopy.precisePlace    = currentNode.find('TEMPORARYLOCATION:first-of-type>data>text').text();
+                currentCopy.cote            = currentNode.find('CALLNUMBER>data>text').text();
+                currentCopy.conditions      = currentNode.find('cell:nth-of-type(5)>data>text').text();
+
+                copies.push(currentCopy);
                 console.log("Details added !");
             });
 
@@ -271,6 +487,7 @@ $(document).ready(function () {
         }
 
     };
+    
     
     
     /*********************************
@@ -296,7 +513,7 @@ $(document).ready(function () {
                 new ResultsArea("Catalogue papier", this, new CatalogDataProvider())
         );
         this._resultAreas.push(
-                new ResultsArea("Horizon/HIP", this, new CatalogDataProvider())
+                new ResultsArea("Livres électroniques", this, new EBookDataProvider())
         );
         
         // Attacher les gestionnaires d'évènements
@@ -325,11 +542,11 @@ $(document).ready(function () {
                 if (tempResultArea) {
                     totalOfResults += tempResultArea.getStats();
                     if (tempResultArea.isLoading()) oneIsLoading = true;
-                    console.log(tempResultArea._title + "is loading : " + tempResultArea._isLoading);
+                    // console.log(tempResultArea._title + "is loading : " + tempResultArea._isLoading);
                 }
             }
             this._setStats(totalOfResults);
-            console.log("One ResultArea is loading : " + oneIsLoading);
+            // console.log("One ResultArea is loading : " + oneIsLoading);
             if (!oneIsLoading) this._setLoadingStateOff();
         },
         
@@ -426,7 +643,7 @@ $(document).ready(function () {
         
         //this._container.append(this._statsContainer);
         
-        this._container.append($("<div class='ui segment items'></div>"));
+        this._container.append($("<div class='ui items'></div>"));
         
         this._container.append($("<div class='ui inverted dimmer'><div class='ui text loader'>Interrogation du catalogue...</div></div>"));
         
