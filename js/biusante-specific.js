@@ -8,9 +8,7 @@ $(document).ready(function () {
     *   CLASS GoogleDataProvider
     *
     */
-    function GoogleBooksDataProvider() {
-
-    }
+    function GoogleBooksDataProvider() {}
     
     GoogleBooksDataProvider.prototype = {
         
@@ -70,9 +68,9 @@ $(document).ready(function () {
     }
 
     function CatalogResultSet() {
-        this.currentPage = null;
-        this.numberOfResults = null;
-        this.results = null;
+        this.currentPage        = null;
+        this.numberOfResults    = null;
+        this.results            = null;
     }
 
     
@@ -93,11 +91,12 @@ $(document).ready(function () {
             @return copies        // Un tableau d'informations sur des exemplaires de la ressources
 
     */
-    function CatalogDataProvider() {
-        this.baseUrl = "http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp";
-    }
+    function CatalogDataProvider() {}
 
     CatalogDataProvider.prototype = {
+        
+        // Propriété constante
+        _BASE_URL: "http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp",
         
         // Fonction publique, que les ResultAreas sont susceptibles d'appeler.
         getSearchResults: function (searchString, pageNumber) {
@@ -105,7 +104,7 @@ $(document).ready(function () {
             var _self = this;
             console.log("getSearchResults. searchString : " + searchString);
             
-            var queryUrl = _self.buildRequest(searchString, pageNumber);
+            var queryUrl = _self._buildRequest(searchString, pageNumber);
             console.log("getSearchResults. queryUrl : " + queryUrl);
             
             var promisedResults = $.Deferred();
@@ -118,11 +117,11 @@ $(document).ready(function () {
             });
             
             ajaxPromise.done(function (response) {
-                    var resultSet = _self.buildResultSet(response);
+                    var resultSet = _self._buildResultSet(response);
                     console.log("Records found !");
                     console.log("resultSet : " + resultSet);
                     promisedResults.resolve(resultSet);
-                    // searchResultView.handleNewResultSet(resultSet);
+                    // searchResultView._handleNewResultSet(resultSet);
             });
             
             ajaxPromise.always(function () {
@@ -148,7 +147,7 @@ $(document).ready(function () {
             
             
             ajaxPromise.done(function (response) {
-                    var copies = _self.buildDetailedDataItem(response);
+                    var copies = _self._buildDetailedDataItem(response);
                     console.log("Copies found !");
                     promisedResults.resolve(copies);
             });
@@ -161,7 +160,7 @@ $(document).ready(function () {
             return promisedResults;
         },
         
-        buildRequest: function (searchString, pageNumber) {
+        _buildRequest: function (searchString, pageNumber) {
             
             var urlArray = [
                 "proxy.php?DonneXML=true&index=",
@@ -185,7 +184,7 @@ $(document).ready(function () {
             return url;
         },
 
-        buildResultSet: function (rawXmlData) {
+        _buildResultSet: function (rawXmlData) {
             console.log("Results set building !");
 
             // var listRoot = $("<div class='ui items'></div>");
@@ -200,7 +199,7 @@ $(document).ready(function () {
 
             var _self = this;
             $(rawXmlData).find('searchresponse>summary>searchresults>results>row').each(function (index, value) {
-                tempDataItem = _self.buildDataItem($(value));
+                tempDataItem = _self._buildDataItem($(value));
                 tempItems.push(tempDataItem);
             });
 
@@ -209,7 +208,7 @@ $(document).ready(function () {
             return resultSet;
         },
 
-        buildDataItem: function (rawXmlData) {
+        _buildDataItem: function (rawXmlData) {
             var item = new CatalogItem();
 
             item.title          = rawXmlData.find('TITLE>data>text').text();
@@ -219,7 +218,7 @@ $(document).ready(function () {
             item.sourceId       = rawXmlData.find('sourceid').text();
             item.func           = rawXmlData.find('TITLE>data>link>func').text();
             item.isbn           = rawXmlData.find('isbn').text();
-            item.catalogUrl     = this.baseUrl + "?uri=" + item.func + "&amp;source=" + item.sourceId;
+            item.catalogUrl     = this._BASE_URL + "?uri=" + item.func + "&amp;source=" + item.sourceId;
 
             var vDocumentType   = rawXmlData.find('cell:nth-of-type(14)>data>text').text();
             if (vDocumentType) {
@@ -229,7 +228,7 @@ $(document).ready(function () {
             return item;
         },
 
-        buildDetailedDataItem: function (rawXmlData) {
+        _buildDetailedDataItem: function (rawXmlData) {
 
             var copies = [];
             var currentCopy = null;
@@ -273,6 +272,8 @@ $(document).ready(function () {
         Classe gérant le formulaire de recherche et englobant les différentes ResultsArea
     */
     function SearchArea() {
+        
+        // Déclarations et initialisations des propriétés
         this._container             = $("#hipSearchArea");
         this._form                  = $("#hipSearchForm");
         this._searchResultsContainer= $("#hipSearchResults");
@@ -282,62 +283,65 @@ $(document).ready(function () {
         this._currentRequest        = "";
         this._resultAreas            = [];
         
-        var _self = this;
+        // Créer et attacher les ResultAreas
+        this._resultAreas.push(
+                new ResultsArea("Catalogue papier", this, new CatalogDataProvider())
+        );
+        this._resultAreas.push(
+                new ResultsArea("Horizon/HIP", this, new CatalogDataProvider())
+        );
         
-        this.init = function () {
-            _self._form.submit(_self.updateCurrentRequest);
-            _self._resultAreas.push(
-                    new ResultsArea("Catalogue papier", this, new CatalogDataProvider())
-            );
-            _self._resultAreas.push(
-                    new ResultsArea("Horizon/HIP", this, new CatalogDataProvider())
-            );
-        };
+        // Attacher les gestionnaires d'évènements
+        this._form.submit($.proxy(this._updateCurrentRequest, this));
+    }
+    
+    SearchArea.prototype = {
         
         // Fonction publique, que les ResultAreas sont susceptibles d'appeler. 
-        this.getSearchString = function () {
+        getSearchString: function () {
             return this._currentRequest;
-        };
+        },
         
         // Fonction publique, que les ResultAreas sont susceptibles d'appeler. 
-        this.getResultsContainer = function () {
+        getResultsContainer: function () {
             return this._searchResultsContainer;
-        };
+        },
         
         // Fonction publique, que les ResultAreas sont susceptibles d'appeler. 
-        this.updateStats = function () {
+        updateStats: function () {
             var totalOfResults = 0;
             var tempResultArea = null;
-            for(var i=0 ; i<_self._resultAreas.length ; i++) {
-                tempResultArea = _self._resultAreas[i];
+            for(var i=0 ; i<this._resultAreas.length ; i++) {
+                tempResultArea = this._resultAreas[i];
                 if (tempResultArea) {
                     totalOfResults += tempResultArea.getStats();   
                 }
             }
-            this.setStats(totalOfResults);
-        };
+            this._setStats(totalOfResults);
+        },
         
-        this.updateCurrentRequest = function ( event ) {
+        
+        _updateCurrentRequest: function ( event ) {
             event.preventDefault();
             
-            _self._currentRequest = _self._form.find("input[type='text']").val();
+            this._currentRequest = this._form.find("input[type='text']").val();
             // Notifier la chose aux ResultAreas
             var tempResultArea = null;
-            for(var i=0 ; i<_self._resultAreas.length ; i++) {
-                tempResultArea = _self._resultAreas[i];
+            for(var i=0 ; i<this._resultAreas.length ; i++) {
+                tempResultArea = this._resultAreas[i];
                 if (tempResultArea) {
                     tempResultArea.queryUpdated();   
                 }
             }
-        };
+        },
         
-        this.setStats = function ( number ) {
+        
+        _setStats: function ( number ) {
             // Créer au besoin les éléments nécessaires à l'affichage des stats
             // Mettre à jour ces éléments
             this._statsContainer.children(".value").text(number);
-        };
-        
-    }
+        }
+    };
 
     /*********************************
     *   CLASS ResultsArea
@@ -351,23 +355,30 @@ $(document).ready(function () {
         
         - Méthodes :
             - Publiques :
-            --- updateCurrentRequest // Récupère la requête saisie par l'utilisateur
-            --- setLoadingStateOn
-            --- setLoadingStateOff
-            --- setStats
+            --- _updateCurrentRequest // Récupère la requête saisie par l'utilisateur
+            --- _setLoadingStateOn
+            --- _setLoadingStateOff
+            --- _setStats
 
-            --- askForItemDetails
+            --- _askForItemDetails
             --- askForNewResultSet
-            --- handleNewItemDetails
-            --- handleNewResultSet
+            --- _handleNewItemDetails
+            --- _handleNewResultSet
     */
     function ResultsArea(title, searchArea, dataProvider ) {
-        this._currentTotalResults   = null;
-        this._currentResultsPage    = null;
         
+        // Initialisées à la création de l'objet
         this._searchArea    = searchArea;
         this._dataProvider  = dataProvider;
         this._title         = title;
+        
+        // Déclarer les autres propriétés
+        this._currentTotalResults   = null;
+        this._currentResultsPage    = null;
+        this._container             = null;
+        this._statsContainer        = null; 
+        
+        // Construire le balisage HTML/CSS
         this._container     = $("<div class='ui vertical segment dimmable'></div>");
         
         var titleElement    = $("<h3 class='ui header'><i class='book icon'></i>" + this._title + "</h3>");
@@ -394,80 +405,22 @@ $(document).ready(function () {
         this._container.append($("<div class='ui items'></div>"));
         
         this._container.append($("<div class='ui inverted dimmer'><div class='ui text loader'>Interrogation du catalogue...</div></div>"));
-
         
+        // Attacher les gestionnaires d'évènements à la liste
         var _self = this;
+        this._container.on("click", "a.header",                     $.proxy(_self._askForItemDetails, _self));
+        this._container.on("click", "button.catalog-detail-link",   $.proxy(_self._redirectToCatalogDetailPage, _self));
+        this._container.on("click", "button.more-results",          $.proxy(_self._askForMoreResults, _self));
         
-
-        this.askForItemDetails = function (event) {
-
-            event.preventDefault();
-            console.log("Inside askForItemDetails");
-
-            var domItem = $(this).closest(".item");
-
-            _self.setItemLoadingStateOn(domItem);
-
-            var promisedResults = _self._dataProvider.getItemDetails(domItem.data("catalog-url"));
-            
-            promisedResults.done(function ( results ) {   
-                _self.handleNewItemDetails(results, domItem);
-                _self.setItemLoadingStateOff(domItem);
-            });
-            
-            console.log("askForItemDetails is ending !");
-
-        };
-        
-        this.askForMoreResults = function (event) {
-            console.log("More results wanted !");
-
-            event.preventDefault();
-
-            var chosenPage = parseInt(_self._currentResultsPage, 10) + 1;
-            // var url = _self._searchArea.getSearchString() + "&page=" + chosenPage;
-            
-            _self.askForResults( _self._searchArea.getSearchString(), chosenPage );
-            
-            console.log("askForMoreResults is ending !");
-        };
-        
-        this.askForResults = function( request, pageNumber ) {
-            
-            _self.setLoadingStateOn();
-
-            var promisedResults = _self._dataProvider.getSearchResults(request, pageNumber);
-            
-            promisedResults.done(function( results ) {
-                console.log("askForResults received results : " + results);
-                _self.handleNewResultSet( results );
-                _self.setLoadingStateOff();
-                _self.askForThumbnailUrl();
-            });
-            
-            console.log("askForResults is ending !");
-        };
-    
-        this.redirectToCatalogDetailPage = function () {
-            var domItem = $(this).closest(".item");
-            window.location.href = domItem.data("catalog-url");
-        };
-        
-        this.init = function () {
-            // Attacher les gestionnaires d'évènements à la liste
-            _self._container.on("click", "a.header",                     _self.askForItemDetails);
-            _self._container.on("click", "button.catalog-detail-link",   _self.redirectToCatalogDetailPage);
-            _self._container.on("click", "button.more-results",          _self.askForMoreResults);
-            
-            _self._container.appendTo(_self._searchArea.getResultsContainer());
-        }();
+        // Attacher la nouvelle zone de recherche au DOM
+        this._container.appendTo(this._searchArea.getResultsContainer());
     }
 
     ResultsArea.prototype = {
         
         // Fonction publique, que les SearchArea sont susceptibles d'appeler.
         queryUpdated: function () {
-            this.askForResults(this._searchArea.getSearchString(), 1);
+            this._askForResults.call(this, this._searchArea.getSearchString(), 1);
         },
         
         // Fonction publique, que les SearchArea sont susceptibles d'appeler. 
@@ -475,24 +428,78 @@ $(document).ready(function () {
             return this._currentTotalResults;
         },
         
-        setLoadingStateOn: function () {
+        _askForResults: function( request, pageNumber ) {
+            
+            this._setLoadingStateOn();
+
+            var promisedResults = this._dataProvider.getSearchResults(request, pageNumber);
+            var _self = this;
+            promisedResults.done(function( results ) {
+                console.log("_askForResults received results : " + results);
+                _self._handleNewResultSet( results );
+                _self._setLoadingStateOff();
+                _self._askForThumbnailUrl();
+            });
+            
+            console.log("_askForResults is ending !");
+        },
+        
+        _askForMoreResults: function (event) {
+            console.log("More results wanted !");
+
+            event.preventDefault();
+
+            var chosenPage = parseInt(this._currentResultsPage, 10) + 1;
+            
+            this._askForResults( this._searchArea.getSearchString(), chosenPage );
+            
+            console.log("_askForMoreResults is ending !");
+        },
+        
+        _askForItemDetails: function ( event ) {
+
+            event.preventDefault();
+            console.log("Inside _askForItemDetails");
+
+            var domItem = $(event.currentTarget).closest(".item");
+
+            this._setItemLoadingStateOn(domItem);
+
+            var promisedResults = this._dataProvider.getItemDetails(domItem.data("catalog-url"));
+            
+            var _self = this;
+            promisedResults.done(function ( results ) {   
+                _self._handleNewItemDetails(results, domItem);
+                _self._setItemLoadingStateOff(domItem);
+            });
+            
+            console.log("_askForItemDetails is ending !");
+
+        },
+        
+        _redirectToCatalogDetailPage: function ( event ) {
+            var domItem = $(event.currentTarget).closest(".item");
+            window.location.href = domItem.data("catalog-url");
+        },
+        
+        _setLoadingStateOn: function () {
             this._container.children(".dimmer").addClass("active");
         },
 
-        setLoadingStateOff: function () {
+        _setLoadingStateOff: function () {
             this._container.children(".dimmer").removeClass("active");
         },
 
-        setStats: function (nResults) {
+        _setStats: function (nResults) {
             // Créer au besoin les éléments nécessaires à l'affichage des stats
             // Mettre à jour ces éléments
-            console.log("setStats called ! nResults : " + nResults);
+            console.log("_setStats called ! nResults : " + nResults);
 
             this._statsContainer.children(".value").text(nResults);
             this._searchArea.updateStats();
         },
 
-        buildResultItem: function (dataItem) {
+        _buildResultItem: function (dataItem) {
 
             var vTitle = dataItem.title;
             var vAuthor = dataItem.author;
@@ -534,16 +541,16 @@ $(document).ready(function () {
             return newDomItem;
         },
 
-        setItemLoadingStateOn: function (domItem) {
+        _setItemLoadingStateOn: function (domItem) {
             domItem.find(".dimmer").addClass("active");
         },
 
-        setItemLoadingStateOff: function (domItem) {
+        _setItemLoadingStateOff: function (domItem) {
             domItem.find(".dimmer").removeClass("active");
         },
 
-        handleNewItemDetails: function (copiesArray, domItem) {
-            console.log("handleNewItemDetails has been called !");
+        _handleNewItemDetails: function (copiesArray, domItem) {
+            console.log("_handleNewItemDetails has been called !");
 
             var currentContainer = domItem.find(".content");
 
@@ -578,8 +585,8 @@ $(document).ready(function () {
             console.log("handleDetails is finished !");
         },
 
-        handleNewResultSet: function (resultSet) {
-            console.log("handleNewResultSet has been called !");
+        _handleNewResultSet: function (resultSet) {
+            console.log("_handleNewResultSet has been called !");
 
             // Construire les items
             // Supprimer les items précédents
@@ -601,7 +608,7 @@ $(document).ready(function () {
             var listRoot = $("<div class='ui items'></div>");
             var resultsArray = resultSet.results;
             for (var i = 0, len = resultsArray.length; i < len; i++) {
-                tempDomItem = this.buildResultItem(resultsArray[i]);
+                tempDomItem = this._buildResultItem(resultsArray[i]);
                 tempDomItem.appendTo(listRoot);
             }
 
@@ -629,10 +636,10 @@ $(document).ready(function () {
             }
             
             // Mettre à jour les statistiques de recherche
-            this.setStats(this._currentTotalResults);
+            this._setStats(this._currentTotalResults);
         },
         
-        askForThumbnailUrl: function() {
+        _askForThumbnailUrl: function() {
             var lastDomItems = this._container.children(".items").last().children(".item");
             
             var isbnArray = [];
@@ -647,7 +654,7 @@ $(document).ready(function () {
             var promisedResults = gbdp.getThumbnailsUrl(isbnArray);
             
             promisedResults.done(function( results ) {
-                console.log("askForThumbnailUrl Results");
+                console.log("_askForThumbnailUrl Results");
                 console.log(results);
                 
                 var tempIsbn = "";
@@ -670,7 +677,7 @@ $(document).ready(function () {
         }
     };
     
-    var mySa = new SearchArea();
-    mySa.init();
+    // Lancement du widget
+    new SearchArea();
 
 });
