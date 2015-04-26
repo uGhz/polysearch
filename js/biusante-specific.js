@@ -570,10 +570,10 @@ $(document).ready(function () {
         
         // Créer et attacher les ResultAreas
         this._resultAreas.push(
-                new ResultsArea("Catalogue papier", this, new CatalogDataProvider())
+                new ResultsArea("Catalogue classique", "book", this, new CatalogDataProvider())
         );
         this._resultAreas.push(
-                new ResultsArea("Livres électroniques", this, new EBookDataProvider())
+                new ResultsArea("Livres électroniques", "tablet", this, new EBookDataProvider())
         );
         
         // Attacher les gestionnaires d'évènements
@@ -678,7 +678,7 @@ $(document).ready(function () {
             --- _handleNewItemDetails
             --- _handleNewResultSet
     */
-    function ResultsArea(title, searchArea, dataProvider ) {
+    function ResultsArea(title, iconName, searchArea, dataProvider ) {
         
         // Initialisées à la création de l'objet
         this._searchArea    = searchArea;
@@ -694,7 +694,7 @@ $(document).ready(function () {
         // Construire le balisage HTML/CSS
         this._container     = $("<div class='ui column dimmable'></div>");
         
-        var titleElement    = $("<h2 class='ui header'><i class='book icon'></i>" + this._title + "</h2>");
+        var titleElement    = $("<h2 class='ui header'><i class='" + iconName + " icon'></i><div class='content'>" + this._title + "</div></h2>");
         
         this._container.append(titleElement);
         
