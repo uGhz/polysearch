@@ -113,7 +113,7 @@ $(document).ready(function () {
             @param  searchString  // La chaîne de recherche saisie.
             @param  pageNumber    // La page de résultats attendue
             @return resultSet     // Un objet CatalogResultSet
-        --- getItemDetails
+        --- getDetailedItem
             @param  url           // Pointant sur une représentation distante et détaillée de la ressource
             @return copies        // Un tableau d'informations sur des exemplaires de la ressources
 
@@ -164,7 +164,7 @@ $(document).ready(function () {
         },
     
         // Fonction publique, que les ResultAreas sont susceptibles d'appeler.
-        getItemDetails: function ( url ) {
+        getDetailedItem: function ( url ) {
 
             var _self = this;
             var promisedResults = $.Deferred();
@@ -179,9 +179,9 @@ $(document).ready(function () {
             
             
             ajaxPromise.done(function (response) {
-                    var copies = _self._buildDetailedDataItem(response);
+                    var detailedItem = _self._buildDetailedDataItem(response);
                     // console.log("Copies found !");
-                    promisedResults.resolve(copies);
+                    promisedResults.resolve(detailedItem);
             });
             
             
@@ -265,6 +265,28 @@ $(document).ready(function () {
             var copies = [];
             var currentCopy = null;
             var tempString = "";
+
+            /**
+             * Autres champs sous "searchresponse>fullnonmarc>searchresults>results>row"
+             *      titre -> 'TITLE>data>text'
+             *      author -> 'cell:nth-of-type(11)>data>text' ou 'AUTHORS>data[Plus. occurrences poss.]>text'
+             *      [Edition informations] -> author -> 'cell:nth-of-type(13)>data>text'
+             *      ISBN / ISSN -> 'cell:nth-of-type(36)>data>text' ou ISBN -> 'isbn'
+             *      catalog URL -> "http://www.biusante.parisdescartes.fr/" + 'PPN>data>text'
+             */
+                                    
+            var item = new CatalogItem();
+            var generalDataRoot = $(rawXmlData).find('searchresponse>fullnonmarc>searchresults>results>row:first-of-type');
+
+
+            item.title          = generalDataRoot.find('TITLE>data>text').text();
+            item.author         = generalDataRoot.find('AUTHOR>data>text').text();
+            item.publisher      = generalDataRoot.find('cell:nth-of-type(13)>data>text').text();
+            // item.publishedDate  = rawXmlData.find('PUBDATE>data>text').text();
+            item.isbn           = generalDataRoot.find('isbn').text();
+            
+            var tempNode = generalDataRoot.find('PPN>data>text');
+            item.catalogUrl     = (tempNode) ? "http://www.biusante.parisdescartes.fr/" + tempNode.text().replace(/ppn\s/g, "ppn?") : "";
             
             $(rawXmlData).find('searchresponse>items>searchresults>results>row').each(function () {
                 
@@ -289,8 +311,10 @@ $(document).ready(function () {
                 copies.push(currentCopy);
                 // console.log("Details added !");
             });
-
-            return copies;
+            
+            item.copies = copies;
+            
+            return item;
 
         }
 
@@ -354,7 +378,7 @@ $(document).ready(function () {
         },
     
         // Fonction publique, que les ResultAreas sont susceptibles d'appeler.
-        getItemDetails: function ( url ) {
+        getDetailedItem: function ( url ) {
 
             var _self = this;
             var promisedResults = $.Deferred();
@@ -568,8 +592,7 @@ $(document).ready(function () {
             return this._searchResultsContainer;
         },
         
-        // Fonction publique, que les ResultAreas sont susceptibles d'appeler. 
-        update: function () {
+        _updateStats: function () {
             var totalOfResults = 0;
             var tempResultArea = null;
 
@@ -602,7 +625,7 @@ $(document).ready(function () {
                 if (tempResultArea) {
                     tempPromise = tempResultArea.queryUpdated();
                     tempPromise.done(function () {
-                        _self.update();
+                        _self._updateStats();
                     });
                     promises.push(tempPromise);   
                 }
@@ -693,7 +716,10 @@ $(document).ready(function () {
         // Attacher les gestionnaires d'évènements à la liste
         var _self = this;
         this._container.on("click", "a.header",                     $.proxy(_self._askForItemDetails, _self));
-        this._container.on("click", "button.catalog-detail-link",   $.proxy(_self._redirectToCatalogDetailPage, _self));
+        //this._container.on("click", "button.catalog-detail-link",   $.proxy(_self._redirectToCatalogDetailPage, _self));
+        this._container.on("click", "button.catalog-link",    function ( event ) {
+            window.location.href = $(this).attr("data-catalog-url");
+        });
         this._container.on("click", "button.online-access-link",    function ( event ) {
             window.location.href = $(this).attr("data-online-access-url");
         });
@@ -728,9 +754,6 @@ $(document).ready(function () {
                         console.log("_askForResults received results : " + results);
 
                         _self._handleNewResultSet( results );
-
-                        // _self._searchArea.update();
-
                         _self._askForThumbnailUrl();
                     }
                 ).always(
@@ -766,7 +789,7 @@ $(document).ready(function () {
 
             this._setItemLoadingStateOn(domItem);
 
-            var promisedResults = this._dataProvider.getItemDetails(domItem.data("catalog-url"));
+            var promisedResults = this._dataProvider.getDetailedItem(domItem.data("catalog-url"));
             
             var _self = this;
             promisedResults.done(function ( results ) {   
@@ -817,42 +840,17 @@ $(document).ready(function () {
         _setItemLoadingStateOff: function (domItem) {
             domItem.find(".dimmer").removeClass("active");
         },
-
-        _handleNewItemDetails: function (copiesArray, domItem) {
+        
+        _handleNewItemDetails: function (detailedItem, domItem) {
             console.log("_handleNewItemDetails has been called !");
-
-            var currentContainer = domItem.find(".content");
-
-            currentContainer.find(".extra").remove();
             
-            var extraElement = $("<div class='extra'></div>");
-            var detailsMarkup = [];
-            for (var i = 0, len = copiesArray.length; i < len; i++) {
-                if (copiesArray[i]) {
-                    
-                    detailsMarkup = detailsMarkup.concat(
-                            ["<span class='ui label' data-title='Conditions de consultation' data-content='",
-                             copiesArray[i].conditions,
-                             "'>",
-                             copiesArray[i].library,
-                             "<span class='detail'>Cote : ",
-                             copiesArray[i].cote,
-                             "</span></span>"]);
-                }
-            }
-            
-            
-            extraElement.html(detailsMarkup.join(""));
-            
-            extraElement.children("span.label").popup();
-            console.log("Details added !");
-
-            $("<button class='ui tiny right floated button catalog-detail-link'>Voir dans le catalogue<i class='right chevron icon'></i></button>").appendTo(extraElement);
-
-            extraElement.appendTo(currentContainer);
+            var newItem = this._buildResultItem(detailedItem);
+            newItem.find(".extra > span.label").popup();
+            domItem.replaceWith(newItem);
             
             console.log("handleDetails is finished !");
         },
+        
 
         _handleNewResultSet: function (resultSet) {
             console.log("_handleNewResultSet has been called !");
