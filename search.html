@@ -100,22 +100,28 @@
 
     <script id="catalog-item-template" type="mustache/x-tmpl-mustache">
         <div class="ui item dimmable">
-            <div class="ui inverted dimmer"><div class="ui loader"></div></div>
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
             <div class="ui tiny image"><img src="images/image.png">
             </div>
             <div class="content"><a class="ui header" href="{{ catalogUrl }}">{{ title }}</a>
                 <div class="description">
-                    <p> 
+                    <p>
                         {{ #author }}
-                        <em>{{ author }}</em><br />
-                        {{ /author }}
-                        {{publisher}}, {{publishedDate}}.
+                        <em>{{ author }}</em>
+                        <br /> {{ /author }} {{publisher}}, {{publishedDate}}.
                     </p>
+                </div>
+                <div class="extra">
+                    {{ #onlineAccessUrl }}
+                    <button class="ui tiny right floated button online-access-link" data-online-access-url="{{ onlineAccessUrl }}">Voir en ligne<i class="right chevron icon"></i></button>
+                    {{ /onlineAccessUrl }}
                 </div>
             </div>
         </div>
     </script>
-    
+
     <script src="mustache/mustache.min.js"></script>
     <script src="js/biusante-specific.js"></script>
 </body>

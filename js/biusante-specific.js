@@ -54,7 +54,14 @@ $(document).ready(function () {
     };
     
     
-
+    /**
+     * Value Object représentant un résultat, une référence bibliographique.
+     * 
+     * @todo Ajouter un tableau de "tags"
+     * @todo Ajouter un tableau d'exemplaires.
+     * @todo Ajouter, éventuellement, une information "langue".
+     * @todo Ajouter, éventuellement, une information "Pays".
+     */
     function CatalogItem() {
         this.author         = null;
         this.title          = null;
@@ -65,9 +72,16 @@ $(document).ready(function () {
         this.documentType   = null;
         this.isbn           = null;
         this.catalogUrl     = null;
-        this.accessUrl      = null;
+        this.onlineAccessUrl      = null;
     }
     
+    /**
+     * Value Object représentant une page de résultats bibliographiques.
+     * 
+     * @property {Number}   numberOfResults   Il s'agit du nombre total de résultats correspondant à la requête sur la source de données.
+     * @property {Array}    results           Tableau de CatalogItem.
+     * @property {Number}   currentPage       Index de la page courante (base 1).  
+     */
     CatalogItem.prototype = {
         mustacheTemplate: function () {
             var template = $('#catalog-item-template').html();
@@ -441,7 +455,7 @@ $(document).ready(function () {
             // item.func           = rawXmlData.find('TITLE>data>link>func').text();
             // item.isbn           = rawXmlData.find('isbn').text();
             item.catalogUrl     = this._BASE_URL + "?uri=" + item.func + "&amp;source=" + item.sourceId;
-            item.accessUrl      = cell2.find('p > a').attr("href");
+            item.onlineAccessUrl      = cell2.find('p > a').attr("href");
         
 
             var vDocumentType   = rawXmlData.find('cell:nth-of-type(14)>data>text').text();
@@ -651,6 +665,9 @@ $(document).ready(function () {
         var _self = this;
         this._container.on("click", "a.header",                     $.proxy(_self._askForItemDetails, _self));
         this._container.on("click", "button.catalog-detail-link",   $.proxy(_self._redirectToCatalogDetailPage, _self));
+        this._container.on("click", "button.online-access-link",    function ( event ) {
+            window.location.href = $(this).attr("data-online-access-url");
+        });
         this._container.on("click", "button.more-results",          $.proxy(_self._askForMoreResults, _self));
         
         // Attacher la nouvelle zone de recherche au DOM
