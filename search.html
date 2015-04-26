@@ -93,7 +93,7 @@
         <div class="row">
             <div class="column">
                 <div class="ui divider"></div>
-                <span>&copy; BIU Santé 2015</span>
+                <span>&copy; Gupta 2015</span>
             </div>
         </div>
     </div>
@@ -109,9 +109,18 @@
                 <div class="description">
                     <p>
                         {{ #author }}
-                        <em>{{ author }}</em>
-                        <br /> {{ /author }} {{publisher}}, {{publishedDate}}.
+                        <em>{{ author }}</em><br />
+                        {{ /author }}
+                        {{ #publisher }}
+                        {{ publisher }}. 
+                        {{ /publisher }}
+                        {{ #publishedDate }}
+                        {{ publishedDate }}. 
+                        {{ /publishedDate }}
                     </p>
+                    {{ #description }}
+                    <p>{{ description }}</p> 
+                    {{ /description }}
                 </div>
                 <div class="extra">
                     {{ #onlineAccessUrl }}

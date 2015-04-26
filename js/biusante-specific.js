@@ -57,22 +57,25 @@ $(document).ready(function () {
     /**
      * Value Object représentant un résultat, une référence bibliographique.
      * 
-     * @todo Ajouter un tableau de "tags"
+     * @todo Ajouter un tableau de "tags". 
      * @todo Ajouter un tableau d'exemplaires.
-     * @todo Ajouter, éventuellement, une information "langue".
-     * @todo Ajouter, éventuellement, une information "Pays".
+     * @todo Ajouter une information "Accès libre" (vs. accès sur identification).
+     * @todo Ajouter, éventuellement, une information "langue". // Pas prioritaire.
+     * @todo Ajouter, éventuellement, une information "Pays". // Pas prioritaire.
+     * @todo Ajouter, éventuellement, une information "description".
      */
     function CatalogItem() {
-        this.author         = null;
-        this.title          = null;
-        this.publisher      = null;
-        this.publishedDate  = null;
-        this.func           = null;
-        this.sourceId       = null;
-        this.documentType   = null;
-        this.isbn           = null;
-        this.catalogUrl     = null;
-        this.onlineAccessUrl      = null;
+        this.author             = null;
+        this.title              = null;
+        this.publisher          = null;
+        this.publishedDate      = null;
+        this.documentType       = null;
+        this.isbn               = null;
+        this.description        = null;
+        this.catalogUrl         = null;
+        this.onlineAccessUrl    = null;
+        this.tags               = null;
+        this.copies             = null;
     }
     
     /**
@@ -93,6 +96,7 @@ $(document).ready(function () {
     function CatalogResultSet() {
         this.currentPage        = null;
         this.numberOfResults    = null;
+        this.maxResultsPerPage  = null;
         this.results            = null;
     }
 
@@ -120,6 +124,7 @@ $(document).ready(function () {
         
         // Propriété constante
         _BASE_URL: "http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp",
+        _MAX_RESULTS_PER_PAGE: 20,
         
         // Fonction publique, que les ResultAreas sont susceptibles d'appeler.
         getSearchResults: function (searchString, pageNumber) {
@@ -143,6 +148,10 @@ $(document).ready(function () {
                     var resultSet = _self._buildResultSet(response);
                     // console.log("Records found !");
                     // console.log("resultSet : " + resultSet);
+                
+                    // Ajout manuel des informations de pagination
+                    resultSet.maxResultsPerPage = _self._MAX_RESULTS_PER_PAGE;
+                
                     promisedResults.resolve(resultSet);
                     // searchResultView._handleNewResultSet(resultSet);
             });
@@ -238,10 +247,10 @@ $(document).ready(function () {
             item.author         = rawXmlData.find('AUTHOR>data>text').text();
             item.publisher      = rawXmlData.find('PUBLISHER>data>text').text();
             item.publishedDate  = rawXmlData.find('PUBDATE>data>text').text();
-            item.sourceId       = rawXmlData.find('sourceid').text();
-            item.func           = rawXmlData.find('TITLE>data>link>func').text();
+            var sourceId        = rawXmlData.find('sourceid').text();
+            var func            = rawXmlData.find('TITLE>data>link>func').text();
             item.isbn           = rawXmlData.find('isbn').text();
-            item.catalogUrl     = this._BASE_URL + "?uri=" + item.func + "&amp;source=" + item.sourceId;
+            item.catalogUrl     = this._BASE_URL + "?uri=" + func + "&amp;source=" + sourceId;
 
             var vDocumentType   = rawXmlData.find('cell:nth-of-type(14)>data>text').text();
             if (vDocumentType) {
@@ -298,6 +307,7 @@ $(document).ready(function () {
         
         // Propriété constante
         _BASE_URL: "http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp",
+        _MAX_RESULTS_PER_PAGE: 100,
         // @todo change this.
         //http://www2.biusante.parisdescartes.fr/signets2015/index.las?specif=livelec&acces=&tri=alp&form=o&tout=rein&dsi_cle=
         _authorRegex: /Par\s(.*)\s*\.[A-Z]{3,}/g,
@@ -307,6 +317,7 @@ $(document).ready(function () {
             
             var _self = this;
             console.log("getSearchResults. searchString : " + searchString);
+            console.log("getSearchResults. pageNumber : " + pageNumber);
             
             var queryUrl = _self._buildRequest(searchString, pageNumber);
             console.log("getSearchResults. queryUrl : " + queryUrl);
@@ -324,6 +335,13 @@ $(document).ready(function () {
                     var resultSet = _self._buildResultSet(response);
                     console.log("Records found !");
                     console.log("resultSet : " + resultSet);
+                
+                    // Ajout manuel des informations de pagination
+                    resultSet.maxResultsPerPage = _self._MAX_RESULTS_PER_PAGE;
+                
+                    // Ajout manuel du numéro de page
+                    resultSet.currentPage = pageNumber;
+                    
                     promisedResults.resolve(resultSet);
                     // searchResultView._handleNewResultSet(resultSet);
             });
@@ -397,9 +415,9 @@ $(document).ready(function () {
             var tempText = wrappingTable.find('tr:nth-child(2)>td>p').text();
             // /:\s(\d+)\s/g
             // console.log("tempText : " + tempText);
-            var regexResult = /:\s(\d+)\s/g.exec(tempText)[1]
+            var regexResult = /:\s(\d+)\s/g.exec(tempText);
             // console.log("regexResult : " + regexResult);
-            resultSet.numberOfResults   = regexResult;
+            resultSet.numberOfResults   = (regexResult) ? regexResult[1] : 0;
             console.log("resultSet.numberOfResults : " + resultSet.numberOfResults);
             resultSet.currentPage       = 25;
 
@@ -432,6 +450,7 @@ $(document).ready(function () {
              * -2ème td :
              *      - p > a > b.text -> Titre,
              *      - p> a.href -> URL d'accès en ligne
+             *      - div > i.text -> Description, commentaire
              *      - div.text -> Auteurs, entre "Par " et " . " (?)
              *      - div > font.text -> Tag (plusieurs occurrences)
              *
@@ -439,22 +458,25 @@ $(document).ready(function () {
         _buildDataItem: function (rawXmlData) {
             var item = new CatalogItem();
             
-            console.log("Row : " + rawXmlData);
-            
             var cell2 = rawXmlData.find('td:nth-child(2)');
             
             item.title          = cell2.find('p>a>b').text();
+            
+            // Récupération de l'auteur
             var regexResult = /Par\s(.*?)\s?\.?(PAYS|LANGUE)/g.exec(cell2.find('div').text());
-            console.log("regexResult : " + regexResult)
+            // console.log("regexResult : " + regexResult)
             item.author         = (regexResult) ? regexResult[1] : "";
+            
+            
             item.publisher      = rawXmlData.find('PUBLISHER>data>text').text();
             
+            item.description    = cell2.find('div > i').text();
+            
+            // Récupération de la date de publication
             regexResult = /(\d{4})\.?/g.exec(cell2.find('div').text());
             item.publishedDate  = (regexResult) ? regexResult[1] : "";
-            // item.sourceId       = rawXmlData.find('sourceid').text();
-            // item.func           = rawXmlData.find('TITLE>data>link>func').text();
             // item.isbn           = rawXmlData.find('isbn').text();
-            item.catalogUrl     = this._BASE_URL + "?uri=" + item.func + "&amp;source=" + item.sourceId;
+            // item.catalogUrl     = this._BASE_URL + "?uri=" + item.func + "&amp;source=" + item.sourceId;
             item.onlineAccessUrl      = cell2.find('p > a').attr("href");
         
 
@@ -550,35 +572,49 @@ $(document).ready(function () {
         update: function () {
             var totalOfResults = 0;
             var tempResultArea = null;
-            var oneIsLoading = false;
+
             for(var i=0, len=this._resultAreas.length ; i < len ; i++) {
                 tempResultArea = this._resultAreas[i];
                 if (tempResultArea) {
                     totalOfResults += tempResultArea.getStats();
-                    if (tempResultArea.isLoading()) oneIsLoading = true;
-                    // console.log(tempResultArea._title + "is loading : " + tempResultArea._isLoading);
                 }
             }
             this._setStats(totalOfResults);
             // console.log("One ResultArea is loading : " + oneIsLoading);
-            if (!oneIsLoading) this._setLoadingStateOff();
         },
         
         
         _updateCurrentRequest: function ( event ) {
             event.preventDefault();
             
-            this._currentRequest = this._form.find("input[type='text']").val();
+            
             // Notifier la chose aux ResultAreas
             var tempResultArea = null;
+            var tempPromise = null;
+            var promises = [];
+            var _self = this;
+            
+            this._currentRequest = this._form.find("input[type='text']").val();           
+            this._setLoadingStateOn();
+            
             for(var i=0, len=this._resultAreas.length; i < len ; i++) {
                 tempResultArea = this._resultAreas[i];
                 if (tempResultArea) {
-                    tempResultArea.queryUpdated();   
+                    tempPromise = tempResultArea.queryUpdated();
+                    tempPromise.done(function () {
+                        _self.update();
+                    });
+                    promises.push(tempPromise);   
                 }
             }
             
-            this._setLoadingStateOn();
+            // var promiseOfArray = $.when.apply($, promises);
+            $.when.apply($, promises).always(
+                function () {
+                    _self._setLoadingStateOff();
+                }
+            );
+
         },
         
         
@@ -631,7 +667,6 @@ $(document).ready(function () {
         this._currentResultsPage    = null;
         this._container             = null;
         this._statsContainer        = null;
-        this._isLoading             = false;
         
         // Construire le balisage HTML/CSS
         this._container     = $("<div class='ui column dimmable'></div>");
@@ -650,12 +685,6 @@ $(document).ready(function () {
                 .append($("<div class='four wide column'></div>")
                         .append(this._statsContainer));
         temp.appendTo(this._container);
-        
-/*        var _divider = $("<h4 class='ui horizontal header divider'><i class='bar chart icon'></i>Specifications</h4>");
-        _divider.append(this._statsContainer);
-        this._container.append(_divider);*/
-        
-        //this._container.append(this._statsContainer);
         
         this._container.append($("<div class='ui items'></div>"));
         
@@ -678,7 +707,7 @@ $(document).ready(function () {
         
         // Fonction publique, que les SearchArea sont susceptibles d'appeler.
         queryUpdated: function () {
-            this._askForResults.call(this, this._searchArea.getSearchString(), 1);
+            return this._askForResults.call(this, this._searchArea.getSearchString(), 1);
         },
         
         // Fonction publique, que les SearchArea sont susceptibles d'appeler. 
@@ -686,33 +715,34 @@ $(document).ready(function () {
             return this._currentTotalResults;
         },
         
-        // Fonction publique, que les SearchArea sont susceptibles d'appeler. 
-        isLoading: function () {
-            return this._isLoading;
-        },
-        
         _askForResults: function( request, pageNumber ) {
             
-            this._isLoading = true;
             this._setLoadingStateOn();
-
+            
+            var resultsHandled = $.Deferred();
+            
             var promisedResults = this._dataProvider.getSearchResults(request, pageNumber);
             var _self = this;
-            promisedResults.done(function( results ) {
-                console.log("_askForResults received results : " + results);
-                
-                _self._handleNewResultSet( results );
-                
-                _self._isLoading = false;
-                _self._setLoadingStateOff();
+            promisedResults.done(
+                    function( results ) {
+                        console.log("_askForResults received results : " + results);
 
-                
-                _self._searchArea.update();
-                
-                _self._askForThumbnailUrl();
-            });
+                        _self._handleNewResultSet( results );
+
+                        // _self._searchArea.update();
+
+                        _self._askForThumbnailUrl();
+                    }
+                ).always(
+                    function () {
+                        _self._setLoadingStateOff();
+                        resultsHandled.resolve();
+                    }
+            );
+            
             
             console.log("_askForResults is ending !");
+            return resultsHandled;
         },
         
         _askForMoreResults: function (event) {
@@ -827,15 +857,11 @@ $(document).ready(function () {
         _handleNewResultSet: function (resultSet) {
             console.log("_handleNewResultSet has been called !");
 
-            // Construire les items
-            // Supprimer les items précédents
-            // Attacher les nouveaux items à leur conteneur
-            // Mettre à jour les statistiques
-
             console.log("Results handled !");
 
             this._currentTotalResults  = parseInt(resultSet.numberOfResults, 10);
             this._currentResultsPage   = resultSet.currentPage;
+            this._maxResultsPerPage    = parseInt(resultSet.maxResultsPerPage, 10);
 
             console.log("this._currentTotalResults : "  + this._currentTotalResults);
             console.log("this._currentResultsPage : "   + this._currentResultsPage);
@@ -854,9 +880,6 @@ $(document).ready(function () {
             // S'il s'agit d'un nouvel ensemble de résultats, réinitialiser le conteneur de résultats
             if (this._currentResultsPage < 2) {
                 this._container.children(".items").empty();
-                if (this._currentTotalResults > 0) {
-                    // listRoot.prepend($("<div class='ui divider'></div>"));
-                }
             }
             
             if (this._currentResultsPage > 1) {
@@ -870,7 +893,7 @@ $(document).ready(function () {
             this._container.find("button.more-results").remove();
 
             // S'il existe des résultats non encore affichés, insérer le bouton "Plus de résultats"
-            if (Math.ceil(this._currentTotalResults / 20) > this._currentResultsPage) {
+            if (Math.ceil(this._currentTotalResults / this._maxResultsPerPage) > this._currentResultsPage) {
                 $("<button class='fluid ui button more-results'>Plus de résultats</button>").appendTo(this._container);
             }
             
