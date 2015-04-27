@@ -91,7 +91,7 @@ $(document).ready(function () {
             Mustache.parse(template);
             return template;
         }()
-    }
+    };
 
     function CatalogResultSet() {
         this.currentPage        = null;
@@ -692,26 +692,9 @@ $(document).ready(function () {
         this._statsContainer        = null;
         
         // Construire le balisage HTML/CSS
-        this._container     = $("<div class='ui column dimmable'></div>");
-        
-        var titleElement    = $("<h2 class='ui header'><i class='" + iconName + " icon'></i><div class='content'>" + this._title + "</div></h2>");
-        
-        this._container.append(titleElement);
-        
-        this._statsContainer = $("<div class='ui tiny right floated statistic'></div>");
-        this._statsContainer.append($("<div class='value'>0</div>"));
-        this._statsContainer.append($("<div class='label'>Résultats</div>"));
-        
-        var temp = $("<div class='ui grid'></div>");
-            temp.append($("<div class='twelve wide column'></div>")
-                        .append(titleElement))
-                .append($("<div class='four wide column'></div>")
-                        .append(this._statsContainer));
-        temp.appendTo(this._container);
-        
-        this._container.append($("<div class='ui items'></div>"));
-        
-        this._container.append($("<div class='ui inverted dimmer'><div class='ui text loader'>Interrogation du catalogue...</div></div>"));
+        var mustacheRendering = Mustache.render(this.mustacheTemplate, {title: title, iconName: iconName});
+        this._container = $(mustacheRendering);
+        this._statsContainer = this._container.find("div.statistic");
         
         // Attacher les gestionnaires d'évènements à la liste
         var _self = this;
@@ -740,6 +723,12 @@ $(document).ready(function () {
         getStats: function () {
             return this._currentTotalResults;
         },
+        
+        mustacheTemplate: function () {
+            var template = $('#empty-results-area-template').html();
+            Mustache.parse(template);
+            return template;
+        }(),
         
         _askForResults: function( request, pageNumber ) {
             

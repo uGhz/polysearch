@@ -98,6 +98,27 @@
         </div>
     </div>
 
+    <script id="empty-results-area-template" type="mustache/x-tmpl-mustache">
+        <div class="ui column dimmable">
+            <div class="ui grid">
+                <div class="twelve wide column">
+                    <h2 class="ui header"><i class="{{iconName}} icon"></i><div class="content">{{title}}</div></h2>
+                </div>
+                <div class="four wide column">
+                    <div class="ui mini right floated statistic">
+                        <div class="value">0</div>
+                        <div class="label">Résultats</div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui inverted dimmer">
+                <div class="ui text loader">Interrogation du catalogue...</div>
+            </div>
+            <div class="ui items"></div>
+        </div>
+    </script>
+
+
     <script id="catalog-item-template" type="mustache/x-tmpl-mustache">
         <div class="ui item dimmable">
             <div class="ui inverted dimmer">
@@ -109,17 +130,11 @@
                 <div class="description">
                     <p>
                         {{ #author }}
-                        <em>{{ author }}</em><br />
-                        {{ /author }}
-                        {{ #publisher }}
-                        {{ publisher }}. 
-                        {{ /publisher }}
-                        {{ #publishedDate }}
-                        {{ publishedDate }}. 
-                        {{ /publishedDate }}
+                        <em>{{ author }}</em>
+                        <br /> {{ /author }} {{ #publisher }} {{ publisher }}. {{ /publisher }} {{ #publishedDate }} {{ publishedDate }}. {{ /publishedDate }}
                     </p>
                     {{ #description }}
-                    <p>{{ description }}</p> 
+                    <p>{{ description }}</p>
                     {{ /description }}
                 </div>
                 <div class="extra">
@@ -127,15 +142,11 @@
                     <span class='ui label' data-title='Conditions de consultation' data-content='{{conditions}}'>
                              {{library}}<span class='detail'>Cote : {{cote}}</span>
                     </span>
-                    {{ /copies }} 
-                    
-                     {{ #catalogUrl }}
+                    {{ /copies }} {{ #catalogUrl }}
                     <button class="ui tiny right floated button catalog-link" data-catalog-url="{{ catalogUrl }}">
                         Voir dans le catalogue<i class="right chevron icon"></i>
                     </button>
-                    {{ /catalogUrl }}
-                    
-                    {{ #onlineAccessUrl }}
+                    {{ /catalogUrl }} {{ #onlineAccessUrl }}
                     <button class="ui tiny right floated button online-access-link" data-online-access-url="{{ onlineAccessUrl }}">
                         Voir en ligne<i class="right chevron icon"></i>
                     </button>
