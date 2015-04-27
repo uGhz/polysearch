@@ -97,8 +97,15 @@ $(document).ready(function () {
         this.currentPage        = null;
         this.numberOfResults    = null;
         this.maxResultsPerPage  = null;
-        this.results            = null;
+        this.results            = [];
+        this.warningMessage     = "";
     }
+    
+    CatalogResultSet.prototype = {
+        WARNING_MESSAGE: {
+            TOO_MUCH_RESULTS: "Votre recherche renvoie de trop nombreux résultats. Merci de l'affiner."
+        }    
+    };
 
     
     /*********************************
@@ -767,6 +774,241 @@ $(document).ready(function () {
 
     };
     
+            /*********************************
+    *   CLASS ThesisSpecificDataProvider
+    *
+    */
+    function ThesisSpecificDataProvider() {}
+
+    ThesisSpecificDataProvider.prototype = {
+        
+        // Propriété constante
+        _BASE_URL: "http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp",
+        _MAX_RESULTS_PER_PAGE: 25,
+        // @todo change this.
+        //http://www2.biusante.parisdescartes.fr/signets2015/index.las?specif=livelec&acces=&tri=alp&form=o&tout=rein&dsi_cle=
+        _authorRegex: /Par\s(.*)\s*\.[A-Z]{3,}/g,
+        
+        // Fonction publique, que les ResultAreas sont susceptibles d'appeler.
+        getSearchResults: function (searchString, pageNumber) {
+            
+            var _self = this;
+            console.log("getSearchResults. searchString : " + searchString);
+            console.log("getSearchResults. pageNumber : " + pageNumber);
+            
+            var queryUrl = _self._buildRequest(searchString, pageNumber);
+            console.log("getSearchResults. queryUrl : " + queryUrl);
+            
+            var promisedResults = $.Deferred();
+            
+            var ajaxPromise = $.ajax({
+                // The URL for the request
+                // url: "proxy.php?index=.GK&limitbox_1=%24LAB7+%3D+s+or+%24LAB7+%3D+i&limitbox_3=&term=neurology&DonneXML=true",
+                url: queryUrl,
+                dataType: "html",
+            });
+            
+            ajaxPromise.done(function (response) {
+                    var resultSet = _self._buildResultSet(response);
+                    console.log("Records found !");
+                    console.log("resultSet : " + resultSet);
+                
+                    // Ajout manuel des informations de pagination
+                    resultSet.maxResultsPerPage = _self._MAX_RESULTS_PER_PAGE;
+                
+                    // Ajout manuel du numéro de page
+                    resultSet.currentPage = pageNumber;
+                    
+                    promisedResults.resolve(resultSet);
+                    // searchResultView._handleNewResultSet(resultSet);
+            });
+            
+            ajaxPromise.always(function () {
+                    console.log("The request for getSearchResults is complete!");
+            });
+
+            return promisedResults;
+        },
+    
+        // Fonction publique, que les ResultAreas sont susceptibles d'appeler.
+        getDetailedItem: function ( url ) {
+
+            var _self = this;
+            var promisedResults = $.Deferred();
+            
+            var queryString = url.slice(url.indexOf("?") + 1);
+            console.log("Query String : " + queryString);
+            
+            var ajaxPromise = $.ajax({
+                url: "proxy.php?DonneXML=true&" + queryString,
+                dataType: "xml"
+            });
+            
+            
+            ajaxPromise.done(function (response) {
+                    var copies = _self._buildDetailedDataItem(response);
+                    console.log("Copies found !");
+                    promisedResults.resolve(copies);
+            });
+            
+            
+            ajaxPromise.always(function () {
+                console.log("Within callback of promise.");
+            });
+            
+            return promisedResults;
+        },
+        
+        _buildRequest: function (searchString, pageNumber) {
+            // http://www2.biusante.parisdescartes.fr/theses/index.las?toutindex=victor&p=2
+            var urlArray = [
+                "proxy-theses.php?",
+                "toutindex=",
+                encodeURIComponent(searchString)
+            ];
+            
+            if (pageNumber) {
+                urlArray = urlArray.concat([
+                    "&p=",
+                    encodeURIComponent(pageNumber)
+                ]);
+            }
+            
+            var url = urlArray.join("");
+            
+            return url;
+        },
+
+        _buildResultSet: function (rawXmlData) {
+            console.log("ThesisSpecificDataProvider... Beginning of _buildResultSet. Results set building !");
+
+            var resultSet = new CatalogResultSet();
+
+            var wrappingTable = $(rawXmlData).find("#table245");
+            console.log("wrappingTable : " + wrappingTable);
+            
+            // S'il y a des résultats, les analyser et alimenter le CatalogResultSet
+            if (wrappingTable.length) {
+                console.log("ThesisSpecificDataProvider... #table245 found !");
+                var tempText = wrappingTable.find('tr:nth-child(1)>td>p').text();
+
+                // console.log("tempText : " + tempText);
+                var regexResult = /:\s(\d+)\s/g.exec(tempText);
+                console.log("regexResult : " + regexResult);
+                resultSet.numberOfResults   = (regexResult) ? regexResult[1] : 0;
+                console.log("resultSet.numberOfResults : " + resultSet.numberOfResults);
+                // resultSet.currentPage       = 25;
+
+                // Récupérer, ligne à ligne, les données, les mettre en forme et les attacher à la liste
+                var tempItems = [];
+                var tempDataItem = null;
+
+                var _self = this;
+                wrappingTable.find('tr > td > table').each(function (index, value) {
+                    // if (index > 2) { // Il faut aussi exclure le dernier TR
+                        tempDataItem = _self._buildDataItem($(value));
+                        tempItems.push(tempDataItem);
+                    // }
+                });
+
+                resultSet.results = tempItems;
+            } else {
+                console.log("ThesisSpecificDataProvider... #table245 not found !");
+                wrappingTable = $(rawXmlData).find("#table241");
+                
+                var messageCell = wrappingTable.find("tr:nth-child(2) > td:nth-child(1)");
+                
+                if (messageCell.text().indexOf("aucune réponse") !== -1) {
+                    // La requête ne renvoie aucun résultat.
+                    console.log("ThesisSpecificDataProvider... No results !");
+                    resultSet.numberOfResults = 0;
+                } else {
+                    // La requête renvoie de trop nombreux résultats.
+                    console.log("ThesisSpecificDataProvider... Too much results !");
+                    resultSet.numberOfResults = messageCell.find("b").text();
+                    console.log("ThesisSpecificDataProvider... Number of results : " + resultSet.numberOfResults);
+                    resultSet.warningMessage = resultSet.WARNING_MESSAGE.TOO_MUCH_RESULTS;
+                }
+                
+            }
+            
+            
+            console.log("Results set is built !");
+            return resultSet;
+        },
+
+        
+            /*
+             * 
+             * $("#table245"), 1ère ligne tr, 1er td, 1er p, text, pageNumber après "Nombre de réponses : " et avant le 1er "&"
+             * Si table245 n'existe pas, soit la recherche n'a ramené aucun résultat, soit la recherche en a ramené trop.
+             * #table245, chaque tr[x] (2 < x < tr.length) correspond à une référence d'ouvrage
+             * chaque tr > td > table :
+             * - 1er tr(1) > td(1) > b.text : Auteur
+             * - 1er tr(1) > td(2) > i.text : Information repérage thèse
+             * - 2ème tr(2) > td.text : Titre
+             * - 3ème tr(3) > td : Le reste
+             *
+            */
+        _buildDataItem: function (rawXmlData) {
+            
+            var item = new CatalogItem();
+            
+            // var cell2 = rawXmlData.find('td:nth-child(2)');
+            
+            // Récupération de l'auteur
+            item.author          = rawXmlData.find('tr:nth-child(1)>td:nth-child(1)>b').text();
+            
+            item.description    = rawXmlData.find('tr:nth-child(1)>td:nth-child(2)>i').text();
+
+            item.title          = rawXmlData.find('tr:nth-child(2)>td').text();
+            
+        
+            /*
+            var vDocumentType   = rawXmlData.find('cell:nth-of-type(14)>data>text').text();
+            if (vDocumentType) {
+                item.documentType = vDocumentType.slice(vDocumentType.lastIndexOf(' ') + 1, vDocumentType.length - "$html$".length);
+            }
+            */
+            return item;
+        },
+
+        _buildDetailedDataItem: function (rawXmlData) {
+
+            var copies = [];
+            var currentCopy = null;
+            var tempString = "";
+            
+            $(rawXmlData).find('searchresponse>items>searchresults>results>row').each(function () {
+                
+                var currentNode = $(this);
+                currentCopy = {};
+
+                tempString = currentNode.find('LOCALLOCATION>data>text').text();
+                
+                if (tempString.indexOf("Médecine") != -1) {
+                    tempString = "Médecine";
+                } else if (tempString.indexOf("Pharmacie") != -1) {
+                    tempString = "Pharmacie";
+                } else {
+                    tempString = "";
+                }
+                currentCopy.library = tempString;
+
+                currentCopy.precisePlace    = currentNode.find('TEMPORARYLOCATION:first-of-type>data>text').text();
+                currentCopy.cote            = currentNode.find('CALLNUMBER>data>text').text();
+                currentCopy.conditions      = currentNode.find('cell:nth-of-type(5)>data>text').text();
+
+                copies.push(currentCopy);
+                console.log("Details added !");
+            });
+
+            return copies;
+
+        }
+
+    };
+    
     
     
     /*********************************
@@ -789,7 +1031,10 @@ $(document).ready(function () {
         
         // Créer et attacher les ResultAreas
         this._resultAreas.push(
-                new ResultsArea("Thèses", "Catalogue général (1800 - 1951)", "student", this, new HipThesisDataProvider())
+                new ResultsArea("Thèses anciennes", "Catalogue général (1800 - 1951)", "student", this, new HipThesisDataProvider())
+        );
+        this._resultAreas.push(
+                new ResultsArea("Thèses récentes", "Catalogue spécifique (1985 - ...)", "student", this, new ThesisSpecificDataProvider())
         );
         this._resultAreas.push(
                 new ResultsArea("Ouvrages", "Catalogue général", "book", this, new HipBookDataProvider())
@@ -1100,10 +1345,18 @@ $(document).ready(function () {
             //Mettre à jour le bouton "Plus de résultats"
             // Supprimer le bouton "Plus de résultats".
             this._container.find("button.more-results").remove();
-
-            // S'il existe des résultats non encore affichés, insérer le bouton "Plus de résultats"
-            if (Math.ceil(this._currentTotalResults / this._maxResultsPerPage) > this._currentResultsPage) {
-                $("<button class='fluid ui button more-results'>Plus de résultats</button>").appendTo(this._container);
+            this._container.find("div.message").remove();
+            
+            if (resultSet.warningMessage === resultSet.WARNING_MESSAGE.TOO_MUCH_RESULTS) {
+                $("<div class='ui icon info message'><i class='warning icon'></i><div class='content'><div class='header'>Trop de réponses.</div><p>Merci d'affiner votre recherche.</p></div></div>")
+                    .appendTo(this._container);
+            } else {
+            
+                // S'il existe des résultats non encore affichés, insérer le bouton "Plus de résultats"
+                var maxPageNumber = Math.ceil(this._currentTotalResults / this._maxResultsPerPage);
+                if ((maxPageNumber > this._currentResultsPage) && (resultSet.warningMessage !== resultSet.WARNING_MESSAGE.TOO_MUCH_RESULTS)) {
+                    $("<button class='fluid ui button more-results'>Plus de résultats</button>").appendTo(this._container);
+                }
             }
             
             // Mettre à jour les statistiques de recherche
