@@ -30,7 +30,7 @@
 
 <body>
     <nav class="ui menu inverted navbar page grid" style="margin-bottom: 0px">
-        <a href="" class="brand item">BIU Santé &mdash; PolySearch Project</a>
+        <a href="" class="brand item">BIU Santé &mdash; PolySearch Project <i class="white lab icon"></i></a>
         <div class="right menu">
             <div class="item">
                 <div class="ui input">
@@ -82,8 +82,8 @@
         </div>
     </div>
     <div class="ui hidden divider"></div>
-    <div class="ui page grid">
-        <div id="hipSearchResults" class="three column row">
+    <div class="ui grid">
+        <div id="hipSearchResults" class="four column row">
             <div class="column">
                 <h2 class="ui header">Heading</h2>
                 <p class="ui segment">Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.</p>
@@ -102,7 +102,14 @@
         <div class="ui column dimmable">
             <div class="ui grid">
                 <div class="twelve wide column">
-                    <h2 class="ui header"><i class="{{iconName}} icon"></i><div class="content">{{title}}</div></h2>
+                    <h2 class="ui header"><i class="{{iconName}} icon"></i>
+                        <div class="content">
+                            {{title}}
+                            {{#subtitle}}
+                            <div class="sub header">{{subtitle}}</div>
+                            {{/subtitle}}
+                        </div>
+                    </h2>
                 </div>
                 <div class="four wide column">
                     <div class="ui mini right floated statistic">

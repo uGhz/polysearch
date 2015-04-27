@@ -1,5 +1,5 @@
 /*jslint browser: true*/
-/*global  $*/
+/*global  $ Mustache*/
 // Using the module pattern for a jQuery feature
 $(document).ready(function () {
     "use strict";
@@ -102,7 +102,7 @@ $(document).ready(function () {
 
     
     /*********************************
-    *   CLASS CatalogDataProvider
+    *   CLASS HipBookDataProvider
     *
     
     - Possède une URL d'accès
@@ -118,9 +118,9 @@ $(document).ready(function () {
             @return copies        // Un tableau d'informations sur des exemplaires de la ressources
 
     */
-    function CatalogDataProvider() {}
+    function HipBookDataProvider() {}
 
-    CatalogDataProvider.prototype = {
+    HipBookDataProvider.prototype = {
         
         // Propriété constante
         _BASE_URL: "http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp",
@@ -199,6 +199,225 @@ $(document).ready(function () {
                 encodeURIComponent(".GK"),
                 "&limitbox_1=",
                 encodeURIComponent("$LAB7 = a or $LAB7 = c or $LAB7 = i or $LAB7 = m not $TH = *"),
+                "&limitbox_3=",
+                "&term=",
+                encodeURIComponent(searchString)
+            ];
+            
+            if (pageNumber) {
+                urlArray = urlArray.concat([
+                    "&page=",
+                    encodeURIComponent(pageNumber)
+                ]);
+            }
+            
+            var url = urlArray.join("");
+            
+            return url;
+        },
+
+        _buildResultSet: function (rawXmlData) {
+            // console.log("Results set building !");
+
+            // var listRoot = $("<div class='ui items'></div>");
+            var resultSet = new CatalogResultSet();
+
+            resultSet.numberOfResults = $(rawXmlData).find('searchresponse>yoursearch>hits').text();
+            resultSet.currentPage = $(rawXmlData).find('searchresponse>yoursearch>view>currpage').text();
+
+            // Récupérer, ligne à ligne, les données, les mettre en forme et les attacher à la liste
+            var tempItems = [];
+            var tempDataItem = null;
+
+            var _self = this;
+            $(rawXmlData).find('searchresponse>summary>searchresults>results>row').each(function (index, value) {
+                tempDataItem = _self._buildDataItem($(value));
+                tempItems.push(tempDataItem);
+            });
+
+            resultSet.results = tempItems;
+            // console.log("Results set is built !");
+            return resultSet;
+        },
+
+        _buildDataItem: function (rawXmlData) {
+            var item = new CatalogItem();
+
+            item.title          = rawXmlData.find('TITLE>data>text').text();
+            item.author         = rawXmlData.find('AUTHOR>data>text').text();
+            item.publisher      = rawXmlData.find('PUBLISHER>data>text').text();
+            item.publishedDate  = rawXmlData.find('PUBDATE>data>text').text();
+            var sourceId        = rawXmlData.find('sourceid').text();
+            var func            = rawXmlData.find('TITLE>data>link>func').text();
+            item.isbn           = rawXmlData.find('isbn').text();
+            item.catalogUrl     = this._BASE_URL + "?uri=" + func + "&amp;source=" + sourceId;
+
+            var vDocumentType   = rawXmlData.find('cell:nth-of-type(14)>data>text').text();
+            if (vDocumentType) {
+                item.documentType = vDocumentType.slice(vDocumentType.lastIndexOf(' ') + 1, vDocumentType.length - "$html$".length);
+            }
+
+            return item;
+        },
+
+        _buildDetailedDataItem: function (rawXmlData) {
+
+            var copies = [];
+            var currentCopy = null;
+            var tempString = "";
+
+            /**
+             * Autres champs sous "searchresponse>fullnonmarc>searchresults>results>row"
+             *      titre -> 'TITLE>data>text'
+             *      author -> 'cell:nth-of-type(11)>data>text' ou 'AUTHORS>data[Plus. occurrences poss.]>text'
+             *      [Edition informations] -> author -> 'cell:nth-of-type(13)>data>text'
+             *      ISBN / ISSN -> 'cell:nth-of-type(36)>data>text' ou ISBN -> 'isbn'
+             *      catalog URL -> "http://www.biusante.parisdescartes.fr/" + 'PPN>data>text'
+             */
+                                    
+            var item = new CatalogItem();
+            var generalDataRoot = $(rawXmlData).find('searchresponse>fullnonmarc>searchresults>results>row:first-of-type');
+
+
+            item.title          = generalDataRoot.find('TITLE>data>text').text();
+            item.author         = generalDataRoot.find('AUTHOR>data>text').text();
+            item.publisher      = generalDataRoot.find('cell:nth-of-type(13)>data>text').text();
+            // item.publishedDate  = rawXmlData.find('PUBDATE>data>text').text();
+            item.isbn           = generalDataRoot.find('isbn').text();
+            
+            var tempNode = generalDataRoot.find('PPN>data>text');
+            item.catalogUrl     = (tempNode) ? "http://www.biusante.parisdescartes.fr/" + tempNode.text().replace(/ppn\s/g, "ppn?") : "";
+            
+            $(rawXmlData).find('searchresponse>items>searchresults>results>row').each(function () {
+                
+                var currentNode = $(this);
+                currentCopy = {};
+
+                tempString = currentNode.find('LOCALLOCATION>data>text').text();
+                
+                if (tempString.indexOf("Médecine") != -1) {
+                    tempString = "Médecine";
+                } else if (tempString.indexOf("Pharmacie") != -1) {
+                    tempString = "Pharmacie";
+                } else {
+                    tempString = "";
+                }
+                currentCopy.library = tempString;
+
+                currentCopy.precisePlace    = currentNode.find('TEMPORARYLOCATION:first-of-type>data>text').text();
+                currentCopy.cote            = currentNode.find('CALLNUMBER>data>text').text();
+                currentCopy.conditions      = currentNode.find('cell:nth-of-type(5)>data>text').text();
+
+                copies.push(currentCopy);
+                // console.log("Details added !");
+            });
+            
+            item.copies = copies;
+            
+            return item;
+
+        }
+
+    };
+    
+      /*********************************
+    *   CLASS HipThesisDataProvider
+    *
+    
+    - Possède une URL d'accès
+    
+    - Méthodes :
+        - Publiques :
+        --- getSearchResults
+            @param  searchString  // La chaîne de recherche saisie.
+            @param  pageNumber    // La page de résultats attendue
+            @return resultSet     // Un objet CatalogResultSet
+        --- getDetailedItem
+            @param  url           // Pointant sur une représentation distante et détaillée de la ressource
+            @return copies        // Un tableau d'informations sur des exemplaires de la ressources
+
+    */
+    function HipThesisDataProvider() {}
+
+    HipThesisDataProvider.prototype = {
+        
+        // Propriété constante
+        _BASE_URL: "http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp",
+        _MAX_RESULTS_PER_PAGE: 20,
+        
+        // Fonction publique, que les ResultAreas sont susceptibles d'appeler.
+        getSearchResults: function (searchString, pageNumber) {
+            
+            var _self = this;
+            // console.log("getSearchResults. searchString : " + searchString);
+            
+            var queryUrl = _self._buildRequest(searchString, pageNumber);
+            // console.log("getSearchResults. queryUrl : " + queryUrl);
+            
+            var promisedResults = $.Deferred();
+            
+            var ajaxPromise = $.ajax({
+                // The URL for the request
+                // url: "proxy.php?index=.GK&limitbox_1=%24LAB7+%3D+s+or+%24LAB7+%3D+i&limitbox_3=&term=neurology&DonneXML=true",
+                url: queryUrl,
+                dataType: "xml",
+            });
+            
+            ajaxPromise.done(function (response) {
+                    var resultSet = _self._buildResultSet(response);
+                    // console.log("Records found !");
+                    // console.log("resultSet : " + resultSet);
+                
+                    // Ajout manuel des informations de pagination
+                    resultSet.maxResultsPerPage = _self._MAX_RESULTS_PER_PAGE;
+                
+                    promisedResults.resolve(resultSet);
+                    // searchResultView._handleNewResultSet(resultSet);
+            });
+            
+            ajaxPromise.always(function () {
+                    // console.log("The request for getSearchResults is complete!");
+            });
+
+            return promisedResults;
+        },
+    
+        // Fonction publique, que les ResultAreas sont susceptibles d'appeler.
+        getDetailedItem: function ( url ) {
+
+            var _self = this;
+            var promisedResults = $.Deferred();
+            
+            var queryString = url.slice(url.indexOf("?") + 1);
+            // console.log("Query String : " + queryString);
+            
+            var ajaxPromise = $.ajax({
+                url: "proxy.php?DonneXML=true&" + queryString,
+                dataType: "xml"
+            });
+            
+            
+            ajaxPromise.done(function (response) {
+                    var detailedItem = _self._buildDetailedDataItem(response);
+                    // console.log("Copies found !");
+                    promisedResults.resolve(detailedItem);
+            });
+            
+            
+            ajaxPromise.always(function () {
+                // console.log("Within callback of promise.");
+            });
+            
+            return promisedResults;
+        },
+        
+        _buildRequest: function (searchString, pageNumber) {
+            
+            var urlArray = [
+                "proxy.php?DonneXML=true&index=",
+                encodeURIComponent(".GK"),
+                "&limitbox_1=",
+                encodeURIComponent("$TH = *"),
                 "&limitbox_3=",
                 "&term=",
                 encodeURIComponent(searchString)
@@ -570,10 +789,13 @@ $(document).ready(function () {
         
         // Créer et attacher les ResultAreas
         this._resultAreas.push(
-                new ResultsArea("Catalogue classique", "book", this, new CatalogDataProvider())
+                new ResultsArea("Thèses", "Catalogue général (1800 - 1951)", "student", this, new HipThesisDataProvider())
         );
         this._resultAreas.push(
-                new ResultsArea("Livres électroniques", "tablet", this, new EBookDataProvider())
+                new ResultsArea("Ouvrages", "Catalogue général", "book", this, new HipBookDataProvider())
+        );
+        this._resultAreas.push(
+                new ResultsArea("Livres électroniques", "Catalogue spécifique", "tablet", this, new EBookDataProvider())
         );
         
         // Attacher les gestionnaires d'évènements
@@ -678,12 +900,13 @@ $(document).ready(function () {
             --- _handleNewItemDetails
             --- _handleNewResultSet
     */
-    function ResultsArea(title, iconName, searchArea, dataProvider ) {
+    function ResultsArea(title, subtitle, iconName, searchArea, dataProvider ) {
         
         // Initialisées à la création de l'objet
         this._searchArea    = searchArea;
         this._dataProvider  = dataProvider;
         this._title         = title;
+        this._subtitle      = subtitle;
         
         // Déclarer les autres propriétés
         this._currentTotalResults   = null;
@@ -692,19 +915,18 @@ $(document).ready(function () {
         this._statsContainer        = null;
         
         // Construire le balisage HTML/CSS
-        var mustacheRendering = Mustache.render(this.mustacheTemplate, {title: title, iconName: iconName});
+        var mustacheRendering = Mustache.render(this.mustacheTemplate, {title: title, subtitle: subtitle, iconName: iconName});
         this._container = $(mustacheRendering);
         this._statsContainer = this._container.find("div.statistic");
         
         // Attacher les gestionnaires d'évènements à la liste
         var _self = this;
         this._container.on("click", "a.header",                     $.proxy(_self._askForItemDetails, _self));
-        //this._container.on("click", "button.catalog-detail-link",   $.proxy(_self._redirectToCatalogDetailPage, _self));
         this._container.on("click", "button.catalog-link",    function ( event ) {
-            window.location.href = $(this).attr("data-catalog-url");
+            window.open($(this).attr("data-catalog-url"));
         });
         this._container.on("click", "button.online-access-link",    function ( event ) {
-            window.location.href = $(this).attr("data-online-access-url");
+            window.open($(this).attr("data-online-access-url"));
         });
         this._container.on("click", "button.more-results",          $.proxy(_self._askForMoreResults, _self));
         
