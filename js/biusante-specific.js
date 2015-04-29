@@ -131,7 +131,15 @@ $(document).ready(function () {
                         implementation:     new HipThesisDataHandler(),
                         maxResultsPerPage:  20,
                         dataType:           "xml"
-                    };                    
+                    };
+                    break;
+                case "HipPeriodical":
+                    parametersMap = {
+                        implementation:     new HipPeriodicalDataHandler(),
+                        maxResultsPerPage:  20,
+                        dataType:           "xml"
+                    };
+                    break;
             }
             
             var fdp = new FacadeDataProvider(parametersMap);
@@ -587,6 +595,7 @@ $(document).ready(function () {
             @return copies        // Un tableau d'informations sur des exemplaires de la ressources
 
     */
+    /*
     function HipPeriodicalDataProvider() {}
 
     HipPeriodicalDataProvider.prototype = {
@@ -742,6 +751,163 @@ $(document).ready(function () {
              *      [Edition informations] -> author -> 'cell:nth-of-type(13)>data>text'
              *      ISBN / ISSN -> 'cell:nth-of-type(36)>data>text' ou ISBN -> 'isbn'
              *      catalog URL -> "http://www.biusante.parisdescartes.fr/" + 'PPN>data>text'
+                                    
+            var item = new CatalogItem();
+            var generalDataRoot = $(rawXmlData).find('searchresponse>fullnonmarc>searchresults>results>row:first-of-type');
+
+
+            item.title          = generalDataRoot.find('TITLE>data>text').text();
+            item.author         = generalDataRoot.find('AUTHOR>data>text').text();
+            item.publisher      = generalDataRoot.find('cell:nth-of-type(13)>data>text').text();
+            // item.publishedDate  = rawXmlData.find('PUBDATE>data>text').text();
+            item.isbn           = generalDataRoot.find('isbn').text();
+            
+            var tempNode = generalDataRoot.find('PPN>data>text');
+            item.catalogUrl     = (tempNode) ? "http://www.biusante.parisdescartes.fr/" + tempNode.text().replace(/ppn\s/g, "ppn?") : "";
+            
+            $(rawXmlData).find('searchresponse>items>searchresults>results>row').each(function () {
+                
+                var currentNode = $(this);
+                currentCopy = {};
+
+                tempString = currentNode.find('LOCALLOCATION>data>text').text();
+                
+                if (tempString.indexOf("Médecine") != -1) {
+                    tempString = "Médecine";
+                } else if (tempString.indexOf("Pharmacie") != -1) {
+                    tempString = "Pharmacie";
+                } else {
+                    tempString = "";
+                }
+                currentCopy.library = tempString;
+
+                currentCopy.precisePlace    = currentNode.find('TEMPORARYLOCATION:first-of-type>data>text').text();
+                currentCopy.cote            = currentNode.find('CALLNUMBER>data>text').text();
+                currentCopy.conditions      = currentNode.find('cell:nth-of-type(5)>data>text').text();
+
+                copies.push(currentCopy);
+                // console.log("Details added !");
+            });
+            
+            item.copies = copies;
+            
+            return item;
+
+        }
+
+    };
+    */
+    function HipPeriodicalDataHandler() {
+        this.data = null;
+    }
+    
+    HipPeriodicalDataHandler.prototype = {
+            
+        setData: function (data) {
+            this.data = $(data);  
+        },
+        
+        unsetData: function () {
+          this.data = null;  
+        },
+    
+        getPageNumber: function () {
+            return parseInt(this.data.find('searchresponse>yoursearch>view>currpage').text(), 10);
+        },
+    
+        getTotalOfResults: function () {
+            return parseInt(this.data.find('searchresponse>yoursearch>hits').text(), 10);
+        },
+    
+        getResultSet: function () {
+            return this.buildResultSet();
+        },
+        
+        buildRequest: function (searchString, pageNumber) {
+            
+            var urlArray = [
+                "proxy.php?DonneXML=true&index=",
+                encodeURIComponent(".GK"),
+                "&limitbox_1=",
+                encodeURIComponent("$LAB7 = s or $LAB7 = i"),
+                "&limitbox_3=",
+                "&term=",
+                encodeURIComponent(searchString)
+            ];
+            
+            if (pageNumber) {
+                urlArray = urlArray.concat([
+                    "&page=",
+                    encodeURIComponent(pageNumber)
+                ]);
+            }
+            
+            var url = urlArray.join("");
+            
+            return url;
+        },
+   
+        buildItemUrl: function (identifier) {
+            return "proxy.php?DonneXML=true&" + identifier;
+        },
+        
+        buildResultSet: function () {
+            // console.log("Results set building !");
+            var $rawXmlData = this.data;
+            // var listRoot = $("<div class='ui items'></div>");
+            var resultSet = new CatalogResultSet();
+
+            resultSet.numberOfResults = $rawXmlData.find('searchresponse>yoursearch>hits').text();
+            resultSet.currentPage = $rawXmlData.find('searchresponse>yoursearch>view>currpage').text();
+
+            // Récupérer, ligne à ligne, les données, les mettre en forme et les attacher à la liste
+            var tempItems = [];
+            var tempDataItem = null;
+
+            var _self = this;
+            $rawXmlData.find('searchresponse>summary>searchresults>results>row').each(function (index, value) {
+                tempDataItem = _self.buildDataItem($(value));
+                tempItems.push(tempDataItem);
+            });
+
+            resultSet.results = tempItems;
+            // console.log("Results set is built !");
+            return resultSet;
+        },
+
+        buildDataItem: function (rawXmlData) {
+            var item = new CatalogItem();
+
+            item.title          = rawXmlData.find('TITLE>data>text').text();
+            item.author         = rawXmlData.find('AUTHOR>data>text').text();
+            item.publisher      = rawXmlData.find('PUBLISHER>data>text').text();
+            item.publishedDate  = rawXmlData.find('PUBDATE>data>text').text();
+            var sourceId        = rawXmlData.find('sourceid').text();
+            var func            = rawXmlData.find('TITLE>data>link>func').text();
+            item.isbn           = rawXmlData.find('isbn').text();
+            item.catalogUrl     = "http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=" + func + "&amp;source=" + sourceId;
+
+            var vDocumentType   = rawXmlData.find('cell:nth-of-type(14)>data>text').text();
+            if (vDocumentType) {
+                item.documentType = vDocumentType.slice(vDocumentType.lastIndexOf(' ') + 1, vDocumentType.length - "$html$".length);
+            }
+
+            return item;
+        },
+
+        buildDetailedDataItem: function (rawXmlData) {
+
+            var copies = [];
+            var currentCopy = null;
+            var tempString = "";
+
+            /**
+             * Autres champs sous "searchresponse>fullnonmarc>searchresults>results>row"
+             *      titre -> 'TITLE>data>text'
+             *      author -> 'cell:nth-of-type(11)>data>text' ou 'AUTHORS>data[Plus. occurrences poss.]>text'
+             *      [Edition informations] -> author -> 'cell:nth-of-type(13)>data>text'
+             *      ISBN / ISSN -> 'cell:nth-of-type(36)>data>text' ou ISBN -> 'isbn'
+             *      catalog URL -> "http://www.biusante.parisdescartes.fr/" + 'PPN>data>text'
              */
                                     
             var item = new CatalogItem();
@@ -788,6 +954,7 @@ $(document).ready(function () {
         }
 
     };
+    
     
     
     
@@ -1284,7 +1451,7 @@ $(document).ready(function () {
                 new ResultsArea("Livres électroniques", "Catalogue spécifique", "tablet", this, new EBookDataProvider())
         );
         this._resultAreas.push(
-                new ResultsArea("Périodiques", "Catalogue général", "newspaper", this, new HipPeriodicalDataProvider())
+                new ResultsArea("Périodiques", "Catalogue général", "newspaper", this, dpf.getInstance("HipPeriodical"))
         );
         
         // Attacher les gestionnaires d'évènements
