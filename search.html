@@ -83,7 +83,7 @@
     </div>
     <div class="ui hidden divider"></div>
     <div class="ui padded grid">
-        <div id="hipSearchResults" class="four column row">
+        <div id="hipSearchResults" class="five column row">
            <!--
             <div class="column">
                 <h2 class="ui header">Heading</h2>
@@ -103,17 +103,17 @@
     <script id="empty-results-area-template" type="mustache/x-tmpl-mustache">
         <div class="ui column dimmable">
             <div class="ui grid">
-                <div class="twelve wide column">
+                <div class="thirteen wide column">
                     <h2 class="ui header"><i class="{{iconName}} icon"></i>
                         <div class="content">
                             {{title}}
                             {{#subtitle}}
-                            <div class="sub header">{{subtitle}}</div>
+                            <div class="sub header">{{&subtitle}}</div>
                             {{/subtitle}}
                         </div>
                     </h2>
                 </div>
-                <div class="four wide column">
+                <div class="three wide column">
                     <div class="ui mini right floated statistic">
                         <div class="value">0</div>
                         <div class="label">Résultats</div>

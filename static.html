@@ -1,0 +1,1463 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <title>BIU Santé — PolySearch Project</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- build:css styles/vendor.css -->
+    <!-- bower:css -->
+    <!-- <link rel="stylesheet" href="semantic-ui/semantic.min.css"> -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.12.0/semantic.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.12.0/components/popup.css">
+
+
+    <!-- endbower -->
+    <!-- endbuild -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,300&amp;subset=latin,vietnamese" rel="stylesheet" type="text/css">
+
+    <!-- build:css styles/main.css -->
+    <link rel="stylesheet" href="main.css">
+    <!-- endbuild -->
+
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script><style type="text/css"></style>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.12.0/semantic.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.12.0/components/popup.js"></script>
+</head>
+
+<body>
+    <nav class="ui menu inverted navbar page grid" style="margin-bottom: 0px">
+        <a href="" class="brand item">BIU Santé — PolySearch Project <i class="white lab icon"></i></a>
+        <div class="right menu">
+            <div class="item">
+                <div class="ui input">
+                    <input type="text" placeholder="Email">
+                </div>
+            </div>
+            <div class="item">
+                <div class="ui input">
+                    <input type="password" placeholder="Password">
+                </div>
+            </div>
+            <div class="item">
+                <button class="ui green button">Sign in</button>
+            </div>
+        </div>
+    </nav>
+    <div class="ui grid">
+        <div class="row">
+            <div class="column padding-reset">
+                <div id="hipSearchArea" class="ui huge message page grid">
+                    <h1 class="ui huge header">Cherchez dans nos collections !</h1>
+                    <p>Proin vitae facilisis purus, non commodo urna. Sed porttitor ante a nunc varius, blandit feugiat nisi semper. Phasellus ut pharetra purus. Donec nibh augue, tincidunt non fringilla nec, imperdiet vitae est. Donec eleifend sapien quis lorem mattis porta. Mauris laoreet vehicula dui eu luctus.</p>
+                    <div class="ui search">
+                        <form id="hipSearchForm" action="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp" method="get">
+                            <div class="ui remote huge search focus">
+                                <div class="ui grid">
+                                    <div class="ten wide column">
+                                        <div class="ui icon huge fluid input">
+                                            <input name="term" type="text" placeholder="Entrez ici vos termes de recherche..." class="prompt" autocomplete="off">
+                                            <i class="search icon"></i>
+                                        </div>
+                                        <button class="btn" type="submit">
+                                            <i class="icon-search"></i>
+                                        </button>
+                                        <div class="results"></div>
+                                    </div>
+                                    <div class="right floated four wide column">
+                                        <div class="ui horizontal statistic">
+                                            <div class="value">4346</div>
+                                            <div class="label">Résultats au total</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ui hidden divider"></div>
+    <div class="ui padded grid">
+        <div id="hipSearchResults" class="five column row">
+           <!--
+            <div class="column">
+                <h2 class="ui header">Heading</h2>
+                <p class="ui segment">Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.</p>
+                <button class="ui tiny button m-top-10">View details &raquo;</button>
+            </div>
+            -->
+        <div class="ui column dimmable">
+            <div class="ui grid">
+                <div class="thirteen wide column">
+                    <h2 class="ui header"><i class="student icon"></i>
+                        <div class="content">
+                            Thèses anciennes
+                            <div class="sub header">Catalogue général (1800&nbsp;-&nbsp;1951)</div>
+                        </div>
+                    </h2>
+                </div>
+                <div class="three wide column">
+                    <div class="ui mini right floated statistic">
+                        <div class="value">1297</div>
+                        <div class="label">Résultats</div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui inverted dimmer">
+                <div class="ui text loader">Interrogation du catalogue...</div>
+            </div>
+            <div class="ui items"><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!553471~!0&amp;amp;source=~!apothicat">Indicateurs qualité : mise en place dans une unité de production hospitalière de médicaments cytotoxiques</a>
+                <div class="description">
+                    <p>
+                        <em>Massot , Victor</em>
+                        <br>   [s.n.].   2014. 
+                    </p>
+                </div>
+                <div class="extra">
+                    <button class="ui tiny right floated button catalog-link" data-catalog-url="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!553471~!0&amp;amp;source=~!apothicat">
+                        Voir dans le catalogue<i class="right chevron icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!552440~!1&amp;amp;source=~!apothicat">Étude des déficits de la fonction exécutive dans un modèle animal hyperdopaminergique de la schizophrénie</a>
+                <div class="description">
+                    <p>
+                        <em>Gorgievski , Victor</em>
+                        <br>   [s.n.].   2013. 
+                    </p>
+                </div>
+                <div class="extra">
+                    <button class="ui tiny right floated button catalog-link" data-catalog-url="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!552440~!1&amp;amp;source=~!apothicat">
+                        Voir dans le catalogue<i class="right chevron icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!537972~!2&amp;amp;source=~!apothicat">L'image du corps dans l'art espagnol aux XVIe et XVIIe siècles : autour du "Libro segundo" de Juan de Arfe y Villafañe (1585)</a>
+                <div class="description">
+                    <p>
+                        <em>Portmann , Maria Jutta</em>
+                        <br>   s.n.].   2012. 
+                    </p>
+                </div>
+                <div class="extra">
+                    <button class="ui tiny right floated button catalog-link" data-catalog-url="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!537972~!2&amp;amp;source=~!apothicat">
+                        Voir dans le catalogue<i class="right chevron icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!536460~!3&amp;amp;source=~!apothicat">Rôle du stress du réticulum endoplasmique et de l'autophagie dans la régulation des réponses immune et angiogénique activées par des stress ischémiques et inflammatoires dans l'épithélium rénal humain</a>
+                <div class="description">
+                    <p>
+                        <em>Fougeray , Sophie</em>
+                        <br>   [s.n.].   2012. 
+                    </p>
+                </div>
+                <div class="extra">
+                    <button class="ui tiny right floated button catalog-link" data-catalog-url="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!536460~!3&amp;amp;source=~!apothicat">
+                        Voir dans le catalogue<i class="right chevron icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!170862~!4&amp;amp;source=~!apothicat">Astragalus membranaceus : astragalus membranaceus var. mongholicus</a>
+                <div class="description">
+                    <p>
+                        <em>Pate , Victor</em>
+                        <br>   [s.n.].   2011. 
+                    </p>
+                </div>
+                <div class="extra">
+                    <button class="ui tiny right floated button catalog-link" data-catalog-url="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!170862~!4&amp;amp;source=~!apothicat">
+                        Voir dans le catalogue<i class="right chevron icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="http://books.google.com/books/content?id=hsRuF5XvD90C&amp;printsec=frontcover&amp;img=1&amp;zoom=5&amp;edge=curl">
+            </div>
+            <div class="content"><a class="ui header" href="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!191252~!5&amp;amp;source=~!apothicat">La formation des médecins : sociologie des études médicales</a>
+                <div class="description">
+                    <p>
+                        <em>Saint-Marc , David</em>
+                        <br>   l'Harmattan -- Impr. Corlet numérique.   DL 2011, cop. 2011. 
+                    </p>
+                </div>
+                <div class="extra">
+                    <button class="ui tiny right floated button catalog-link" data-catalog-url="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!191252~!5&amp;amp;source=~!apothicat">
+                        Voir dans le catalogue<i class="right chevron icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!170950~!6&amp;amp;source=~!apothicat">Conception et évaluation biologique d'antagonistes des récepteurs au VEGF à activité anti-angiogénique</a>
+                <div class="description">
+                    <p>
+                        <em>Goncalves , Victor</em>
+                        <br>   [s.n.].   2008. 
+                    </p>
+                </div>
+                <div class="extra">
+                    <button class="ui tiny right floated button catalog-link" data-catalog-url="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!170950~!6&amp;amp;source=~!apothicat">
+                        Voir dans le catalogue<i class="right chevron icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!480537~!7&amp;amp;source=~!apothicat">Pour une approche temporalisée et épistémologique de l'autisme : le Sauvage de l'Aveyron au sein de l'oeuvre médico-philosophique de Jean Marc Gaspard Itard (1774-1838) comme prémices de la complexe figure future de l'enfant autiste</a>
+                <div class="description">
+                    <p>
+                        <em>Dupuis , Guy</em>
+                        <br>   [s.n.].   2008. 
+                    </p>
+                </div>
+                <div class="extra">
+                    <button class="ui tiny right floated button catalog-link" data-catalog-url="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!480537~!7&amp;amp;source=~!apothicat">
+                        Voir dans le catalogue<i class="right chevron icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!534802~!8&amp;amp;source=~!apothicat">Pour une approche temporalisée et épistémologique de l'autisme : le Sauvage de l'Aveyron au sein de l'oeuvre médico-philosophique de Jean Marc Gaspard Itard (1774-1838) comme prémices de la complexe figure future de l'enfant autiste</a>
+                <div class="description">
+                    <p>
+                        <em>Dupuis , Guy</em>
+                        <br>   BIUM [Diff].  
+                    </p>
+                </div>
+                <div class="extra">
+                    <button class="ui tiny right floated button catalog-link" data-catalog-url="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!534802~!8&amp;amp;source=~!apothicat">
+                        Voir dans le catalogue<i class="right chevron icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!548966~!9&amp;amp;source=~!apothicat">Synthèse et évaluation biologique d'antagonistes des récepteurs au VEGF à activité antiangiogénique</a>
+                <div class="description">
+                    <p>
+                        <em>Goncalves , Victor</em>
+                        <br>   [s.n.].   2005. 
+                    </p>
+                </div>
+                <div class="extra">
+                    <button class="ui tiny right floated button catalog-link" data-catalog-url="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!548966~!9&amp;amp;source=~!apothicat">
+                        Voir dans le catalogue<i class="right chevron icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div></div>
+        <button class="fluid ui button more-results">Plus de résultats</button></div><div class="ui column dimmable">
+            <div class="ui grid">
+                <div class="thirteen wide column">
+                    <h2 class="ui header"><i class="student icon"></i>
+                        <div class="content">
+                            Thèses récentes
+                            <div class="sub header">Catalogue spécifique (1985&nbsp;-&nbsp;…)</div>
+                        </div>
+                    </h2>
+                </div>
+                <div class="three wide column">
+                    <div class="ui mini right floated statistic">
+                        <div class="value">144</div>
+                        <div class="label">Résultats</div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui inverted dimmer">
+                <div class="ui text loader">Interrogation du catalogue...</div>
+            </div>
+            <div class="ui items"><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="">Plainte cognitive avant 65 ans : analyse descriptive des sujets consultant au CMRR du CHU de Dijon et identification de facteurs associés à une cause dégénérative </a>
+                <div class="description">
+                    <p>
+                        <em>ABADIE (Victor)</em>
+                        <br>   
+                    </p>
+                </div>
+                <div class="extra">
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="">Dimension politique des soins en psychiatrie </a>
+                <div class="description">
+                    <p>
+                        <em>BRUNESSAUX (Victor)</em>
+                        <br>   
+                    </p>
+                </div>
+                <div class="extra">
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="">Prise en charge d'une adolescente atteinte du syndrome de Kabuki associé à un purpura thrombopénique auto-immun       </a>
+                <div class="description">
+                    <p>
+                        <em>LIM (Victoria)</em>
+                        <br>   
+                    </p>
+                </div>
+                <div class="extra">
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="">La place des techniques cognitivo-comportementales dans le traitement des enfants anxieux des soins dentaires </a>
+                <div class="description">
+                    <p>
+                        <em>MARRAUD DES GROTTES (Victoria)</em>
+                        <br>   
+                    </p>
+                </div>
+                <div class="extra">
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="">Vécu de l’extraction instrumentale : étude prospective sur une population de 100 patientes primipares à terme sous analgésie péridurale </a>
+                <div class="description">
+                    <p>
+                        <em>MULOT (Victoria)</em>
+                        <br>   
+                    </p>
+                </div>
+                <div class="extra">
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="">Point de vue des médecins généralistes sur les relations ville-hôpital dans la prise en charge des cancers au sein de l'hôpital Victor Provo de Roubaix et de l'hôpital Dron de Tourcoing  : enquête d'observation  </a>
+                <div class="description">
+                    <p>
+                        <em>PONT (Angélique)</em>
+                        <br>   
+                    </p>
+                </div>
+                <div class="extra">
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="">Imagerie de la plaque d’athérosclérose vulnérable : apport de l’échographie endocoronaire avec analyse du spectre de radiofréquence : résultats préliminaires de l’étude BIOCORE-2 </a>
+                <div class="description">
+                    <p>
+                        <em>TADROS (Victor-Xavier)</em>
+                        <br>   
+                    </p>
+                </div>
+                <div class="extra">
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="">La lèpre au moyen âge à Montpellier (XIIè-XVè siècles) : prise en charge médicale et sociétale </a>
+                <div class="description">
+                    <p>
+                        <em>VIARD (Victoria)</em>
+                        <br>   
+                    </p>
+                </div>
+                <div class="extra">
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="">Positionnement de l'implant en secteur antérieur : réel défi esthétique  </a>
+                <div class="description">
+                    <p>
+                        <em>VOUILLOT (Victor)</em>
+                        <br>   
+                    </p>
+                </div>
+                <div class="extra">
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="">Analyse éthique des leviers de l'esthétique dentaire pour le patient et pour le praticien : entre normativité et coercition  </a>
+                <div class="description">
+                    <p>
+                        <em>BUONO (Victor)</em>
+                        <br>   
+                    </p>
+                </div>
+                <div class="extra">
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="">Prise en charge de l'ulcère veineux de jambe : évaluation de la qualité des connaissances des internes de médecine générale d'après les guidelines internationales </a>
+                <div class="description">
+                    <p>
+                        <em>CIESIELSKI BAROILLER (Victoria)</em>
+                        <br>   
+                    </p>
+                </div>
+                <div class="extra">
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="">Le collage en orthodontie : données actuelles
+
+ </a>
+                <div class="description">
+                    <p>
+                        <em>GRESET (Victor)</em>
+                        <br>   
+                    </p>
+                </div>
+                <div class="extra">
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="">Les facteurs de risques de l’hypersensibilité dentinaire : étude observationelle dans la région de Nice  </a>
+                <div class="description">
+                    <p>
+                        <em>LEDUC (Victor)</em>
+                        <br>   
+                    </p>
+                </div>
+                <div class="extra">
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="">Pratique de la pédiatrie par les médecins généralistes de la région PACA  : état des lieux et perspectives  </a>
+                <div class="description">
+                    <p>
+                        <em>MARCHAND (Victoria)</em>
+                        <br>   
+                    </p>
+                </div>
+                <div class="extra">
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="">Toxicités loco-régionales aiguës et tardives du bevacizumab en concomitant de la radiothérapie adjuvante pour les patientes présentant un cancer du sein  </a>
+                <div class="description">
+                    <p>
+                        <em>PERNIN (Victor-Emmanuel)</em>
+                        <br>   
+                    </p>
+                </div>
+                <div class="extra">
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="">Syndrome des antiphospholipides et manifestations thrombotiques artérielles cérébrales et coronariennes : étude rétrospective chez les patients de moins de 50 ans au CHU de Dijon  </a>
+                <div class="description">
+                    <p>
+                        <em>PICQUE (Jean-Baptiste Victor Kléber)</em>
+                        <br>   
+                    </p>
+                </div>
+                <div class="extra">
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="">Utilisation des implants courts dans les thérapeutiques implantaires  </a>
+                <div class="description">
+                    <p>
+                        <em>SARAFIAN (Victor)</em>
+                        <br>   
+                    </p>
+                </div>
+                <div class="extra">
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="">Mise au point sur la photographie : outil de communication entre praticien et prothésiste   </a>
+                <div class="description">
+                    <p>
+                        <em>ANGHERT (Victor)</em>
+                        <br>   
+                    </p>
+                </div>
+                <div class="extra">
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="">Faisabilité et rendement diagnostique des biopsies rénales percutanées </a>
+                <div class="description">
+                    <p>
+                        <em>BASSET (Victor)</em>
+                        <br>   
+                    </p>
+                </div>
+                <div class="extra">
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="">Expérience angevine de l'autorisation temporaire d'utilisation de l'acétate d'abiratérone dans le cancer de la prostate résistant à la castration  </a>
+                <div class="description">
+                    <p>
+                        <em>BOUGHALEM (Elouen Yamine Victor)</em>
+                        <br>   
+                    </p>
+                </div>
+                <div class="extra">
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="">Chirurgien-dentiste : cent peurs et cent reproches </a>
+                <div class="description">
+                    <p>
+                        <em>BROCHARD (Victor)</em>
+                        <br>   
+                    </p>
+                </div>
+                <div class="extra">
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="">Le syndrome d'apnées obstructives du sommeil : prise en charge : place des orthèses d'avancée mandibulaire et de la chirurgie  </a>
+                <div class="description">
+                    <p>
+                        <em>GILBERT (Victoria)</em>
+                        <br>   
+                    </p>
+                </div>
+                <div class="extra">
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="">Etude de la fertilité chez 31 femmes et 13 hommes atteints d'hyperplasie congénitale des surrénales par déficit en 21-hydroxylase </a>
+                <div class="description">
+                    <p>
+                        <em>MAGET (Victoria)</em>
+                        <br>   
+                    </p>
+                </div>
+                <div class="extra">
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="">Suivi à 6 et 12 mois de 323 patients angioplastiés avec mise en place d'un stent coronaire bioactif TITAN 2® </a>
+                <div class="description">
+                    <p>
+                        <em>MATEUS (Victor)</em>
+                        <br>   
+                    </p>
+                </div>
+                <div class="extra">
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="">Intérêt des produits de distorsion acoustique dans l'évaluation des traumatismes sonores par musique amplifiée </a>
+                <div class="description">
+                    <p>
+                        <em>MILHE DE SAINT VICTOR (Solange)</em>
+                        <br>   
+                    </p>
+                </div>
+                <div class="extra">
+                </div>
+            </div>
+        </div></div>
+        <button class="fluid ui button more-results">Plus de résultats</button></div><div class="ui column dimmable">
+            <div class="ui grid">
+                <div class="thirteen wide column">
+                    <h2 class="ui header"><i class="book icon"></i>
+                        <div class="content">
+                            Ouvrages
+                            <div class="sub header">Catalogue général</div>
+                        </div>
+                    </h2>
+                </div>
+                <div class="three wide column">
+                    <div class="ui mini right floated statistic">
+                        <div class="value">2878</div>
+                        <div class="label">Résultats</div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui inverted dimmer">
+                <div class="ui text loader">Interrogation du catalogue...</div>
+            </div>
+            <div class="ui items"><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!187~!0&amp;amp;source=~!apothicat">Précis de biochimie de Harper</a>
+                <div class="description">
+                    <p>
+                        <em>Harper , Harold AnthonyRodwell , Victor WMayes , Peter AMartin , David William</em>
+                        <br>   Presses de l'Université Laval , Éd. Eska.   1985. 
+                    </p>
+                </div>
+                <div class="extra">
+                    <button class="ui tiny right floated button catalog-link" data-catalog-url="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!187~!0&amp;amp;source=~!apothicat">
+                        Voir dans le catalogue<i class="right chevron icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!760~!1&amp;amp;source=~!apothicat">Histologie fonctionnelle</a>
+                <div class="description">
+                    <p>
+                        <em>Wheater , Paul RichardBurkitt , H. GeorgeDaniels , Victor G</em>
+                        <br>   Medsi-McGraw-Hill -- Impr. Soulisse et Cassegrain.   DL 1988. 
+                    </p>
+                </div>
+                <div class="extra">
+                    <button class="ui tiny right floated button catalog-link" data-catalog-url="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!760~!1&amp;amp;source=~!apothicat">
+                        Voir dans le catalogue<i class="right chevron icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!1137~!2&amp;amp;source=~!apothicat">Grand dictionnaire français allemand -- Grosswörterbuch Deutsch Französisch</a>
+                <div class="description">
+                    <p>
+                        <em>Grappin , Pierre</em>
+                        <br>   Larousse -- Impr. Hérissey.   impr. 1989. 
+                    </p>
+                </div>
+                <div class="extra">
+                    <button class="ui tiny right floated button catalog-link" data-catalog-url="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!1137~!2&amp;amp;source=~!apothicat">
+                        Voir dans le catalogue<i class="right chevron icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="http://books.google.com/books/content?id=IPtsAAAAMAAJ&amp;printsec=frontcover&amp;img=1&amp;zoom=5">
+            </div>
+            <div class="content"><a class="ui header" href="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!1229~!3&amp;amp;source=~!apothicat">Geriatric dermatology : clinical diagnosis and practical therapy</a>
+                <div class="description">
+                    <p>
+                        <em>Newcomer , Victor DelbertYoung , Edward Medhard</em>
+                        <br>   Igaku-Shoin.   1989. 
+                    </p>
+                </div>
+                <div class="extra">
+                    <button class="ui tiny right floated button catalog-link" data-catalog-url="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!1229~!3&amp;amp;source=~!apothicat">
+                        Voir dans le catalogue<i class="right chevron icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!1261~!4&amp;amp;source=~!apothicat">Mechanisms of selective [alpha]1-inhibitions in lipid metabolism : role of doxazosin, proceedings of an International Workshop Puerto Rico, April 16, 1988</a>
+                <div class="description">
+                    <p>
+  Raven press.   1989. 
+                    </p>
+                </div>
+                <div class="extra">
+                    <button class="ui tiny right floated button catalog-link" data-catalog-url="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!1261~!4&amp;amp;source=~!apothicat">
+                        Voir dans le catalogue<i class="right chevron icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!1378~!5&amp;amp;source=~!apothicat">Current concepts in cutaneous toxicity : [proceedings of the Fourth Conference on Cutaneous Toxicity, Washington, D.C., May 9-11, 1979</a>
+                <div class="description">
+                    <p>
+  Academic Press.   1980. 
+                    </p>
+                </div>
+                <div class="extra">
+                    <button class="ui tiny right floated button catalog-link" data-catalog-url="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!1378~!5&amp;amp;source=~!apothicat">
+                        Voir dans le catalogue<i class="right chevron icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!1718~!6&amp;amp;source=~!apothicat">Worldwide clinical experience with ACE : inhibitors, the role of quinapril : proceedings of Investigators' Meeting held in Marbella, Spain, June 10-11, 1989</a>
+                <div class="description">
+                    <p>
+  Raven Press.   1990. 
+                    </p>
+                </div>
+                <div class="extra">
+                    <button class="ui tiny right floated button catalog-link" data-catalog-url="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!1718~!6&amp;amp;source=~!apothicat">
+                        Voir dans le catalogue<i class="right chevron icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!3430~!7&amp;amp;source=~!apothicat">Histologie fonctionnelle : manuel et atlas</a>
+                <div class="description">
+                    <p>
+                        <em>Wheater , Paul RichardBurkitt , H. GeorgeDaniels , Victor G</em>
+                        <br>   MEDSI -- impr. Berger-Levrault.   1979. 
+                    </p>
+                </div>
+                <div class="extra">
+                    <button class="ui tiny right floated button catalog-link" data-catalog-url="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!3430~!7&amp;amp;source=~!apothicat">
+                        Voir dans le catalogue<i class="right chevron icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!3860~!8&amp;amp;source=~!apothicat">Ethical issues of molecular genetics in psychiatry</a>
+                <div class="description">
+                    <p>
+  Springer-Verlag.   cop. 1991. 
+                    </p>
+                </div>
+                <div class="extra">
+                    <button class="ui tiny right floated button catalog-link" data-catalog-url="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!3860~!8&amp;amp;source=~!apothicat">
+                        Voir dans le catalogue<i class="right chevron icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="http://books.google.com/books/content?id=ZihrAAAAMAAJ&amp;printsec=frontcover&amp;img=1&amp;zoom=5">
+            </div>
+            <div class="content"><a class="ui header" href="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!5097~!9&amp;amp;source=~!apothicat">Cosmetic and pharmaceutical applications of polymers</a>
+                <div class="description">
+                    <p>
+  Plenum press.   1991. 
+                    </p>
+                </div>
+                <div class="extra">
+                    <button class="ui tiny right floated button catalog-link" data-catalog-url="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!5097~!9&amp;amp;source=~!apothicat">
+                        Voir dans le catalogue<i class="right chevron icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div></div>
+        <button class="fluid ui button more-results">Plus de résultats</button></div><div class="ui column dimmable">
+            <div class="ui grid">
+                <div class="thirteen wide column">
+                    <h2 class="ui header"><i class="tablet icon"></i>
+                        <div class="content">
+                            Livres électroniques
+                            <div class="sub header">Catalogue spécifique</div>
+                        </div>
+                    </h2>
+                </div>
+                <div class="three wide column">
+                    <div class="ui mini right floated statistic">
+                        <div class="value">12</div>
+                        <div class="label">Résultats</div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui inverted dimmer">
+                <div class="ui text loader">Interrogation du catalogue...</div>
+            </div>
+            <div class="ui items"><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="">Aging</a>
+                <div class="description">
+                    <p>
+                        <em>Preedy, Victor. </em>
+                        <br>    2014. 
+                    </p>
+                </div>
+                <div class="extra">
+                    <button class="ui tiny right floated button online-access-link" data-online-access-url="https://frodon-biusante.parisdescartes.fr/http/www.sciencedirect.com/science/book/9780124059337">
+                        Voir en ligne<i class="right chevron icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="">Cancer</a>
+                <div class="description">
+                    <p>
+                        <em>Preedy, Victor. </em>
+                        <br>    2014. 
+                    </p>
+                </div>
+                <div class="extra">
+                    <button class="ui tiny right floated button online-access-link" data-online-access-url="https://frodon-biusante.parisdescartes.fr/http/www.sciencedirect.com/science/book/9780124052055">
+                        Voir en ligne<i class="right chevron icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="">Coffee in Health and Disease Prevention</a>
+                <div class="description">
+                    <p>
+                        <em>Preedy, Victor. </em>
+                        <br>    2014. 
+                    </p>
+                </div>
+                <div class="extra">
+                    <button class="ui tiny right floated button online-access-link" data-online-access-url="https://frodon-biusante.parisdescartes.fr/http/www.sciencedirect.com/science/book/9780124095175">
+                        Voir en ligne<i class="right chevron icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="">Comprehensive Handbook of Alcohol Related Pathology</a>
+                <div class="description">
+                    <p>
+                        <em>Victor Preedy/Ronald Watson. </em>
+                        <br>    2004. 
+                    </p>
+                </div>
+                <div class="extra">
+                    <button class="ui tiny right floated button online-access-link" data-online-access-url="https://frodon-biusante.parisdescartes.fr/http/www.sciencedirect.com/science/book/9780125643702">
+                        Voir en ligne<i class="right chevron icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="">Comprehensive Handbook of Iodine
+</a>
+                <div class="description">
+                    <p>
+   2009. 
+                    </p>
+                </div>
+                <div class="extra">
+                    <button class="ui tiny right floated button online-access-link" data-online-access-url="https://frodon-biusante.parisdescartes.fr/http/www.sciencedirect.com/science/book/9780123741356">
+                        Voir en ligne<i class="right chevron icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="">Diabetes</a>
+                <div class="description">
+                    <p>
+                        <em>Preedy, Victor. </em>
+                        <br>    2013. 
+                    </p>
+                </div>
+                <div class="extra">
+                    <button class="ui tiny right floated button online-access-link" data-online-access-url="https://frodon-biusante.parisdescartes.fr/http/www.sciencedirect.com/science/book/9780124058859">
+                        Voir en ligne<i class="right chevron icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="">Flow Analysis</a>
+                <div class="description">
+                    <p>
+                        <em>Cerda, Victor. </em>
+                        <br>    2014. 
+                    </p>
+                </div>
+                <div class="extra">
+                    <button class="ui tiny right floated button online-access-link" data-online-access-url="https://frodon-biusante.parisdescartes.fr/http/www.sciencedirect.com/science/book/9780444595966">
+                        Voir en ligne<i class="right chevron icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="">Handbook of Nutrition Diet and the Eye</a>
+                <div class="description">
+                    <p>
+                        <em>Preedy, Victor. </em>
+                        <br>    2014. 
+                    </p>
+                </div>
+                <div class="extra">
+                    <button class="ui tiny right floated button online-access-link" data-online-access-url="https://frodon-biusante.parisdescartes.fr/http/www.sciencedirect.com/science/book/9780124017177">
+                        Voir en ligne<i class="right chevron icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="">Medicinal Plant Research in Africa</a>
+                <div class="description">
+                    <p>
+                        <em>Kuete, Victor. </em>
+                        <br>    2013. 
+                    </p>
+                </div>
+                <div class="extra">
+                    <button class="ui tiny right floated button online-access-link" data-online-access-url="https://frodon-biusante.parisdescartes.fr/http/www.sciencedirect.com/science/book/9780124059276">
+                        Voir en ligne<i class="right chevron icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="">Synthesis of Essential Drugs</a>
+                <div class="description">
+                    <p>
+                        <em>Ruben Vardanyan/Victor Hruby . </em>
+                        <br>    2006. 
+                    </p>
+                </div>
+                <div class="extra">
+                    <button class="ui tiny right floated button online-access-link" data-online-access-url="https://frodon-biusante.parisdescartes.fr/http/www.sciencedirect.com/science/book/9780444521668">
+                        Voir en ligne<i class="right chevron icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="">The Mediterranean Diet</a>
+                <div class="description">
+                    <p>
+                        <em>Preedy, Victor. </em>
+                        <br>    2014. 
+                    </p>
+                </div>
+                <div class="extra">
+                    <button class="ui tiny right floated button online-access-link" data-online-access-url="https://frodon-biusante.parisdescartes.fr/http/www.sciencedirect.com/science/book/9780124078499">
+                        Voir en ligne<i class="right chevron icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="">Toxicological survey of African Medicinal Plants</a>
+                <div class="description">
+                    <p>
+                        <em>Kuete, Victor. </em>
+                        <br>    2014. 
+                    </p>
+                </div>
+                <div class="extra">
+                    <button class="ui tiny right floated button online-access-link" data-online-access-url="https://frodon-biusante.parisdescartes.fr/http/www.sciencedirect.com/science/book/9780128000182">
+                        Voir en ligne<i class="right chevron icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div></div>
+        </div><div class="ui column dimmable">
+            <div class="ui grid">
+                <div class="thirteen wide column">
+                    <h2 class="ui header"><i class="newspaper icon"></i>
+                        <div class="content">
+                            Périodiques
+                            <div class="sub header">Catalogue général</div>
+                        </div>
+                    </h2>
+                </div>
+                <div class="three wide column">
+                    <div class="ui mini right floated statistic">
+                        <div class="value">15</div>
+                        <div class="label">Résultats</div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui inverted dimmer">
+                <div class="ui text loader">Interrogation du catalogue...</div>
+            </div>
+            <div class="ui items"><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!237479~!0&amp;amp;source=~!apothicat">Bristol-Myers Squibb/Mead Johnson nutrition symposia</a>
+                <div class="description">
+                    <p>
+                        <em>Bristol-Myers Squibb/Mead Johnson Symposium on Nutrition Research</em>
+                        <br>   Academic Press.   1990-1995. 
+                    </p>
+                </div>
+                <div class="extra">
+                    <button class="ui tiny right floated button catalog-link" data-catalog-url="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!237479~!0&amp;amp;source=~!apothicat">
+                        Voir dans le catalogue<i class="right chevron icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!34290~!1&amp;amp;source=~!apothicat">Nordiska specialitetskommissionens årsberättelse</a>
+                <div class="description">
+                    <p>
+  Victor Pettersons bokindustriaktiebolag.   1930-1940. 
+                    </p>
+                </div>
+                <div class="extra">
+                    <button class="ui tiny right floated button catalog-link" data-catalog-url="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!34290~!1&amp;amp;source=~!apothicat">
+                        Voir dans le catalogue<i class="right chevron icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!34289~!2&amp;amp;source=~!apothicat">Årsberättelse över verksamheten under år ... vid Apotekens kontrollaboratorium</a>
+                <div class="description">
+                    <p>
+  Victor Pettersons bokindustriaktiebolag.   [19..]-1929. 
+                    </p>
+                </div>
+                <div class="extra">
+                    <button class="ui tiny right floated button catalog-link" data-catalog-url="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!34289~!2&amp;amp;source=~!apothicat">
+                        Voir dans le catalogue<i class="right chevron icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!272912~!3&amp;amp;source=~!apothicat">L'Année électrique, électrothérapique et radiographique : revue annuelle des progrès électriques</a>
+                <div class="description">
+                    <p>
+  Libr. polytechnique C. Béranger.   1901-1914. 
+                    </p>
+                </div>
+                <div class="extra">
+                    <button class="ui tiny right floated button catalog-link" data-catalog-url="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!272912~!3&amp;amp;source=~!apothicat">
+                        Voir dans le catalogue<i class="right chevron icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!36069~!4&amp;amp;source=~!apothicat">Annuaire des eaux minérales, stations thermales, climatiques et balnéaires de France</a>
+                <div class="description">
+                    <p>
+  [s.n.].   1913. 
+                    </p>
+                </div>
+                <div class="extra">
+                    <button class="ui tiny right floated button catalog-link" data-catalog-url="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!36069~!4&amp;amp;source=~!apothicat">
+                        Voir dans le catalogue<i class="right chevron icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!240203~!5&amp;amp;source=~!apothicat">Diplôme Inter-Universitaire d'Echocardiographie</a>
+                <div class="description">
+                    <p>
+  Université Victor Segalen Bordeaux 2 - DCAV.  
+                    </p>
+                </div>
+                <div class="extra">
+                    <button class="ui tiny right floated button catalog-link" data-catalog-url="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!240203~!5&amp;amp;source=~!apothicat">
+                        Voir dans le catalogue<i class="right chevron icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!267568~!6&amp;amp;source=~!apothicat">Mémoires de la Société de chirurgie de Paris</a>
+                <div class="description">
+                    <p>
+                        <em>Académie nationale de chirurgie -- France</em>
+                        <br>   Librairie de Victor Masson.   1847-1874. 
+                    </p>
+                </div>
+                <div class="extra">
+                    <button class="ui tiny right floated button catalog-link" data-catalog-url="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!267568~!6&amp;amp;source=~!apothicat">
+                        Voir dans le catalogue<i class="right chevron icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!35615~!7&amp;amp;source=~!apothicat">L'Année pharmaceutique</a>
+                <div class="description">
+                    <p>
+  Victor Masson.   1861-1865. 
+                    </p>
+                </div>
+                <div class="extra">
+                    <button class="ui tiny right floated button catalog-link" data-catalog-url="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!35615~!7&amp;amp;source=~!apothicat">
+                        Voir dans le catalogue<i class="right chevron icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!267569~!8&amp;amp;source=~!apothicat">Bulletin de la Société de chirurgie de Paris</a>
+                <div class="description">
+                    <p>
+  Librairie de Victor Masson.   1851-1865. 
+                    </p>
+                </div>
+                <div class="extra">
+                    <button class="ui tiny right floated button catalog-link" data-catalog-url="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!267569~!8&amp;amp;source=~!apothicat">
+                        Voir dans le catalogue<i class="right chevron icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div><div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!267423~!9&amp;amp;source=~!apothicat">Annales cliniques ou Journal des sciences médicales rédigées par une commission présidée par J. F. Victor Bonnet, Docteur en médecine de la Faculté de Montpellier,...</a>
+                <div class="description">
+                    <p>
+                        <em>Baumes , Jean Baptiste ThéodoreBonnet , Jean-François Victor -- médecin</em>
+                        <br>   Impr. J.G. Tournel.   1809-1820. 
+                    </p>
+                </div>
+                <div class="extra">
+                    <button class="ui tiny right floated button catalog-link" data-catalog-url="http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=full=3100001~!267423~!9&amp;amp;source=~!apothicat">
+                        Voir dans le catalogue<i class="right chevron icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div></div>
+        </div></div>
+        <div class="row">
+            <div class="column">
+                <div class="ui divider"></div>
+                <span>© Gupta 2015</span>
+            </div>
+        </div>
+    </div>
+
+    <script id="empty-results-area-template" type="mustache/x-tmpl-mustache">
+        <div class="ui column dimmable">
+            <div class="ui grid">
+                <div class="thirteen wide column">
+                    <h2 class="ui header"><i class="{{iconName}} icon"></i>
+                        <div class="content">
+                            {{title}}
+                            {{#subtitle}}
+                            <div class="sub header">{{&subtitle}}</div>
+                            {{/subtitle}}
+                        </div>
+                    </h2>
+                </div>
+                <div class="three wide column">
+                    <div class="ui mini right floated statistic">
+                        <div class="value">0</div>
+                        <div class="label">Résultats</div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui inverted dimmer">
+                <div class="ui text loader">Interrogation du catalogue...</div>
+            </div>
+            <div class="ui items"></div>
+        </div>
+    </script>
+
+
+    <script id="catalog-item-template" type="mustache/x-tmpl-mustache">
+        <div class="ui item dimmable">
+            <div class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui tiny image"><img src="images/image.png">
+            </div>
+            <div class="content"><a class="ui header" href="{{ catalogUrl }}">{{ title }}</a>
+                <div class="description">
+                    <p>
+                        {{ #author }}
+                        <em>{{ author }}</em>
+                        <br /> {{ /author }} {{ #publisher }} {{ publisher }}. {{ /publisher }} {{ #publishedDate }} {{ publishedDate }}. {{ /publishedDate }}
+                    </p>
+                    {{ #description }}
+                    <p>{{ description }}</p>
+                    {{ /description }}
+                </div>
+                <div class="extra">
+                    {{ #copies }}
+                    <span class='ui label' data-title='Conditions de consultation' data-content='{{conditions}}'>
+                             {{library}}<span class='detail'>Cote : {{cote}}</span>
+                    </span>
+                    {{ /copies }} {{ #catalogUrl }}
+                    <button class="ui tiny right floated button catalog-link" data-catalog-url="{{ catalogUrl }}">
+                        Voir dans le catalogue<i class="right chevron icon"></i>
+                    </button>
+                    {{ /catalogUrl }} {{ #onlineAccessUrl }}
+                    <button class="ui tiny right floated button online-access-link" data-online-access-url="{{ onlineAccessUrl }}">
+                        Voir en ligne<i class="right chevron icon"></i>
+                    </button>
+                    {{ /onlineAccessUrl }}
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <script src="mustache/mustache.min.js"></script>
+    <!-- <script src="js/biusante-specific.js"></script> -->
+
+
+</body></html>
