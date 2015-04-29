@@ -33,8 +33,8 @@ $(document).ready(function () {
             });
             
             ajaxPromise.done(function (response) {
-                console.log("--- Réponse ---");
-                console.log(response);
+              // console.log("--- Réponse ---");
+              // console.log(response);
                 
                 var resultMap = {};
                 
@@ -43,8 +43,8 @@ $(document).ready(function () {
                 for (var refKey in response) {
                     resultMap[refKey] = response[refKey].thumbnail_url;
                 }
-                console.log("--- resultMap ---");
-                console.log(resultMap);
+              // console.log("--- resultMap ---");
+              // console.log(resultMap);
                 
                 promisedUrls.resolve(resultMap);
             });
@@ -125,13 +125,21 @@ $(document).ready(function () {
             @return copies        // Un tableau d'informations sur des exemplaires de la ressources
 
     */
-    function HipBookDataProvider() {}
+    function HipBookDataProvider() {
+        this._converter             = new HipBookDataConverter();
+        this._currentQueryString    = "";
+        this._currentPageNumber     = 0;
+        this._currentTotalOfResults = 0;
+        this._MAX_RESULTS_PER_PAGE  = 20;
+        this._DATA_TYPE             = "xml";
+        
+    }
 
     HipBookDataProvider.prototype = {
         
         // Propriété constante
-        _BASE_URL: "http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp",
-        _MAX_RESULTS_PER_PAGE: 20,
+        // _BASE_URL: "http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp",
+        // _MAX_RESULTS_PER_PAGE: 20,
         
         // Fonction publique, que les ResultAreas sont susceptibles d'appeler.
         getSearchResults: function (searchString, pageNumber) {
@@ -139,7 +147,14 @@ $(document).ready(function () {
             var _self = this;
             // console.log("getSearchResults. searchString : " + searchString);
             
-            var queryUrl = _self._buildRequest(searchString, pageNumber);
+            var queryUrl = null;
+            console.log("getSearchResults. pageNumber : " + pageNumber);
+            if (pageNumber && pageNumber > 1) {            
+                queryUrl = _self._converter.buildRequest(this._currentQueryString, this._currentPageNumber + 1);
+            } else {
+                this._currentQueryString = searchString;
+                queryUrl = _self._converter.buildRequest(searchString);
+            }
             // console.log("getSearchResults. queryUrl : " + queryUrl);
             
             var promisedResults = $.Deferred();
@@ -148,17 +163,22 @@ $(document).ready(function () {
                 // The URL for the request
                 // url: "proxy.php?index=.GK&limitbox_1=%24LAB7+%3D+s+or+%24LAB7+%3D+i&limitbox_3=&term=neurology&DonneXML=true",
                 url: queryUrl,
-                dataType: "xml",
+                dataType: this._DATA_TYPE,
             });
             
             ajaxPromise.done(function (response) {
-                    var resultSet = _self._buildResultSet(response);
+                    _self._converter.setData(response);
+                    // var resultSet = _self._converter._buildResultSet(response);
+                    _self._currentPageNumber        = _self._converter.getPageNumber();
+                    _self._currentTotalOfResults    = _self._converter.getTotalOfResults();
+                
+                    var resultSet                   = _self._converter.getResultSet();
                     // console.log("Records found !");
                     // console.log("resultSet : " + resultSet);
                 
                     // Ajout manuel des informations de pagination
                     resultSet.maxResultsPerPage = _self._MAX_RESULTS_PER_PAGE;
-                
+                    _self._converter.unsetData();
                     promisedResults.resolve(resultSet);
                     // searchResultView._handleNewResultSet(resultSet);
             });
@@ -169,24 +189,29 @@ $(document).ready(function () {
 
             return promisedResults;
         },
+        
+        getNewSearchResults: function (searchString) {
+            this._currentQueryString = searchString;
+        },
     
         // Fonction publique, que les ResultAreas sont susceptibles d'appeler.
         getDetailedItem: function ( url ) {
-
+            // @todo supprimer le calcul suivant
+            var itemIdentifier = url.slice(url.indexOf("?") + 1);
             var _self = this;
             var promisedResults = $.Deferred();
             
-            var queryString = url.slice(url.indexOf("?") + 1);
+            
             // console.log("Query String : " + queryString);
             
             var ajaxPromise = $.ajax({
-                url: "proxy.php?DonneXML=true&" + queryString,
-                dataType: "xml"
+                url: _self._converter.buildItemUrl(itemIdentifier),
+                dataType: _self._DATA_TYPE
             });
             
             
             ajaxPromise.done(function (response) {
-                    var detailedItem = _self._buildDetailedDataItem(response);
+                    var detailedItem = _self._converter.buildDetailedDataItem(response);
                     // console.log("Copies found !");
                     promisedResults.resolve(detailedItem);
             });
@@ -197,9 +222,38 @@ $(document).ready(function () {
             });
             
             return promisedResults;
+        }
+        
+   
+    };
+    
+    function HipBookDataConverter() {
+        this.data = null;
+    }
+    
+    HipBookDataConverter.prototype = {
+            
+        setData: function (data) {
+            this.data = $(data);  
         },
         
-        _buildRequest: function (searchString, pageNumber) {
+        unsetData: function () {
+          this.data = null;  
+        },
+    
+        getPageNumber: function () {
+            return parseInt(this.data.find('searchresponse>yoursearch>view>currpage').text(), 10);
+        },
+    
+        getTotalOfResults: function () {
+            return parseInt(this.data.find('searchresponse>yoursearch>hits').text(), 10);
+        },
+    
+        getResultSet: function () {
+            return this.buildResultSet();
+        },
+        
+        buildRequest: function (searchString, pageNumber) {
             
             var urlArray = [
                 "proxy.php?DonneXML=true&index=",
@@ -222,23 +276,29 @@ $(document).ready(function () {
             
             return url;
         },
+        
+        buildItemUrl: function (identifier) {
+            return "proxy.php?DonneXML=true&" + identifier;
+        },
 
-        _buildResultSet: function (rawXmlData) {
+        buildResultSet: function (rawXmlData) {
+            rawXmlData = null;
             // console.log("Results set building !");
-
+            var $rawXmlData = this.data;
+            
             // var listRoot = $("<div class='ui items'></div>");
             var resultSet = new CatalogResultSet();
 
-            resultSet.numberOfResults = $(rawXmlData).find('searchresponse>yoursearch>hits').text();
-            resultSet.currentPage = $(rawXmlData).find('searchresponse>yoursearch>view>currpage').text();
+            resultSet.numberOfResults   = $rawXmlData.find('searchresponse>yoursearch>hits').text();
+            resultSet.currentPage       = $rawXmlData.find('searchresponse>yoursearch>view>currpage').text();
 
             // Récupérer, ligne à ligne, les données, les mettre en forme et les attacher à la liste
             var tempItems = [];
             var tempDataItem = null;
 
             var _self = this;
-            $(rawXmlData).find('searchresponse>summary>searchresults>results>row').each(function (index, value) {
-                tempDataItem = _self._buildDataItem($(value));
+            $rawXmlData.find('searchresponse>summary>searchresults>results>row').each(function (index, value) {
+                tempDataItem = _self.buildDataItem($(value));
                 tempItems.push(tempDataItem);
             });
 
@@ -247,7 +307,7 @@ $(document).ready(function () {
             return resultSet;
         },
 
-        _buildDataItem: function (rawXmlData) {
+        buildDataItem: function (rawXmlData) {
             var item = new CatalogItem();
 
             item.title          = rawXmlData.find('TITLE>data>text').text();
@@ -257,7 +317,7 @@ $(document).ready(function () {
             var sourceId        = rawXmlData.find('sourceid').text();
             var func            = rawXmlData.find('TITLE>data>link>func').text();
             item.isbn           = rawXmlData.find('isbn').text();
-            item.catalogUrl     = this._BASE_URL + "?uri=" + func + "&amp;source=" + sourceId;
+            item.catalogUrl     = "http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=" + func + "&amp;source=" + sourceId;
 
             var vDocumentType   = rawXmlData.find('cell:nth-of-type(14)>data>text').text();
             if (vDocumentType) {
@@ -267,20 +327,11 @@ $(document).ready(function () {
             return item;
         },
 
-        _buildDetailedDataItem: function (rawXmlData) {
+        buildDetailedDataItem: function (rawXmlData) {
 
             var copies = [];
             var currentCopy = null;
             var tempString = "";
-
-            /**
-             * Autres champs sous "searchresponse>fullnonmarc>searchresults>results>row"
-             *      titre -> 'TITLE>data>text'
-             *      author -> 'cell:nth-of-type(11)>data>text' ou 'AUTHORS>data[Plus. occurrences poss.]>text'
-             *      [Edition informations] -> author -> 'cell:nth-of-type(13)>data>text'
-             *      ISBN / ISSN -> 'cell:nth-of-type(36)>data>text' ou ISBN -> 'isbn'
-             *      catalog URL -> "http://www.biusante.parisdescartes.fr/" + 'PPN>data>text'
-             */
                                     
             var item = new CatalogItem();
             var generalDataRoot = $(rawXmlData).find('searchresponse>fullnonmarc>searchresults>results>row:first-of-type');
@@ -787,11 +838,8 @@ $(document).ready(function () {
         getSearchResults: function (searchString, pageNumber) {
             
             var _self = this;
-            console.log("getSearchResults. searchString : " + searchString);
-            console.log("getSearchResults. pageNumber : " + pageNumber);
             
             var queryUrl = _self._buildRequest(searchString, pageNumber);
-            console.log("getSearchResults. queryUrl : " + queryUrl);
             
             var promisedResults = $.Deferred();
             
@@ -804,8 +852,6 @@ $(document).ready(function () {
             
             ajaxPromise.done(function (response) {
                     var resultSet = _self._buildResultSet(response);
-                    console.log("Records found !");
-                    console.log("resultSet : " + resultSet);
                 
                     // Ajout manuel des informations de pagination
                     resultSet.maxResultsPerPage = _self._MAX_RESULTS_PER_PAGE;
@@ -818,7 +864,7 @@ $(document).ready(function () {
             });
             
             ajaxPromise.always(function () {
-                    console.log("The request for getSearchResults is complete!");
+                  // console.log("The request for getSearchResults is complete!");
             });
 
             return promisedResults;
@@ -831,7 +877,7 @@ $(document).ready(function () {
             var promisedResults = $.Deferred();
             
             var queryString = url.slice(url.indexOf("?") + 1);
-            console.log("Query String : " + queryString);
+          // console.log("Query String : " + queryString);
             
             var ajaxPromise = $.ajax({
                 url: "proxy.php?DonneXML=true&" + queryString,
@@ -841,13 +887,13 @@ $(document).ready(function () {
             
             ajaxPromise.done(function (response) {
                     var copies = _self._buildDetailedDataItem(response);
-                    console.log("Copies found !");
+                  // console.log("Copies found !");
                     promisedResults.resolve(copies);
             });
             
             
             ajaxPromise.always(function () {
-                console.log("Within callback of promise.");
+              // console.log("Within callback of promise.");
             });
             
             return promisedResults;
@@ -876,12 +922,12 @@ $(document).ready(function () {
         },
 
         _buildResultSet: function (rawXmlData) {
-            console.log("Beginning of _buildResultSet. Results set building !");
+          // console.log("Beginning of _buildResultSet. Results set building !");
 
             var resultSet = new CatalogResultSet();
 
             var wrappingTable = $(rawXmlData).find("#table247");
-            console.log("wrappingTable : " + wrappingTable);
+          // console.log("wrappingTable : " + wrappingTable);
             
             var tempText = wrappingTable.find('tr:nth-child(2)>td>p').text();
             // /:\s(\d+)\s/g
@@ -889,7 +935,7 @@ $(document).ready(function () {
             var regexResult = /:\s(\d+)\s/g.exec(tempText);
             // console.log("regexResult : " + regexResult);
             resultSet.numberOfResults   = (regexResult) ? regexResult[1] : 0;
-            console.log("resultSet.numberOfResults : " + resultSet.numberOfResults);
+          // console.log("resultSet.numberOfResults : " + resultSet.numberOfResults);
             resultSet.currentPage       = 25;
 
             // Récupérer, ligne à ligne, les données, les mettre en forme et les attacher à la liste
@@ -906,7 +952,7 @@ $(document).ready(function () {
             tempItems.pop();
 
             resultSet.results = tempItems;
-            console.log("Results set is built !");
+          // console.log("Results set is built !");
             return resultSet;
         },
 
@@ -986,7 +1032,7 @@ $(document).ready(function () {
                 currentCopy.conditions      = currentNode.find('cell:nth-of-type(5)>data>text').text();
 
                 copies.push(currentCopy);
-                console.log("Details added !");
+              // console.log("Details added !");
             });
 
             return copies;
@@ -1014,11 +1060,11 @@ $(document).ready(function () {
         getSearchResults: function (searchString, pageNumber) {
             
             var _self = this;
-            console.log("getSearchResults. searchString : " + searchString);
-            console.log("getSearchResults. pageNumber : " + pageNumber);
+          // console.log("getSearchResults. searchString : " + searchString);
+          // console.log("getSearchResults. pageNumber : " + pageNumber);
             
             var queryUrl = _self._buildRequest(searchString, pageNumber);
-            console.log("getSearchResults. queryUrl : " + queryUrl);
+          // console.log("getSearchResults. queryUrl : " + queryUrl);
             
             var promisedResults = $.Deferred();
             
@@ -1031,8 +1077,8 @@ $(document).ready(function () {
             
             ajaxPromise.done(function (response) {
                     var resultSet = _self._buildResultSet(response);
-                    console.log("Records found !");
-                    console.log("resultSet : " + resultSet);
+                  // console.log("Records found !");
+                  // console.log("resultSet : " + resultSet);
                 
                     // Ajout manuel des informations de pagination
                     resultSet.maxResultsPerPage = _self._MAX_RESULTS_PER_PAGE;
@@ -1045,7 +1091,7 @@ $(document).ready(function () {
             });
             
             ajaxPromise.always(function () {
-                    console.log("The request for getSearchResults is complete!");
+                  // console.log("The request for getSearchResults is complete!");
             });
 
             return promisedResults;
@@ -1058,7 +1104,7 @@ $(document).ready(function () {
             var promisedResults = $.Deferred();
             
             var queryString = url.slice(url.indexOf("?") + 1);
-            console.log("Query String : " + queryString);
+          // console.log("Query String : " + queryString);
             
             var ajaxPromise = $.ajax({
                 url: "proxy.php?DonneXML=true&" + queryString,
@@ -1068,13 +1114,13 @@ $(document).ready(function () {
             
             ajaxPromise.done(function (response) {
                     var copies = _self._buildDetailedDataItem(response);
-                    console.log("Copies found !");
+                  // console.log("Copies found !");
                     promisedResults.resolve(copies);
             });
             
             
             ajaxPromise.always(function () {
-                console.log("Within callback of promise.");
+              // console.log("Within callback of promise.");
             });
             
             return promisedResults;
@@ -1101,23 +1147,23 @@ $(document).ready(function () {
         },
 
         _buildResultSet: function (rawXmlData) {
-            console.log("ThesisSpecificDataProvider... Beginning of _buildResultSet. Results set building !");
+          // console.log("ThesisSpecificDataProvider... Beginning of _buildResultSet. Results set building !");
 
             var resultSet = new CatalogResultSet();
 
             var wrappingTable = $(rawXmlData).find("#table245");
-            console.log("wrappingTable : " + wrappingTable);
+          // console.log("wrappingTable : " + wrappingTable);
             
             // S'il y a des résultats, les analyser et alimenter le CatalogResultSet
             if (wrappingTable.length) {
-                console.log("ThesisSpecificDataProvider... #table245 found !");
+              // console.log("ThesisSpecificDataProvider... #table245 found !");
                 var tempText = wrappingTable.find('tr:nth-child(1)>td>p').text();
 
                 // console.log("tempText : " + tempText);
                 var regexResult = /:\s(\d+)\s/g.exec(tempText);
-                console.log("regexResult : " + regexResult);
+              // console.log("regexResult : " + regexResult);
                 resultSet.numberOfResults   = (regexResult) ? regexResult[1] : 0;
-                console.log("resultSet.numberOfResults : " + resultSet.numberOfResults);
+              // console.log("resultSet.numberOfResults : " + resultSet.numberOfResults);
                 // resultSet.currentPage       = 25;
 
                 // Récupérer, ligne à ligne, les données, les mettre en forme et les attacher à la liste
@@ -1134,27 +1180,27 @@ $(document).ready(function () {
 
                 resultSet.results = tempItems;
             } else {
-                console.log("ThesisSpecificDataProvider... #table245 not found !");
+              // console.log("ThesisSpecificDataProvider... #table245 not found !");
                 wrappingTable = $(rawXmlData).find("#table241");
                 
                 var messageCell = wrappingTable.find("tr:nth-child(2) > td:nth-child(1)");
                 
                 if (messageCell.text().indexOf("aucune réponse") !== -1) {
                     // La requête ne renvoie aucun résultat.
-                    console.log("ThesisSpecificDataProvider... No results !");
+                  // console.log("ThesisSpecificDataProvider... No results !");
                     resultSet.numberOfResults = 0;
                 } else {
                     // La requête renvoie de trop nombreux résultats.
-                    console.log("ThesisSpecificDataProvider... Too much results !");
+                  // console.log("ThesisSpecificDataProvider... Too much results !");
                     resultSet.numberOfResults = messageCell.find("b").text();
-                    console.log("ThesisSpecificDataProvider... Number of results : " + resultSet.numberOfResults);
+                  // console.log("ThesisSpecificDataProvider... Number of results : " + resultSet.numberOfResults);
                     resultSet.warningMessage = resultSet.WARNING_MESSAGE.TOO_MUCH_RESULTS;
                 }
                 
             }
             
             
-            console.log("Results set is built !");
+          // console.log("Results set is built !");
             return resultSet;
         },
 
@@ -1221,7 +1267,7 @@ $(document).ready(function () {
                 currentCopy.conditions      = currentNode.find('cell:nth-of-type(5)>data>text').text();
 
                 copies.push(currentCopy);
-                console.log("Details added !");
+              // console.log("Details added !");
             });
 
             return copies;
@@ -1332,10 +1378,10 @@ $(document).ready(function () {
         },
         
         
-        _setStats: function ( number ) {
+        _setStats: function ( nResults ) {
             // Créer au besoin les éléments nécessaires à l'affichage des stats
             // Mettre à jour ces éléments
-            this._statsContainer.children(".value").text(number);
+            this._statsContainer.children(".value").text(nResults);
         },
         
         _setLoadingStateOn: function () {
@@ -1431,7 +1477,7 @@ $(document).ready(function () {
             var _self = this;
             promisedResults.done(
                     function( results ) {
-                        console.log("_askForResults received results : " + results);
+                      // console.log("_askForResults received results : " + results);
 
                         _self._handleNewResultSet( results );
                         _self._askForThumbnailUrl();
@@ -1444,12 +1490,12 @@ $(document).ready(function () {
             );
             
             
-            console.log("_askForResults is ending !");
+          // console.log("_askForResults is ending !");
             return resultsHandled;
         },
         
         _askForMoreResults: function (event) {
-            console.log("More results wanted !");
+          // console.log("More results wanted !");
 
             event.preventDefault();
 
@@ -1457,13 +1503,13 @@ $(document).ready(function () {
             
             this._askForResults( this._searchArea.getSearchString(), chosenPage );
             
-            console.log("_askForMoreResults is ending !");
+          // console.log("_askForMoreResults is ending !");
         },
         
         _askForItemDetails: function ( event ) {
 
             event.preventDefault();
-            console.log("Inside _askForItemDetails");
+          // console.log("Inside _askForItemDetails");
 
             var domItem = $(event.currentTarget).closest(".item");
 
@@ -1477,7 +1523,7 @@ $(document).ready(function () {
                 _self._setItemLoadingStateOff(domItem);
             });
             
-            console.log("_askForItemDetails is ending !");
+          // console.log("_askForItemDetails is ending !");
 
         },
         
@@ -1497,7 +1543,7 @@ $(document).ready(function () {
         _setStats: function (nResults) {
             // Créer au besoin les éléments nécessaires à l'affichage des stats
             // Mettre à jour ces éléments
-            console.log("_setStats called ! nResults : " + nResults);
+          // console.log("_setStats called ! nResults : " + nResults);
             this._statsContainer.children(".value").text(nResults);
         },
         
@@ -1522,27 +1568,27 @@ $(document).ready(function () {
         },
         
         _handleNewItemDetails: function (detailedItem, domItem) {
-            console.log("_handleNewItemDetails has been called !");
+          // console.log("_handleNewItemDetails has been called !");
             
             var newItem = this._buildResultItem(detailedItem);
             newItem.find(".extra > span.label").popup();
             domItem.replaceWith(newItem);
             
-            console.log("handleDetails is finished !");
+          // console.log("handleDetails is finished !");
         },
         
 
         _handleNewResultSet: function (resultSet) {
-            console.log("_handleNewResultSet has been called !");
+          // console.log("_handleNewResultSet has been called !");
 
-            console.log("Results handled !");
+          // console.log("Results handled !");
 
             this._currentTotalResults  = parseInt(resultSet.numberOfResults, 10);
             this._currentResultsPage   = resultSet.currentPage;
             this._maxResultsPerPage    = parseInt(resultSet.maxResultsPerPage, 10);
 
-            console.log("this._currentTotalResults : "  + this._currentTotalResults);
-            console.log("this._currentResultsPage : "   + this._currentResultsPage);
+          // console.log("this._currentTotalResults : "  + this._currentTotalResults);
+          // console.log("this._currentResultsPage : "   + this._currentResultsPage);
 
             // Récupérer, ligne à ligne, les données,
             // les mettre en forme et les attacher au conteneur d'items
@@ -1602,8 +1648,8 @@ $(document).ready(function () {
             var promisedResults = gbdp.getThumbnailsUrl(isbnArray);
             
             promisedResults.done(function( results ) {
-                console.log("_askForThumbnailUrl Results");
-                console.log(results);
+              // console.log("_askForThumbnailUrl Results");
+              // console.log(results);
                 
                 var tempIsbn = "";
                 var tempUrl = "";
