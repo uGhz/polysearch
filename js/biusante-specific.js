@@ -108,8 +108,42 @@ $(document).ready(function () {
     };
 
     
+    function DataProviderFactory() {}
+    
+    DataProviderFactory.prototype = {
+        
+        getInstance: function ( dataProviderType ) {
+            
+            var parametersMap = {};
+            
+            switch (dataProviderType) {
+            
+                case "HipBook":
+                    parametersMap = {
+                        implementation:     new HipBookDataHandler(),
+                        maxResultsPerPage:  20,
+                        dataType:           "xml"
+                    };
+                    break;
+                    
+                case "HipThesis":
+                    parametersMap = {
+                        implementation:     new HipThesisDataHandler(),
+                        maxResultsPerPage:  20,
+                        dataType:           "xml"
+                    };                    
+            }
+            
+            var fdp = new FacadeDataProvider(parametersMap);
+            
+            return fdp;
+            
+        }
+        
+    };
+    
     /*********************************
-    *   CLASS HipBookDataProvider
+    *   CLASS FacadeDataProvider
     *
     
     - Possède une URL d'accès
@@ -125,17 +159,18 @@ $(document).ready(function () {
             @return copies        // Un tableau d'informations sur des exemplaires de la ressources
 
     */
-    function HipBookDataProvider() {
-        this._converter             = new HipBookDataConverter();
+    function FacadeDataProvider( parametersMap ) {
+        this._converter             = parametersMap.implementation;
+        this._MAX_RESULTS_PER_PAGE  = parametersMap.maxResultsPerPage;
+        this._DATA_TYPE             = parametersMap.dataType;
+        
         this._currentQueryString    = "";
         this._currentPageNumber     = 0;
         this._currentTotalOfResults = 0;
-        this._MAX_RESULTS_PER_PAGE  = 20;
-        this._DATA_TYPE             = "xml";
-        
+
     }
 
-    HipBookDataProvider.prototype = {
+    FacadeDataProvider.prototype = {
         
         // Propriété constante
         // _BASE_URL: "http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp",
@@ -227,11 +262,11 @@ $(document).ready(function () {
    
     };
     
-    function HipBookDataConverter() {
+    function HipBookDataHandler() {
         this.data = null;
     }
     
-    HipBookDataConverter.prototype = {
+    HipBookDataHandler.prototype = {
             
         setData: function (data) {
             this.data = $(data);  
@@ -378,98 +413,32 @@ $(document).ready(function () {
 
     };
     
-      /*********************************
-    *   CLASS HipThesisDataProvider
-    *
+    function HipThesisDataHandler() {
+        this.data = null;
+    }
     
-    - Possède une URL d'accès
-    
-    - Méthodes :
-        - Publiques :
-        --- getSearchResults
-            @param  searchString  // La chaîne de recherche saisie.
-            @param  pageNumber    // La page de résultats attendue
-            @return resultSet     // Un objet CatalogResultSet
-        --- getDetailedItem
-            @param  url           // Pointant sur une représentation distante et détaillée de la ressource
-            @return copies        // Un tableau d'informations sur des exemplaires de la ressources
-
-    */
-    function HipThesisDataProvider() {}
-
-    HipThesisDataProvider.prototype = {
-        
-        // Propriété constante
-        _BASE_URL: "http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp",
-        _MAX_RESULTS_PER_PAGE: 20,
-        
-        // Fonction publique, que les ResultAreas sont susceptibles d'appeler.
-        getSearchResults: function (searchString, pageNumber) {
-            
-            var _self = this;
-            // console.log("getSearchResults. searchString : " + searchString);
-            
-            var queryUrl = _self._buildRequest(searchString, pageNumber);
-            // console.log("getSearchResults. queryUrl : " + queryUrl);
-            
-            var promisedResults = $.Deferred();
-            
-            var ajaxPromise = $.ajax({
-                // The URL for the request
-                // url: "proxy.php?index=.GK&limitbox_1=%24LAB7+%3D+s+or+%24LAB7+%3D+i&limitbox_3=&term=neurology&DonneXML=true",
-                url: queryUrl,
-                dataType: "xml",
-            });
-            
-            ajaxPromise.done(function (response) {
-                    var resultSet = _self._buildResultSet(response);
-                    // console.log("Records found !");
-                    // console.log("resultSet : " + resultSet);
-                
-                    // Ajout manuel des informations de pagination
-                    resultSet.maxResultsPerPage = _self._MAX_RESULTS_PER_PAGE;
-                
-                    promisedResults.resolve(resultSet);
-                    // searchResultView._handleNewResultSet(resultSet);
-            });
-            
-            ajaxPromise.always(function () {
-                    // console.log("The request for getSearchResults is complete!");
-            });
-
-            return promisedResults;
-        },
-    
-        // Fonction publique, que les ResultAreas sont susceptibles d'appeler.
-        getDetailedItem: function ( url ) {
-
-            var _self = this;
-            var promisedResults = $.Deferred();
-            
-            var queryString = url.slice(url.indexOf("?") + 1);
-            // console.log("Query String : " + queryString);
-            
-            var ajaxPromise = $.ajax({
-                url: "proxy.php?DonneXML=true&" + queryString,
-                dataType: "xml"
-            });
-            
-            
-            ajaxPromise.done(function (response) {
-                    var detailedItem = _self._buildDetailedDataItem(response);
-                    // console.log("Copies found !");
-                    promisedResults.resolve(detailedItem);
-            });
-            
-            
-            ajaxPromise.always(function () {
-                // console.log("Within callback of promise.");
-            });
-            
-            return promisedResults;
+    HipThesisDataHandler.prototype = {
+        setData: function (data) {
+            this.data = $(data);  
         },
         
-        _buildRequest: function (searchString, pageNumber) {
+        unsetData: function () {
+          this.data = null;  
+        },
+    
+        getPageNumber: function () {
+            return parseInt(this.data.find('searchresponse>yoursearch>view>currpage').text(), 10);
+        },
+    
+        getTotalOfResults: function () {
+            return parseInt(this.data.find('searchresponse>yoursearch>hits').text(), 10);
+        },
+    
+        getResultSet: function () {
+            return this.buildResultSet();
+        },
+        
+        buildRequest: function (searchString, pageNumber) {
             
             var urlArray = [
                 "proxy.php?DonneXML=true&index=",
@@ -493,22 +462,26 @@ $(document).ready(function () {
             return url;
         },
 
-        _buildResultSet: function (rawXmlData) {
+        buildItemUrl: function (identifier) {
+            return "proxy.php?DonneXML=true&" + identifier;
+        },
+        
+        buildResultSet: function () {
             // console.log("Results set building !");
-
+            var $rawXmlData = this.data;
             // var listRoot = $("<div class='ui items'></div>");
             var resultSet = new CatalogResultSet();
 
-            resultSet.numberOfResults = $(rawXmlData).find('searchresponse>yoursearch>hits').text();
-            resultSet.currentPage = $(rawXmlData).find('searchresponse>yoursearch>view>currpage').text();
+            resultSet.numberOfResults = $rawXmlData.find('searchresponse>yoursearch>hits').text();
+            resultSet.currentPage = $rawXmlData.find('searchresponse>yoursearch>view>currpage').text();
 
             // Récupérer, ligne à ligne, les données, les mettre en forme et les attacher à la liste
             var tempItems = [];
             var tempDataItem = null;
 
             var _self = this;
-            $(rawXmlData).find('searchresponse>summary>searchresults>results>row').each(function (index, value) {
-                tempDataItem = _self._buildDataItem($(value));
+            $rawXmlData.find('searchresponse>summary>searchresults>results>row').each(function (index, value) {
+                tempDataItem = _self.buildDataItem($(value));
                 tempItems.push(tempDataItem);
             });
 
@@ -517,7 +490,7 @@ $(document).ready(function () {
             return resultSet;
         },
 
-        _buildDataItem: function (rawXmlData) {
+        buildDataItem: function (rawXmlData) {
             var item = new CatalogItem();
 
             item.title          = rawXmlData.find('TITLE>data>text').text();
@@ -527,7 +500,7 @@ $(document).ready(function () {
             var sourceId        = rawXmlData.find('sourceid').text();
             var func            = rawXmlData.find('TITLE>data>link>func').text();
             item.isbn           = rawXmlData.find('isbn').text();
-            item.catalogUrl     = this._BASE_URL + "?uri=" + func + "&amp;source=" + sourceId;
+            item.catalogUrl     = "http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=" + func + "&amp;source=" + sourceId;
 
             var vDocumentType   = rawXmlData.find('cell:nth-of-type(14)>data>text').text();
             if (vDocumentType) {
@@ -537,7 +510,7 @@ $(document).ready(function () {
             return item;
         },
 
-        _buildDetailedDataItem: function (rawXmlData) {
+        buildDetailedDataItem: function (rawXmlData) {
 
             var copies = [];
             var currentCopy = null;
@@ -594,7 +567,6 @@ $(document).ready(function () {
             return item;
 
         }
-
     };
     
     
@@ -1297,14 +1269,16 @@ $(document).ready(function () {
         this._resultAreas           = [];
         
         // Créer et attacher les ResultAreas
+        var dpf = new DataProviderFactory();
+        
         this._resultAreas.push(
-                new ResultsArea("Thèses anciennes", "Catalogue général (1800&nbsp;-&nbsp;1951)", "student", this, new HipThesisDataProvider())
+                new ResultsArea("Thèses anciennes", "Catalogue général (1800&nbsp;-&nbsp;1951)", "student", this, dpf.getInstance("HipThesis"))
         );
         this._resultAreas.push(
                 new ResultsArea("Thèses récentes", "Catalogue spécifique (1985&nbsp;-&nbsp;&hellip;)", "student", this, new ThesisSpecificDataProvider())
         );
         this._resultAreas.push(
-                new ResultsArea("Ouvrages", "Catalogue général", "book", this, new HipBookDataProvider())
+                new ResultsArea("Ouvrages", "Catalogue général", "book", this, dpf.getInstance("HipBook"))
         );
         this._resultAreas.push(
                 new ResultsArea("Livres électroniques", "Catalogue spécifique", "tablet", this, new EBookDataProvider())
