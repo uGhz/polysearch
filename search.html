@@ -59,7 +59,7 @@
                                 <div class="ui grid">
                                     <div class="ten wide column">
                                         <div class="ui icon huge fluid input">
-                                            <input name="term" type="text" placeholder="Entrez ici vos termes de recherche..." class="prompt" autocomplete="off">
+                                            <input disabled="disabled" name="term" type="text" placeholder="Entrez ici vos termes de recherche..." class="prompt" autocomplete="off" autofocus="autofocus">
                                             <i class="search icon"></i>
                                         </div>
                                         <button class="btn" type="submit">
@@ -123,7 +123,7 @@
             <div class="ui inverted dimmer">
                 <div class="ui text loader">Interrogation du catalogue...</div>
             </div>
-            <div class="ui items"></div>
+            <div class="ui relaxed divided items"></div>
         </div>
     </script>
 
@@ -133,17 +133,21 @@
             <div class="ui inverted dimmer">
                 <div class="ui loader"></div>
             </div>
-            <div class="ui tiny image"><img src="images/image.png">
+            
+            {{ #thumbnailUrl }}
+            <div class="ui tiny image"><img src="{{thumbnailUrl}}">
             </div>
+            {{ /thumbnailUrl }}
+
             <div class="content">
             
-                {{ #catalogUrl }}
+                {{ #detailsAvailable }}
                 <a class="ui header" href="{{ catalogUrl }}">{{ title }}</a>
-                {{ /catalogUrl }}
+                {{ /detailsAvailable }}
                 
-                {{ ^catalogUrl }}
+                {{ ^detailsAvailable }}
                 <span class="ui header">{{ title }}</span>
-                {{ /catalogUrl }}
+                {{ /detailsAvailable }}
                 
                 <div class="description">
                     <p>
@@ -154,24 +158,64 @@
                     {{ #description }}
                     <p>{{ description }}</p>
                     {{ /description }}
+                    
+                    <p>
+                    {{ #discipline }}
+                    <span class='ui label'>{{ discipline }}</span>
+                    {{ /discipline }}
+                    {{ #thesisType }}
+                    <span class='ui label'>{{ thesisType }}</span>
+                    {{ /thesisType }}
+                    </p>
+                    
+                    <div class="ui divided selection list">
+                    {{ #directAccesses }}
+                      <div class="item">
+                        <button class="right floated compact ui button online-access-link" data-online-access-url="{{ url }}">En ligne<i class="right chevron icon"></i></button>
+                        <!-- <img class="ui avatar image" src="/images/avatar/small/justen.jpg">
+                        <div class="content">
+                          <div class="header">[Test.]</div>
+                        </div>
+                      </div> -->
+                    {{ /directAccesses }}
+                    </div>
+                    
+                    <div class="ui divided list">
+                    {{ #copies }}
+                      <div class="item">
+                        <div class="ui image">
+                                {{#conditions}}
+                                <span class='ui horizontal label popup-conditions' data-title='Conditions de consultation' data-content='{{conditions}}'>
+                                {{/conditions}}
+                                
+                                {{^conditions}}
+                                <span class='ui horizontal label'>
+                                {{/conditions}}
+                                
+                                    {{library}}<span class='detail'>Cote : {{callNumber}}</span>
+                                </span>
+                        </div>
+                        <div class="content">
+                            <!-- <div class="header"></div> -->
+                            <div class="description">
+                            {{holdings}}
+                            </div>
+                        </div>
+                      </div>
+                    {{ /copies }}
+                    </div>
                 </div>
                 
                 <div class="extra">
-                
-                    {{ #copies }}
-                    <span class='ui label' data-title='Conditions de consultation' data-content='{{conditions}}'>
-                             {{library}}<span class='detail'>Cote : {{cote}}</span>
-                    </span>
-                    {{ /copies }}
                     
                     {{ #catalogUrl }}
-                    <button class="ui tiny right floated button catalog-link" data-catalog-url="{{ catalogUrl }}">
+                    <button class="ui basic tiny right floated button catalog-link" data-catalog-url="{{ catalogUrl }}">
                         Voir dans le catalogue<i class="right chevron icon"></i>
                     </button>
                     {{ /catalogUrl }}
                     
                     {{ #onlineAccessUrl }}
-                    <button class="ui tiny right floated button online-access-link" data-online-access-url="{{ onlineAccessUrl }}">
+                    <button class="ui basic tiny right floated button online-access-link" data-online-access-url="{{ onlineAccessUrl }}">
                         Voir en ligne<i class="right chevron icon"></i>
                     </button>
                     {{ /onlineAccessUrl }}

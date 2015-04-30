@@ -53,6 +53,21 @@ $(document).ready(function () {
         }
     };
     
+    function ItemCopy() {
+        this.callNumber     = null;
+        this.library        = null;
+        this.precisePlace   = null;
+        this.conditions     = null;
+        this.holdings       = null;
+    }
+    
+    function DirectAccess() {
+        this.url            = null;
+        this.type           = null;
+        this.holdings       = null;
+        this.provider       = null;
+    }
+    
     /**
      * Value Object représentant un résultat, une référence bibliographique.
      * 
@@ -69,12 +84,17 @@ $(document).ready(function () {
         this.publisher          = null;
         this.publishedDate      = null;
         this.documentType       = null;
+        this.discipline         = null; // Qualifie les thèses.
+        this.thesisType         = null; // Qualifie les thèses.
         this.isbn               = null;
-        this.description        = null;
+        this.description        = null; // Usage à préciser.
         this.catalogUrl         = null;
-        this.onlineAccessUrl    = null;
+        // this.onlineAccessUrl    = null;
+        this.thumbnailUrl       = null; // A utiliser si la récupération se fait au niveau de la couche d'accès aux données.
         this.tags               = null;
-        this.copies             = null;
+        this.copies             = [];
+        this.directAccesses     = [];
+        this.detailsAvailable   = false; // Marque la possibilité d'enrichir ce contenu par une nouvelle requête.
     }
     
     /**
@@ -402,8 +422,10 @@ $(document).ready(function () {
             var sourceId        = rawXmlData.find('sourceid').text();
             var func            = rawXmlData.find('TITLE>data>link>func').text();
             item.isbn           = rawXmlData.find('isbn').text();
+            item.thumbnailUrl   = "images/image.png";
             item.catalogUrl     = "http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=" + func + "&amp;source=" + sourceId;
-
+            item.detailsAvailable = true;
+            
             var vDocumentType   = rawXmlData.find('cell:nth-of-type(14)>data>text').text();
             if (vDocumentType) {
                 item.documentType = vDocumentType.slice(vDocumentType.lastIndexOf(' ') + 1, vDocumentType.length - "$html$".length);
@@ -430,6 +452,7 @@ $(document).ready(function () {
             
             var tempNode = generalDataRoot.find('PPN>data>text');
             item.catalogUrl     = (tempNode) ? "http://www.biusante.parisdescartes.fr/" + tempNode.text().replace(/ppn\s/g, "ppn?") : "";
+            item.thumbnailUrl   = "images/image.png";
             
             $(rawXmlData).find('searchresponse>items>searchresults>results>row').each(function () {
                 
@@ -448,7 +471,7 @@ $(document).ready(function () {
                 currentCopy.library = tempString;
 
                 currentCopy.precisePlace    = currentNode.find('TEMPORARYLOCATION:first-of-type>data>text').text();
-                currentCopy.cote            = currentNode.find('CALLNUMBER>data>text').text();
+                currentCopy.callNumber            = currentNode.find('CALLNUMBER>data>text').text();
                 currentCopy.conditions      = currentNode.find('cell:nth-of-type(5)>data>text').text();
 
                 copies.push(currentCopy);
@@ -549,8 +572,10 @@ $(document).ready(function () {
             var sourceId        = rawXmlData.find('sourceid').text();
             var func            = rawXmlData.find('TITLE>data>link>func').text();
             item.isbn           = rawXmlData.find('isbn').text();
+            item.thumbnailUrl   = "images/image.png";
             item.catalogUrl     = "http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=" + func + "&amp;source=" + sourceId;
-
+            item.detailsAvailable   = true;
+            
             var vDocumentType   = rawXmlData.find('cell:nth-of-type(14)>data>text').text();
             if (vDocumentType) {
                 item.documentType = vDocumentType.slice(vDocumentType.lastIndexOf(' ') + 1, vDocumentType.length - "$html$".length);
@@ -586,6 +611,7 @@ $(document).ready(function () {
             
             var tempNode = generalDataRoot.find('PPN>data>text');
             item.catalogUrl     = (tempNode) ? "http://www.biusante.parisdescartes.fr/" + tempNode.text().replace(/ppn\s/g, "ppn?") : "";
+            item.thumbnailUrl   = "images/image.png";
             
             $(rawXmlData).find('searchresponse>items>searchresults>results>row').each(function () {
                 
@@ -604,7 +630,7 @@ $(document).ready(function () {
                 currentCopy.library = tempString;
 
                 currentCopy.precisePlace    = currentNode.find('TEMPORARYLOCATION:first-of-type>data>text').text();
-                currentCopy.cote            = currentNode.find('CALLNUMBER>data>text').text();
+                currentCopy.callNumber            = currentNode.find('CALLNUMBER>data>text').text();
                 currentCopy.conditions      = currentNode.find('cell:nth-of-type(5)>data>text').text();
 
                 copies.push(currentCopy);
@@ -704,9 +730,10 @@ $(document).ready(function () {
             item.publishedDate  = rawXmlData.find('PUBDATE>data>text').text();
             var sourceId        = rawXmlData.find('sourceid').text();
             var func            = rawXmlData.find('TITLE>data>link>func').text();
-            item.isbn           = rawXmlData.find('isbn').text();
+            item.issn           = rawXmlData.find('issn').text();
             item.catalogUrl     = "http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=" + func + "&amp;source=" + sourceId;
-
+            item.detailsAvailable = true;
+            
             var vDocumentType   = rawXmlData.find('cell:nth-of-type(14)>data>text').text();
             if (vDocumentType) {
                 item.documentType = vDocumentType.slice(vDocumentType.lastIndexOf(' ') + 1, vDocumentType.length - "$html$".length);
@@ -738,18 +765,31 @@ $(document).ready(function () {
             item.author         = generalDataRoot.find('AUTHOR>data>text').text();
             item.publisher      = generalDataRoot.find('cell:nth-of-type(13)>data>text').text();
             // item.publishedDate  = rawXmlData.find('PUBDATE>data>text').text();
-            item.isbn           = generalDataRoot.find('isbn').text();
+            item.issn           = generalDataRoot.find('issn').text();
             
             var tempNode = generalDataRoot.find('PPN>data>text');
             item.catalogUrl     = (tempNode) ? "http://www.biusante.parisdescartes.fr/" + tempNode.text().replace(/ppn\s/g, "ppn?") : "";
             
-            $(rawXmlData).find('searchresponse>items>searchresults>results>row').each(function () {
+            var vLocalisation   = null;
+            var currentNode     = null;
+            var ic              = null;
+            
+            generalDataRoot.find('cell:nth-of-type(75)>data').each(function () {
                 
-                var currentNode = $(this);
-                currentCopy = {};
+                ic              = new ItemCopy();
+                vLocalisation       = $(this).children('text').text();
+                console.log("vLocalisation set !");
+                console.log("Raw Localisation : " + vLocalisation);
+                vLocalisation = vLocalisation.split("$html$")[1];
 
-                tempString = currentNode.find('LOCALLOCATION>data>text').text();
-                
+                var tempTab = vLocalisation.split("Cote : ");
+                ic.callNumber = tempTab[1];
+
+                tempTab = tempTab[0].split("collection : ");
+                vLocalisation = tempTab[1];
+                ic.holdings = vLocalisation;
+
+                tempString = tempTab[0];
                 if (tempString.indexOf("Médecine") != -1) {
                     tempString = "Médecine";
                 } else if (tempString.indexOf("Pharmacie") != -1) {
@@ -757,16 +797,43 @@ $(document).ready(function () {
                 } else {
                     tempString = "";
                 }
-                currentCopy.library = tempString;
+                ic.library = tempString;
 
-                currentCopy.precisePlace    = currentNode.find('TEMPORARYLOCATION:first-of-type>data>text').text();
-                currentCopy.cote            = currentNode.find('CALLNUMBER>data>text').text();
-                currentCopy.conditions      = currentNode.find('cell:nth-of-type(5)>data>text').text();
 
-                copies.push(currentCopy);
-                // console.log("Details added !");
+                console.log("Raw Localisation : " + vLocalisation);
+
+                copies.push(ic);
+                
             });
             
+            /*
+            vLocalisation       = generalDataRoot.find('cell:nth-of-type(75)>data>text').text();
+            console.log("vLocalisation set !");
+            console.log("Raw Localisation : " + vLocalisation);
+            vLocalisation = vLocalisation.split("$html$")[1];
+            
+            var tempTab = vLocalisation.split("Cote : ");
+            ic.callNumber = tempTab[1];
+            
+            tempTab = tempTab[0].split("collection : ");
+            vLocalisation = tempTab[1];
+            ic.holdings = vLocalisation;
+            
+            tempString = tempTab[0];
+            if (tempString.indexOf("Médecine") != -1) {
+                tempString = "Médecine";
+            } else if (tempString.indexOf("Pharmacie") != -1) {
+                tempString = "Pharmacie";
+            } else {
+                tempString = "";
+            }
+            ic.library = tempString;
+            
+            
+            console.log("Raw Localisation : " + vLocalisation);
+            
+            copies.push(ic);
+            */
             item.copies = copies;
             
             return item;
@@ -829,8 +896,8 @@ $(document).ready(function () {
             return url;
         },
          
-        buildItemUrl: function (identifier) {
-            return null; // return "proxy.php?DonneXML=true&" + identifier;
+        buildItemUrl: function () {
+            return null;
         },
 
         buildResultSet: function () {
@@ -887,18 +954,23 @@ $(document).ready(function () {
             item.title          = cell2.find('p>a>b').text();
             
             // Récupération de l'auteur
-            var regexResult = /Par\s(.*?)\s?\.?(PAYS|LANGUE)/g.exec(cell2.find('div').text());
+            var tempText = cell2.find('div').text();
+            var regexResult = /Par\s(.*?)\s?\.?(PAYS|LANGUE)/g.exec(tempText);
             // console.log("regexResult : " + regexResult)
             item.author         = (regexResult) ? regexResult[1] : "";
             
-            item.publisher      = rawXmlData.find('PUBLISHER>data>text').text();
+            item.publisher      = cell2.find('div > a').text();
             
             item.description    = cell2.find('div > i').text();
             
             // Récupération de la date de publication
-            regexResult = /(\d{4})\.?/g.exec(cell2.find('div').text());
+            regexResult = /(\d{4})\.?/g.exec(tempText);
             item.publishedDate  = (regexResult) ? regexResult[1] : "";
-            item.onlineAccessUrl      = cell2.find('p > a').attr("href");
+            //item.onlineAccessUrl      = cell2.find('p > a').attr("href");
+            
+            var directAccess = new DirectAccess();
+            directAccess.url = cell2.find('p > a').attr("href");
+            item.directAccesses.push(directAccess);
         
 
             var vDocumentType   = rawXmlData.find('cell:nth-of-type(14)>data>text').text();
@@ -963,9 +1035,6 @@ $(document).ready(function () {
                 var regexResult = /:\s(\d+)\s/g.exec(tempText);
                 result   = (regexResult) ? regexResult[1] : 0;
 
-                var tempItems = [];
-                var tempDataItem = null;
-
             } else {
 
                 wrappingTable = this.data.find("#table241");
@@ -1011,8 +1080,8 @@ $(document).ready(function () {
             return url;
         },
          
-        buildItemUrl: function (identifier) {
-            return null; // return "proxy.php?DonneXML=true&" + identifier;
+        buildItemUrl: function () {
+            return null;
         },
 
         buildResultSet: function () {
@@ -1023,9 +1092,6 @@ $(document).ready(function () {
             var resultSet = new CatalogResultSet();
 
             var wrappingTable = $rawXmlData.find("#table245");
-          // console.log("wrappingTable : " + wrappingTable);
-            
-            // resultSet.numberOfResults   = this.getTotalOfResults();
             
             // S'il y a des résultats, les analyser et alimenter le CatalogResultSet
             if (wrappingTable.length) {
@@ -1066,9 +1132,28 @@ $(document).ready(function () {
             // Récupération de l'auteur
             item.author          = rawXmlData.find('tr:nth-child(1)>td:nth-child(1)>b').text();
             
-            item.description    = rawXmlData.find('tr:nth-child(1)>td:nth-child(2)>i').text();
-
+            // Récupération de la cote et de la date.
+            var tempText = rawXmlData.find('tr:nth-child(1)>td:nth-child(2)>p>i').text();
+            console.log("tempText : " + tempText);
+            var regexResult = /^(\d+)\s/g.exec(tempText);
+            if (regexResult !== null) {
+                item.publishedDate = regexResult[1];
+            }
+            var ic = new ItemCopy();
+            ic.callNumber = tempText;
+            ic.library      = "Médecine";
+            item.copies.push(ic);
+            
+            // Récupération du titre
             item.title          = rawXmlData.find('tr:nth-child(2)>td').text();
+            
+            // Récupération du type et de la discipline de thèse.
+            var tempElements = rawXmlData.find('tr:nth-child(3)>td').contents()
+                .filter(function() {
+                  return this.nodeType === 3;
+                });
+            item.discipline = tempElements.first().text();
+            item.thesisType = tempElements.eq(1).text();
             
             return item;
         },
@@ -1118,6 +1203,9 @@ $(document).ready(function () {
         
         // Attacher les gestionnaires d'évènements
         this._form.submit($.proxy(this._updateCurrentRequest, this));
+        
+        // Activer le formulaire de recherche
+        this._form.find("input").removeAttr("disabled");
     }
     
     SearchArea.prototype = {
@@ -1371,7 +1459,7 @@ $(document).ready(function () {
           // console.log("_handleNewItemDetails has been called !");
             
             var newItem = this._buildResultItem(detailedItem);
-            newItem.find(".extra > span.label").popup();
+            newItem.find("span.label.popup-conditions").popup();
             domItem.replaceWith(newItem);
             
           // console.log("handleDetails is finished !");
@@ -1389,7 +1477,7 @@ $(document).ready(function () {
             // les mettre en forme et les attacher au conteneur d'items
             var tempDomItem = null;
             
-            var listRoot = $("<div class='ui items'></div>");
+            var listRoot = $("<div class='ui relaxed divided items'></div>");
             var resultsArray = resultSet.results;
             for (var i = 0, len = resultsArray.length; i < len; i++) {
                 tempDomItem = this._buildResultItem(resultsArray[i]);
