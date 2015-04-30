@@ -53,7 +53,6 @@ $(document).ready(function () {
         }
     };
     
-    
     /**
      * Value Object représentant un résultat, une référence bibliographique.
      * 
@@ -120,7 +119,7 @@ $(document).ready(function () {
             
                 case "HipBook":
                     parametersMap = {
-                        implementation:     new HipBookDataHandler(),
+                        implementation:     new HipBookDataAnalyzer(),
                         maxResultsPerPage:  20,
                         dataType:           "xml"
                     };
@@ -128,28 +127,28 @@ $(document).ready(function () {
                     
                 case "HipThesis":
                     parametersMap = {
-                        implementation:     new HipThesisDataHandler(),
+                        implementation:     new HipThesisDataAnalyzer(),
                         maxResultsPerPage:  20,
                         dataType:           "xml"
                     };
                     break;
                 case "HipPeriodical":
                     parametersMap = {
-                        implementation:     new HipPeriodicalDataHandler(),
+                        implementation:     new HipPeriodicalDataAnalyzer(),
                         maxResultsPerPage:  20,
                         dataType:           "xml"
                     };
                     break;
                 case "EBookSpecific":
                     parametersMap = {
-                        implementation:     new EBookSpecificDataHandler(),
+                        implementation:     new EBookSpecificDataAnalyzer(),
                         maxResultsPerPage:  100,
                         dataType:           "html"
                     };
                     break;
                 case "ThesisSpecific":
                     parametersMap = {
-                        implementation:     new ThesisSpecificDataHandler(),
+                        implementation:     new ThesisSpecificDataAnalyzer(),
                         maxResultsPerPage:  25,
                         dataType:           "html"
                     };                    
@@ -181,7 +180,7 @@ $(document).ready(function () {
 
     */
     function FacadeDataProvider( parametersMap ) {
-        this._converter             = parametersMap.implementation;
+        this._analyzer             = parametersMap.implementation;
         this._MAX_RESULTS_PER_PAGE  = parametersMap.maxResultsPerPage;
         this._DATA_TYPE             = parametersMap.dataType;
         
@@ -206,10 +205,10 @@ $(document).ready(function () {
             var queryUrl = null;
             console.log("getSearchResults. pageNumber : " + pageNumber);
             if (pageNumber && pageNumber > 1) {            
-                queryUrl = _self._converter.buildRequest(this._currentQueryString, this._currentPageNumber + 1);
+                queryUrl = _self._analyzer.buildRequest(this._currentQueryString, this._currentPageNumber + 1);
             } else {
                 this._currentQueryString = searchString;
-                queryUrl = _self._converter.buildRequest(searchString);
+                queryUrl = _self._analyzer.buildRequest(searchString);
             }
             // console.log("getSearchResults. queryUrl : " + queryUrl);
             
@@ -223,18 +222,18 @@ $(document).ready(function () {
             });
             
             ajaxPromise.done(function (response) {
-                    _self._converter.setData(response);
-                    // var resultSet = _self._converter._buildResultSet(response);
-                    _self._currentPageNumber        = _self._converter.getPageNumber();
-                    _self._currentTotalOfResults    = _self._converter.getTotalOfResults();
+                    _self._analyzer.setData(response);
+                    // var resultSet = _self._analyzer._buildResultSet(response);
+                    _self._currentPageNumber        = _self._analyzer.getPageNumber();
+                    _self._currentTotalOfResults    = _self._analyzer.getTotalOfResults();
                 
-                    var resultSet                   = _self._converter.getResultSet();
+                    var resultSet                   = _self._analyzer.getResultSet();
                     // console.log("Records found !");
                     // console.log("resultSet : " + resultSet);
                 
                     // Ajout manuel des informations de pagination
                     resultSet.maxResultsPerPage = _self._MAX_RESULTS_PER_PAGE;
-                    _self._converter.unsetData();
+                    _self._analyzer.unsetData();
                     promisedResults.resolve(resultSet);
                     // searchResultView._handleNewResultSet(resultSet);
             });
@@ -261,13 +260,13 @@ $(document).ready(function () {
             // console.log("Query String : " + queryString);
             
             var ajaxPromise = $.ajax({
-                url: _self._converter.buildItemUrl(itemIdentifier),
+                url: _self._analyzer.buildItemUrl(itemIdentifier),
                 dataType: _self._DATA_TYPE
             });
             
             
             ajaxPromise.done(function (response) {
-                    var detailedItem = _self._converter.buildDetailedDataItem(response);
+                    var detailedItem = _self._analyzer.buildDetailedDataItem(response);
                     // console.log("Copies found !");
                     promisedResults.resolve(detailedItem);
             });
@@ -283,11 +282,11 @@ $(document).ready(function () {
    
     };
     
-    function HipBookDataHandler() {
+    function HipBookDataAnalyzer() {
         this.data = null;
     }
     
-    HipBookDataHandler.prototype = {
+    HipBookDataAnalyzer.prototype = {
             
         setData: function (data) {
             this.data = $(data);  
@@ -434,11 +433,11 @@ $(document).ready(function () {
 
     };
     
-    function HipThesisDataHandler() {
+    function HipThesisDataAnalyzer() {
         this.data = null;
     }
     
-    HipThesisDataHandler.prototype = {
+    HipThesisDataAnalyzer.prototype = {
         setData: function (data) {
             this.data = $(data);  
         },
@@ -590,11 +589,11 @@ $(document).ready(function () {
         }
     };
     
-    function HipPeriodicalDataHandler() {
+    function HipPeriodicalDataAnalyzer() {
         this.data = null;
     }
     
-    HipPeriodicalDataHandler.prototype = {
+    HipPeriodicalDataAnalyzer.prototype = {
             
         setData: function (data) {
             this.data = $(data);  
@@ -748,11 +747,11 @@ $(document).ready(function () {
 
     };
     
-    function EBookSpecificDataHandler() {
+    function EBookSpecificDataAnalyzer() {
         this.data = null;
     }
     
-    EBookSpecificDataHandler.prototype = {
+    EBookSpecificDataAnalyzer.prototype = {
         
         _authorRegex: /Par\s(.*)\s*\.[A-Z]{3,}/g,
         
@@ -894,11 +893,11 @@ $(document).ready(function () {
 
     };
     
-    function ThesisSpecificDataHandler() {
+    function ThesisSpecificDataAnalyzer() {
         this.data = null;
     }
     
-    ThesisSpecificDataHandler.prototype = {
+    ThesisSpecificDataAnalyzer.prototype = {
         
         setData: function (data) {
             this.data = $(data);  
@@ -1059,8 +1058,6 @@ $(document).ready(function () {
 
     };
     
-    
-    
     /*********************************
     *   CLASS SearchArea
     *
@@ -1200,7 +1197,7 @@ $(document).ready(function () {
             --- _handleNewItemDetails
             --- _handleNewResultSet
     */
-    function ResultsArea(title, subtitle, iconName, searchArea, dataProvider ) {
+    function ResultsArea(title, subtitle, iconName, searchArea, dataProvider) {
         
         // Initialisées à la création de l'objet
         this._searchArea    = searchArea;
