@@ -145,7 +145,14 @@ $(document).ready(function () {
                         implementation:     new EBookSpecificDataHandler(),
                         maxResultsPerPage:  100,
                         dataType:           "html"
-                    };                
+                    };
+                    break;
+                case "ThesisSpecific":
+                    parametersMap = {
+                        implementation:     new ThesisSpecificDataHandler(),
+                        maxResultsPerPage:  25,
+                        dataType:           "html"
+                    };                    
             }
             
             var fdp = new FacadeDataProvider(parametersMap);
@@ -887,93 +894,83 @@ $(document).ready(function () {
 
     };
     
+    function ThesisSpecificDataHandler() {
+        this.data = null;
+    }
     
-            /*********************************
-    *   CLASS ThesisSpecificDataProvider
-    *
-    */
-    function ThesisSpecificDataProvider() {}
-
-    ThesisSpecificDataProvider.prototype = {
+    ThesisSpecificDataHandler.prototype = {
         
-        // Propriété constante
-        _BASE_URL: "http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp",
-        _MAX_RESULTS_PER_PAGE: 25,
-        // @todo change this.
-        //http://www2.biusante.parisdescartes.fr/signets2015/index.las?specif=livelec&acces=&tri=alp&form=o&tout=rein&dsi_cle=
-        _authorRegex: /Par\s(.*)\s*\.[A-Z]{3,}/g,
-        
-        // Fonction publique, que les ResultAreas sont susceptibles d'appeler.
-        getSearchResults: function (searchString, pageNumber) {
-            
-            var _self = this;
-          // console.log("getSearchResults. searchString : " + searchString);
-          // console.log("getSearchResults. pageNumber : " + pageNumber);
-            
-            var queryUrl = _self._buildRequest(searchString, pageNumber);
-          // console.log("getSearchResults. queryUrl : " + queryUrl);
-            
-            var promisedResults = $.Deferred();
-            
-            var ajaxPromise = $.ajax({
-                // The URL for the request
-                // url: "proxy.php?index=.GK&limitbox_1=%24LAB7+%3D+s+or+%24LAB7+%3D+i&limitbox_3=&term=neurology&DonneXML=true",
-                url: queryUrl,
-                dataType: "html",
-            });
-            
-            ajaxPromise.done(function (response) {
-                    var resultSet = _self._buildResultSet(response);
-                  // console.log("Records found !");
-                  // console.log("resultSet : " + resultSet);
-                
-                    // Ajout manuel des informations de pagination
-                    resultSet.maxResultsPerPage = _self._MAX_RESULTS_PER_PAGE;
-                
-                    // Ajout manuel du numéro de page
-                    resultSet.currentPage = pageNumber;
-                    
-                    promisedResults.resolve(resultSet);
-                    // searchResultView._handleNewResultSet(resultSet);
-            });
-            
-            ajaxPromise.always(function () {
-                  // console.log("The request for getSearchResults is complete!");
-            });
-
-            return promisedResults;
-        },
-    
-        // Fonction publique, que les ResultAreas sont susceptibles d'appeler.
-        getDetailedItem: function ( url ) {
-
-            var _self = this;
-            var promisedResults = $.Deferred();
-            
-            var queryString = url.slice(url.indexOf("?") + 1);
-          // console.log("Query String : " + queryString);
-            
-            var ajaxPromise = $.ajax({
-                url: "proxy.php?DonneXML=true&" + queryString,
-                dataType: "xml"
-            });
-            
-            
-            ajaxPromise.done(function (response) {
-                    var copies = _self._buildDetailedDataItem(response);
-                  // console.log("Copies found !");
-                    promisedResults.resolve(copies);
-            });
-            
-            
-            ajaxPromise.always(function () {
-              // console.log("Within callback of promise.");
-            });
-            
-            return promisedResults;
+        setData: function (data) {
+            this.data = $(data);  
         },
         
-        _buildRequest: function (searchString, pageNumber) {
+        unsetData: function () {
+          this.data = null;  
+        },
+    
+        getPageNumber: function () {
+            // throw "Not implemented method.";
+            
+            var result = 1;
+            
+            var $flecheGauche = this.data.find("img[src='http://www.biusante.parisdescartes.fr/imutil/flecheptg.gif'][alt='page précédente']");
+            console.log("$flecheGauche found : " + $flecheGauche);
+            if ($flecheGauche) {
+                
+                var urlPagePrecedente = $flecheGauche.parent().attr("href");
+                console.log("urlPagePrecedente found : " + urlPagePrecedente);
+                var regexResult = /p=(\d+)/g.exec(urlPagePrecedente);
+                
+                if (regexResult) {
+                    result = parseInt(regexResult[1], 10) + 1;
+                }
+            }
+                
+            console.log("Thesis page number : " + result);
+            return result;
+        },
+    
+        getTotalOfResults: function () {
+            
+            var wrappingTable = this.data.find("#table245");
+            var result = 0;
+            
+            // S'il y a des résultats, les analyser et alimenter le CatalogResultSet
+            if (wrappingTable.length) {
+                var tempText = wrappingTable.find('tr:nth-child(1)>td>p').text();
+
+                var regexResult = /:\s(\d+)\s/g.exec(tempText);
+                result   = (regexResult) ? regexResult[1] : 0;
+
+                var tempItems = [];
+                var tempDataItem = null;
+
+            } else {
+
+                wrappingTable = this.data.find("#table241");
+                
+                var messageCell = wrappingTable.find("tr:nth-child(2) > td:nth-child(1)");
+                
+                if (messageCell.text().indexOf("aucune réponse") !== -1) {
+                    // La requête ne renvoie aucun résultat.
+                    result = 0;
+                } else {
+
+                    result = messageCell.find("b").text();
+
+                }
+                
+            }
+            
+            return result;
+        },
+    
+        getResultSet: function () {
+            return this.buildResultSet();
+        },
+        
+        buildRequest: function (searchString, pageNumber) {
+            
             // http://www2.biusante.parisdescartes.fr/theses/index.las?toutindex=victor&p=2
             var urlArray = [
                 "proxy-theses.php?",
@@ -992,27 +989,27 @@ $(document).ready(function () {
             
             return url;
         },
+         
+        buildItemUrl: function (identifier) {
+            return null; // return "proxy.php?DonneXML=true&" + identifier;
+        },
 
-        _buildResultSet: function (rawXmlData) {
-          // console.log("ThesisSpecificDataProvider... Beginning of _buildResultSet. Results set building !");
-
+        buildResultSet: function () {
+            // console.log("ThesisSpecificDataProvider... Beginning of _buildResultSet. Results set building !");
+            
+            var $rawXmlData = this.data;
+            
             var resultSet = new CatalogResultSet();
 
-            var wrappingTable = $(rawXmlData).find("#table245");
+            var wrappingTable = $rawXmlData.find("#table245");
           // console.log("wrappingTable : " + wrappingTable);
+            
+            resultSet.numberOfResults   = this.getTotalOfResults();
+            resultSet.currentPage = this.getPageNumber();
             
             // S'il y a des résultats, les analyser et alimenter le CatalogResultSet
             if (wrappingTable.length) {
-              // console.log("ThesisSpecificDataProvider... #table245 found !");
-                var tempText = wrappingTable.find('tr:nth-child(1)>td>p').text();
-
-                // console.log("tempText : " + tempText);
-                var regexResult = /:\s(\d+)\s/g.exec(tempText);
-              // console.log("regexResult : " + regexResult);
-                resultSet.numberOfResults   = (regexResult) ? regexResult[1] : 0;
-              // console.log("resultSet.numberOfResults : " + resultSet.numberOfResults);
-                // resultSet.currentPage       = 25;
-
+                
                 // Récupérer, ligne à ligne, les données, les mettre en forme et les attacher à la liste
                 var tempItems = [];
                 var tempDataItem = null;
@@ -1020,7 +1017,7 @@ $(document).ready(function () {
                 var _self = this;
                 wrappingTable.find('tr > td > table').each(function (index, value) {
                     // if (index > 2) { // Il faut aussi exclure le dernier TR
-                        tempDataItem = _self._buildDataItem($(value));
+                        tempDataItem = _self.buildDataItem($(value));
                         tempItems.push(tempDataItem);
                     // }
                 });
@@ -1028,19 +1025,11 @@ $(document).ready(function () {
                 resultSet.results = tempItems;
             } else {
               // console.log("ThesisSpecificDataProvider... #table245 not found !");
-                wrappingTable = $(rawXmlData).find("#table241");
+                wrappingTable = $rawXmlData.find("#table241");
                 
                 var messageCell = wrappingTable.find("tr:nth-child(2) > td:nth-child(1)");
                 
-                if (messageCell.text().indexOf("aucune réponse") !== -1) {
-                    // La requête ne renvoie aucun résultat.
-                  // console.log("ThesisSpecificDataProvider... No results !");
-                    resultSet.numberOfResults = 0;
-                } else {
-                    // La requête renvoie de trop nombreux résultats.
-                  // console.log("ThesisSpecificDataProvider... Too much results !");
-                    resultSet.numberOfResults = messageCell.find("b").text();
-                  // console.log("ThesisSpecificDataProvider... Number of results : " + resultSet.numberOfResults);
+                if (messageCell.text().indexOf("aucune réponse") === -1) {
                     resultSet.warningMessage = resultSet.WARNING_MESSAGE.TOO_MUCH_RESULTS;
                 }
                 
@@ -1051,24 +1040,8 @@ $(document).ready(function () {
             return resultSet;
         },
 
-        
-            /*
-             * 
-             * $("#table245"), 1ère ligne tr, 1er td, 1er p, text, pageNumber après "Nombre de réponses : " et avant le 1er "&"
-             * Si table245 n'existe pas, soit la recherche n'a ramené aucun résultat, soit la recherche en a ramené trop.
-             * #table245, chaque tr[x] (2 < x < tr.length) correspond à une référence d'ouvrage
-             * chaque tr > td > table :
-             * - 1er tr(1) > td(1) > b.text : Auteur
-             * - 1er tr(1) > td(2) > i.text : Information repérage thèse
-             * - 2ème tr(2) > td.text : Titre
-             * - 3ème tr(3) > td : Le reste
-             *
-            */
-        _buildDataItem: function (rawXmlData) {
-            
+        buildDataItem: function (rawXmlData) {
             var item = new CatalogItem();
-            
-            // var cell2 = rawXmlData.find('td:nth-child(2)');
             
             // Récupération de l'auteur
             item.author          = rawXmlData.find('tr:nth-child(1)>td:nth-child(1)>b').text();
@@ -1077,48 +1050,11 @@ $(document).ready(function () {
 
             item.title          = rawXmlData.find('tr:nth-child(2)>td').text();
             
-        
-            /*
-            var vDocumentType   = rawXmlData.find('cell:nth-of-type(14)>data>text').text();
-            if (vDocumentType) {
-                item.documentType = vDocumentType.slice(vDocumentType.lastIndexOf(' ') + 1, vDocumentType.length - "$html$".length);
-            }
-            */
             return item;
         },
 
-        _buildDetailedDataItem: function (rawXmlData) {
-
-            var copies = [];
-            var currentCopy = null;
-            var tempString = "";
-            
-            $(rawXmlData).find('searchresponse>items>searchresults>results>row').each(function () {
-                
-                var currentNode = $(this);
-                currentCopy = {};
-
-                tempString = currentNode.find('LOCALLOCATION>data>text').text();
-                
-                if (tempString.indexOf("Médecine") != -1) {
-                    tempString = "Médecine";
-                } else if (tempString.indexOf("Pharmacie") != -1) {
-                    tempString = "Pharmacie";
-                } else {
-                    tempString = "";
-                }
-                currentCopy.library = tempString;
-
-                currentCopy.precisePlace    = currentNode.find('TEMPORARYLOCATION:first-of-type>data>text').text();
-                currentCopy.cote            = currentNode.find('CALLNUMBER>data>text').text();
-                currentCopy.conditions      = currentNode.find('cell:nth-of-type(5)>data>text').text();
-
-                copies.push(currentCopy);
-              // console.log("Details added !");
-            });
-
-            return copies;
-
+        buildDetailedDataItem: function () {
+            throw "Exception : UnsupportedOperationException";
         }
 
     };
@@ -1150,7 +1086,7 @@ $(document).ready(function () {
                 new ResultsArea("Thèses anciennes", "Catalogue général (1800&nbsp;-&nbsp;1951)", "student", this, dpf.getInstance("HipThesis"))
         );
         this._resultAreas.push(
-                new ResultsArea("Thèses récentes", "Catalogue spécifique (1985&nbsp;-&nbsp;&hellip;)", "student", this, new ThesisSpecificDataProvider())
+                new ResultsArea("Thèses récentes", "Catalogue spécifique (1985&nbsp;-&nbsp;&hellip;)", "student", this, dpf.getInstance("ThesisSpecific"))
         );
         this._resultAreas.push(
                 new ResultsArea("Ouvrages", "Catalogue général", "book", this, dpf.getInstance("HipBook"))
