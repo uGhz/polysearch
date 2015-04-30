@@ -135,7 +135,16 @@
             </div>
             <div class="ui tiny image"><img src="images/image.png">
             </div>
-            <div class="content"><a class="ui header" href="{{ catalogUrl }}">{{ title }}</a>
+            <div class="content">
+            
+                {{ #catalogUrl }}
+                <a class="ui header" href="{{ catalogUrl }}">{{ title }}</a>
+                {{ /catalogUrl }}
+                
+                {{ ^catalogUrl }}
+                <span class="ui header">{{ title }}</span>
+                {{ /catalogUrl }}
+                
                 <div class="description">
                     <p>
                         {{ #author }}
@@ -146,20 +155,27 @@
                     <p>{{ description }}</p>
                     {{ /description }}
                 </div>
+                
                 <div class="extra">
+                
                     {{ #copies }}
                     <span class='ui label' data-title='Conditions de consultation' data-content='{{conditions}}'>
                              {{library}}<span class='detail'>Cote : {{cote}}</span>
                     </span>
-                    {{ /copies }} {{ #catalogUrl }}
+                    {{ /copies }}
+                    
+                    {{ #catalogUrl }}
                     <button class="ui tiny right floated button catalog-link" data-catalog-url="{{ catalogUrl }}">
                         Voir dans le catalogue<i class="right chevron icon"></i>
                     </button>
-                    {{ /catalogUrl }} {{ #onlineAccessUrl }}
+                    {{ /catalogUrl }}
+                    
+                    {{ #onlineAccessUrl }}
                     <button class="ui tiny right floated button online-access-link" data-online-access-url="{{ onlineAccessUrl }}">
                         Voir en ligne<i class="right chevron icon"></i>
                     </button>
                     {{ /onlineAccessUrl }}
+                    
                 </div>
             </div>
         </div>

@@ -93,9 +93,7 @@ $(document).ready(function () {
     };
 
     function CatalogResultSet() {
-        this.currentPage        = null;
-        this.numberOfResults    = null;
-        this.maxResultsPerPage  = null;
+        // this.numberOfResults    = null;
         this.results            = [];
         this.warningMessage     = "";
     }
@@ -180,13 +178,14 @@ $(document).ready(function () {
 
     */
     function FacadeDataProvider( parametersMap ) {
-        this._analyzer             = parametersMap.implementation;
+        this._analyzer              = parametersMap.implementation;
         this._MAX_RESULTS_PER_PAGE  = parametersMap.maxResultsPerPage;
         this._DATA_TYPE             = parametersMap.dataType;
         
         this._currentQueryString    = "";
         this._currentPageNumber     = 0;
         this._currentTotalOfResults = 0;
+        this._moreResultsAvailable  = null;
 
     }
 
@@ -212,6 +211,44 @@ $(document).ready(function () {
             }
             // console.log("getSearchResults. queryUrl : " + queryUrl);
             
+            return this._sendRequest(queryUrl);
+        },
+        
+        moreResultsAvailable: function () {
+            var maxPageNumber = Math.ceil(this._currentTotalOfResults / this._MAX_RESULTS_PER_PAGE);
+            if (maxPageNumber > this._currentPageNumber) {
+                return true;
+            }
+            
+            return false;
+        },
+        
+        getFreshSearchResults: function ( searchString ) {
+
+            this._currentQueryString = searchString;
+            var queryUrl = this._analyzer.buildRequest(this._currentQueryString);
+            
+            return this._sendRequest(queryUrl);
+        },
+        
+        getNextSearchResults: function () {
+            
+            var queryUrl = this._analyzer.buildRequest(
+                                this._currentQueryString,
+                                this._currentPageNumber + 1);
+            
+            return this._sendRequest( queryUrl );
+            
+        },
+        
+        getTotalOfResults: function () {
+          return this._currentTotalOfResults;  
+        },
+        
+        _sendRequest: function ( queryUrl ) {
+            
+            var _self = this;
+            
             var promisedResults = $.Deferred();
             
             var ajaxPromise = $.ajax({
@@ -231,8 +268,6 @@ $(document).ready(function () {
                     // console.log("Records found !");
                     // console.log("resultSet : " + resultSet);
                 
-                    // Ajout manuel des informations de pagination
-                    resultSet.maxResultsPerPage = _self._MAX_RESULTS_PER_PAGE;
                     _self._analyzer.unsetData();
                     promisedResults.resolve(resultSet);
                     // searchResultView._handleNewResultSet(resultSet);
@@ -243,10 +278,6 @@ $(document).ready(function () {
             });
 
             return promisedResults;
-        },
-        
-        getNewSearchResults: function (searchString) {
-            this._currentQueryString = searchString;
         },
     
         // Fonction publique, que les ResultAreas sont susceptibles d'appeler.
@@ -287,7 +318,7 @@ $(document).ready(function () {
     }
     
     HipBookDataAnalyzer.prototype = {
-            
+        
         setData: function (data) {
             this.data = $(data);  
         },
@@ -295,7 +326,7 @@ $(document).ready(function () {
         unsetData: function () {
           this.data = null;  
         },
-    
+        
         getPageNumber: function () {
             return parseInt(this.data.find('searchresponse>yoursearch>view>currpage').text(), 10);
         },
@@ -344,8 +375,7 @@ $(document).ready(function () {
             // var listRoot = $("<div class='ui items'></div>");
             var resultSet = new CatalogResultSet();
 
-            resultSet.numberOfResults   = $rawXmlData.find('searchresponse>yoursearch>hits').text();
-            resultSet.currentPage       = $rawXmlData.find('searchresponse>yoursearch>view>currpage').text();
+            // resultSet.numberOfResults   = $rawXmlData.find('searchresponse>yoursearch>hits').text();
 
             // Récupérer, ligne à ligne, les données, les mettre en forme et les attacher à la liste
             var tempItems = [];
@@ -492,8 +522,7 @@ $(document).ready(function () {
             // var listRoot = $("<div class='ui items'></div>");
             var resultSet = new CatalogResultSet();
 
-            resultSet.numberOfResults = $rawXmlData.find('searchresponse>yoursearch>hits').text();
-            resultSet.currentPage = $rawXmlData.find('searchresponse>yoursearch>view>currpage').text();
+            // resultSet.numberOfResults = $rawXmlData.find('searchresponse>yoursearch>hits').text();
 
             // Récupérer, ligne à ligne, les données, les mettre en forme et les attacher à la liste
             var tempItems = [];
@@ -649,8 +678,7 @@ $(document).ready(function () {
             // var listRoot = $("<div class='ui items'></div>");
             var resultSet = new CatalogResultSet();
 
-            resultSet.numberOfResults = $rawXmlData.find('searchresponse>yoursearch>hits').text();
-            resultSet.currentPage = $rawXmlData.find('searchresponse>yoursearch>view>currpage').text();
+            // resultSet.numberOfResults = $rawXmlData.find('searchresponse>yoursearch>hits').text();
 
             // Récupérer, ligne à ligne, les données, les mettre en forme et les attacher à la liste
             var tempItems = [];
@@ -813,15 +841,9 @@ $(document).ready(function () {
 
             var wrappingTable = $rawData.find("#table247");
           // console.log("wrappingTable : " + wrappingTable);
-            
-            //var tempText = wrappingTable.find('tr:nth-child(2)>td>p').text();
-            // /:\s(\d+)\s/g
-            // console.log("tempText : " + tempText);
-            //var regexResult = /:\s(\d+)\s/g.exec(tempText);
-            // console.log("regexResult : " + regexResult);
-            resultSet.numberOfResults   = this.getTotalOfResults();
+    
+            // resultSet.numberOfResults   = this.getTotalOfResults();
           // console.log("resultSet.numberOfResults : " + resultSet.numberOfResults);
-            resultSet.currentPage       = 25;
 
             // Récupérer, ligne à ligne, les données, les mettre en forme et les attacher à la liste
             var tempItems = [];
@@ -1003,8 +1025,7 @@ $(document).ready(function () {
             var wrappingTable = $rawXmlData.find("#table245");
           // console.log("wrappingTable : " + wrappingTable);
             
-            resultSet.numberOfResults   = this.getTotalOfResults();
-            resultSet.currentPage = this.getPageNumber();
+            // resultSet.numberOfResults   = this.getTotalOfResults();
             
             // S'il y a des résultats, les analyser et alimenter le CatalogResultSet
             if (wrappingTable.length) {
@@ -1144,11 +1165,13 @@ $(document).ready(function () {
             for(var i=0, len=this._resultAreas.length; i < len ; i++) {
                 tempResultArea = this._resultAreas[i];
                 if (tempResultArea) {
-                    tempPromise = tempResultArea.queryUpdated();
+                    tempPromise = tempResultArea.handleQueryUpdate();
                     tempPromise.done(updateStatsFunction);
                     promises.push(tempPromise);   
                 }
             }
+            
+            this._updateStats();
             
             // var promiseOfArray = $.when.apply($, promises);
             $.when.apply($, promises).always(
@@ -1207,7 +1230,6 @@ $(document).ready(function () {
         
         // Déclarer les autres propriétés
         this._currentTotalResults   = null;
-        this._currentResultsPage    = null;
         this._container             = null;
         this._statsContainer        = null;
         
@@ -1225,7 +1247,7 @@ $(document).ready(function () {
         this._container.on("click", "button.online-access-link",    function () {
             window.open($(this).attr("data-online-access-url"));
         });
-        this._container.on("click", "button.more-results",          $.proxy(_self._askForMoreResults, _self));
+        this._container.on("click", "button.more-results",          $.proxy(_self._handleMoreResultsAction, _self));
         
         // Attacher la nouvelle zone de recherche au DOM
         this._container.appendTo(this._searchArea.getResultsContainer());
@@ -1234,13 +1256,14 @@ $(document).ready(function () {
     ResultsArea.prototype = {
         
         // Fonction publique, que les SearchArea sont susceptibles d'appeler.
-        queryUpdated: function () {
-            return this._askForResults.call(this, this._searchArea.getSearchString(), 1);
+        handleQueryUpdate: function () {
+            this._clear();
+            return this._askForResults.call(this, this._searchArea.getSearchString(), true);
         },
         
         // Fonction publique, que les SearchArea sont susceptibles d'appeler. 
         getStats: function () {
-            return this._currentTotalResults;
+            return parseInt(this._currentTotalResults, 10);
         },
         
         mustacheTemplate: function () {
@@ -1249,18 +1272,23 @@ $(document).ready(function () {
             return template;
         }(),
         
-        _askForResults: function( request, pageNumber ) {
+        _askForResults: function( request, isNewSearch ) {
             
             this._setLoadingStateOn();
             
             var resultsHandled = $.Deferred();
+            var promisedResults = null;
             
-            var promisedResults = this._dataProvider.getSearchResults(request, pageNumber);
+            if (isNewSearch === true) {
+                promisedResults = this._dataProvider.getFreshSearchResults(request);
+            } else {
+                promisedResults = this._dataProvider.getNextSearchResults();
+            }
+            
             var _self = this;
-            promisedResults.done(
+            promisedResults
+                .done(
                     function( results ) {
-                      // console.log("_askForResults received results : " + results);
-
                         _self._handleNewResultSet( results );
                         _self._askForThumbnailUrl();
                     }
@@ -1270,22 +1298,13 @@ $(document).ready(function () {
                         resultsHandled.resolve();
                     }
             );
-            
-            
-          // console.log("_askForResults is ending !");
+
             return resultsHandled;
         },
         
-        _askForMoreResults: function (event) {
-          // console.log("More results wanted !");
-
+        _handleMoreResultsAction: function (event) {
             event.preventDefault();
-
-            var chosenPage = parseInt(this._currentResultsPage, 10) + 1;
-            
-            this._askForResults( this._searchArea.getSearchString(), chosenPage );
-            
-          // console.log("_askForMoreResults is ending !");
+            return this._askForResults();
         },
         
         _askForItemDetails: function ( event ) {
@@ -1339,7 +1358,6 @@ $(document).ready(function () {
 
             return $(newDomItem);
         },
-        
 
         _setItemLoadingStateOn: function (domItem) {
             domItem.find(".dimmer").addClass("active");
@@ -1359,18 +1377,13 @@ $(document).ready(function () {
           // console.log("handleDetails is finished !");
         },
         
-
         _handleNewResultSet: function (resultSet) {
           // console.log("_handleNewResultSet has been called !");
 
           // console.log("Results handled !");
 
-            this._currentTotalResults  = parseInt(resultSet.numberOfResults, 10);
-            this._currentResultsPage   = resultSet.currentPage;
-            this._maxResultsPerPage    = parseInt(resultSet.maxResultsPerPage, 10);
-
-          // console.log("this._currentTotalResults : "  + this._currentTotalResults);
-          // console.log("this._currentResultsPage : "   + this._currentResultsPage);
+            // this._currentTotalResults  = parseInt(resultSet.numberOfResults, 10);
+            this._currentTotalResults  = this._dataProvider.getTotalOfResults();
 
             // Récupérer, ligne à ligne, les données,
             // les mettre en forme et les attacher au conteneur d'items
@@ -1382,17 +1395,8 @@ $(document).ready(function () {
                 tempDomItem = this._buildResultItem(resultsArray[i]);
                 tempDomItem.appendTo(listRoot);
             }
-
-            // S'il s'agit d'un nouvel ensemble de résultats, réinitialiser le conteneur de résultats
-            if (this._currentResultsPage < 2) {
-                this._container.children(".items").empty();
-            }
             
-            if (this._currentResultsPage > 1) {
-                this._container.find(".items").append(listRoot.children(".item"));
-            } else {
-                this._container.find(".items").replaceWith(listRoot);
-            }
+            this._container.find(".items").append(listRoot.children(".item"));
             
             //Mettre à jour le bouton "Plus de résultats"
             // Supprimer le bouton "Plus de résultats".
@@ -1403,11 +1407,9 @@ $(document).ready(function () {
                 $("<div class='ui icon info message'><i class='warning icon'></i><div class='content'><div class='header'>Trop de réponses.</div><p>Merci d'affiner votre recherche.</p></div></div>")
                     .appendTo(this._container);
             } else {
-            
                 // S'il existe des résultats non encore affichés, insérer le bouton "Plus de résultats"
-                var maxPageNumber = Math.ceil(this._currentTotalResults / this._maxResultsPerPage);
-                if ((maxPageNumber > this._currentResultsPage) && (resultSet.warningMessage !== resultSet.WARNING_MESSAGE.TOO_MUCH_RESULTS)) {
-                    $("<button class='fluid ui button more-results'>Plus de résultats</button>").appendTo(this._container);
+                if (this._dataProvider.moreResultsAvailable()) {
+                   $("<button class='fluid ui button more-results'>Plus de résultats</button>").appendTo(this._container); 
                 }
             }
             
@@ -1450,6 +1452,12 @@ $(document).ready(function () {
                 );
 
             });
+        },
+        
+        _clear: function() {
+            this._container.children(".items").empty();
+            this._currentTotalResults = 0;
+            this._setStats(0);
         }
     };
     
