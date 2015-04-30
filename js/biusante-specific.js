@@ -140,6 +140,12 @@ $(document).ready(function () {
                         dataType:           "xml"
                     };
                     break;
+                case "EBookSpecific":
+                    parametersMap = {
+                        implementation:     new EBookSpecificDataHandler(),
+                        maxResultsPerPage:  100,
+                        dataType:           "html"
+                    };                
             }
             
             var fdp = new FacadeDataProvider(parametersMap);
@@ -577,226 +583,6 @@ $(document).ready(function () {
         }
     };
     
-    
-          /*********************************
-    *   CLASS HipPeriodicalDataProvider
-    *
-    
-    - Possède une URL d'accès
-    
-    - Méthodes :
-        - Publiques :
-        --- getSearchResults
-            @param  searchString  // La chaîne de recherche saisie.
-            @param  pageNumber    // La page de résultats attendue
-            @return resultSet     // Un objet CatalogResultSet
-        --- getDetailedItem
-            @param  url           // Pointant sur une représentation distante et détaillée de la ressource
-            @return copies        // Un tableau d'informations sur des exemplaires de la ressources
-
-    */
-    /*
-    function HipPeriodicalDataProvider() {}
-
-    HipPeriodicalDataProvider.prototype = {
-        
-        // Propriété constante
-        _BASE_URL: "http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp",
-        _MAX_RESULTS_PER_PAGE: 20,
-        
-        // Fonction publique, que les ResultAreas sont susceptibles d'appeler.
-        getSearchResults: function (searchString, pageNumber) {
-            
-            var _self = this;
-            // console.log("getSearchResults. searchString : " + searchString);
-            
-            var queryUrl = _self._buildRequest(searchString, pageNumber);
-            // console.log("getSearchResults. queryUrl : " + queryUrl);
-            
-            var promisedResults = $.Deferred();
-            
-            var ajaxPromise = $.ajax({
-                // The URL for the request
-                // url: "proxy.php?index=.GK&limitbox_1=%24LAB7+%3D+s+or+%24LAB7+%3D+i&limitbox_3=&term=neurology&DonneXML=true",
-                url: queryUrl,
-                dataType: "xml",
-            });
-            
-            ajaxPromise.done(function (response) {
-                    var resultSet = _self._buildResultSet(response);
-                    // console.log("Records found !");
-                    // console.log("resultSet : " + resultSet);
-                
-                    // Ajout manuel des informations de pagination
-                    resultSet.maxResultsPerPage = _self._MAX_RESULTS_PER_PAGE;
-                
-                    promisedResults.resolve(resultSet);
-                    // searchResultView._handleNewResultSet(resultSet);
-            });
-            
-            ajaxPromise.always(function () {
-                    // console.log("The request for getSearchResults is complete!");
-            });
-
-            return promisedResults;
-        },
-    
-        // Fonction publique, que les ResultAreas sont susceptibles d'appeler.
-        getDetailedItem: function ( url ) {
-
-            var _self = this;
-            var promisedResults = $.Deferred();
-            
-            var queryString = url.slice(url.indexOf("?") + 1);
-            // console.log("Query String : " + queryString);
-            
-            var ajaxPromise = $.ajax({
-                url: "proxy.php?DonneXML=true&" + queryString,
-                dataType: "xml"
-            });
-            
-            
-            ajaxPromise.done(function (response) {
-                    var detailedItem = _self._buildDetailedDataItem(response);
-                    // console.log("Copies found !");
-                    promisedResults.resolve(detailedItem);
-            });
-            
-            
-            ajaxPromise.always(function () {
-                // console.log("Within callback of promise.");
-            });
-            
-            return promisedResults;
-        },
-        
-        _buildRequest: function (searchString, pageNumber) {
-            
-            var urlArray = [
-                "proxy.php?DonneXML=true&index=",
-                encodeURIComponent(".GK"),
-                "&limitbox_1=",
-                encodeURIComponent("$LAB7 = s or $LAB7 = i"),
-                "&limitbox_3=",
-                "&term=",
-                encodeURIComponent(searchString)
-            ];
-            
-            if (pageNumber) {
-                urlArray = urlArray.concat([
-                    "&page=",
-                    encodeURIComponent(pageNumber)
-                ]);
-            }
-            
-            var url = urlArray.join("");
-            
-            return url;
-        },
-
-        _buildResultSet: function (rawXmlData) {
-            // console.log("Results set building !");
-
-            // var listRoot = $("<div class='ui items'></div>");
-            var resultSet = new CatalogResultSet();
-
-            resultSet.numberOfResults = $(rawXmlData).find('searchresponse>yoursearch>hits').text();
-            resultSet.currentPage = $(rawXmlData).find('searchresponse>yoursearch>view>currpage').text();
-
-            // Récupérer, ligne à ligne, les données, les mettre en forme et les attacher à la liste
-            var tempItems = [];
-            var tempDataItem = null;
-
-            var _self = this;
-            $(rawXmlData).find('searchresponse>summary>searchresults>results>row').each(function (index, value) {
-                tempDataItem = _self._buildDataItem($(value));
-                tempItems.push(tempDataItem);
-            });
-
-            resultSet.results = tempItems;
-            // console.log("Results set is built !");
-            return resultSet;
-        },
-
-        _buildDataItem: function (rawXmlData) {
-            var item = new CatalogItem();
-
-            item.title          = rawXmlData.find('TITLE>data>text').text();
-            item.author         = rawXmlData.find('AUTHOR>data>text').text();
-            item.publisher      = rawXmlData.find('PUBLISHER>data>text').text();
-            item.publishedDate  = rawXmlData.find('PUBDATE>data>text').text();
-            var sourceId        = rawXmlData.find('sourceid').text();
-            var func            = rawXmlData.find('TITLE>data>link>func').text();
-            item.isbn           = rawXmlData.find('isbn').text();
-            item.catalogUrl     = this._BASE_URL + "?uri=" + func + "&amp;source=" + sourceId;
-
-            var vDocumentType   = rawXmlData.find('cell:nth-of-type(14)>data>text').text();
-            if (vDocumentType) {
-                item.documentType = vDocumentType.slice(vDocumentType.lastIndexOf(' ') + 1, vDocumentType.length - "$html$".length);
-            }
-
-            return item;
-        },
-
-        _buildDetailedDataItem: function (rawXmlData) {
-
-            var copies = [];
-            var currentCopy = null;
-            var tempString = "";
-
-            /**
-             * Autres champs sous "searchresponse>fullnonmarc>searchresults>results>row"
-             *      titre -> 'TITLE>data>text'
-             *      author -> 'cell:nth-of-type(11)>data>text' ou 'AUTHORS>data[Plus. occurrences poss.]>text'
-             *      [Edition informations] -> author -> 'cell:nth-of-type(13)>data>text'
-             *      ISBN / ISSN -> 'cell:nth-of-type(36)>data>text' ou ISBN -> 'isbn'
-             *      catalog URL -> "http://www.biusante.parisdescartes.fr/" + 'PPN>data>text'
-                                    
-            var item = new CatalogItem();
-            var generalDataRoot = $(rawXmlData).find('searchresponse>fullnonmarc>searchresults>results>row:first-of-type');
-
-
-            item.title          = generalDataRoot.find('TITLE>data>text').text();
-            item.author         = generalDataRoot.find('AUTHOR>data>text').text();
-            item.publisher      = generalDataRoot.find('cell:nth-of-type(13)>data>text').text();
-            // item.publishedDate  = rawXmlData.find('PUBDATE>data>text').text();
-            item.isbn           = generalDataRoot.find('isbn').text();
-            
-            var tempNode = generalDataRoot.find('PPN>data>text');
-            item.catalogUrl     = (tempNode) ? "http://www.biusante.parisdescartes.fr/" + tempNode.text().replace(/ppn\s/g, "ppn?") : "";
-            
-            $(rawXmlData).find('searchresponse>items>searchresults>results>row').each(function () {
-                
-                var currentNode = $(this);
-                currentCopy = {};
-
-                tempString = currentNode.find('LOCALLOCATION>data>text').text();
-                
-                if (tempString.indexOf("Médecine") != -1) {
-                    tempString = "Médecine";
-                } else if (tempString.indexOf("Pharmacie") != -1) {
-                    tempString = "Pharmacie";
-                } else {
-                    tempString = "";
-                }
-                currentCopy.library = tempString;
-
-                currentCopy.precisePlace    = currentNode.find('TEMPORARYLOCATION:first-of-type>data>text').text();
-                currentCopy.cote            = currentNode.find('CALLNUMBER>data>text').text();
-                currentCopy.conditions      = currentNode.find('cell:nth-of-type(5)>data>text').text();
-
-                copies.push(currentCopy);
-                // console.log("Details added !");
-            });
-            
-            item.copies = copies;
-            
-            return item;
-
-        }
-
-    };
-    */
     function HipPeriodicalDataHandler() {
         this.data = null;
     }
@@ -955,90 +741,39 @@ $(document).ready(function () {
 
     };
     
+    function EBookSpecificDataHandler() {
+        this.data = null;
+    }
     
-    
-    
-        /*********************************
-    *   CLASS EBookDataProvider
-    *
-    */
-    function EBookDataProvider() {}
-
-    EBookDataProvider.prototype = {
+    EBookSpecificDataHandler.prototype = {
         
-        // Propriété constante
-        _BASE_URL: "http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp",
-        _MAX_RESULTS_PER_PAGE: 100,
-        // @todo change this.
-        //http://www2.biusante.parisdescartes.fr/signets2015/index.las?specif=livelec&acces=&tri=alp&form=o&tout=rein&dsi_cle=
         _authorRegex: /Par\s(.*)\s*\.[A-Z]{3,}/g,
         
-        // Fonction publique, que les ResultAreas sont susceptibles d'appeler.
-        getSearchResults: function (searchString, pageNumber) {
-            
-            var _self = this;
-            
-            var queryUrl = _self._buildRequest(searchString, pageNumber);
-            
-            var promisedResults = $.Deferred();
-            
-            var ajaxPromise = $.ajax({
-                // The URL for the request
-                // url: "proxy.php?index=.GK&limitbox_1=%24LAB7+%3D+s+or+%24LAB7+%3D+i&limitbox_3=&term=neurology&DonneXML=true",
-                url: queryUrl,
-                dataType: "html",
-            });
-            
-            ajaxPromise.done(function (response) {
-                    var resultSet = _self._buildResultSet(response);
-                
-                    // Ajout manuel des informations de pagination
-                    resultSet.maxResultsPerPage = _self._MAX_RESULTS_PER_PAGE;
-                
-                    // Ajout manuel du numéro de page
-                    resultSet.currentPage = pageNumber;
-                    
-                    promisedResults.resolve(resultSet);
-                    // searchResultView._handleNewResultSet(resultSet);
-            });
-            
-            ajaxPromise.always(function () {
-                  // console.log("The request for getSearchResults is complete!");
-            });
-
-            return promisedResults;
-        },
-    
-        // Fonction publique, que les ResultAreas sont susceptibles d'appeler.
-        getDetailedItem: function ( url ) {
-
-            var _self = this;
-            var promisedResults = $.Deferred();
-            
-            var queryString = url.slice(url.indexOf("?") + 1);
-          // console.log("Query String : " + queryString);
-            
-            var ajaxPromise = $.ajax({
-                url: "proxy.php?DonneXML=true&" + queryString,
-                dataType: "xml"
-            });
-            
-            
-            ajaxPromise.done(function (response) {
-                    var copies = _self._buildDetailedDataItem(response);
-                  // console.log("Copies found !");
-                    promisedResults.resolve(copies);
-            });
-            
-            
-            ajaxPromise.always(function () {
-              // console.log("Within callback of promise.");
-            });
-            
-            return promisedResults;
+        setData: function (data) {
+            this.data = $(data);  
         },
         
-        _buildRequest: function (searchString, pageNumber) {
+        unsetData: function () {
+          this.data = null;  
+        },
+    
+        getPageNumber: function () {
+            return parseInt(this.data.find('searchresponse>yoursearch>view>currpage').text(), 10);
+        },
+    
+        getTotalOfResults: function () {
+            var wrappingTable = this.data.find("#table247");
+            var tempText = wrappingTable.find('tr:nth-child(2)>td>p').text();
+            var regexResult = /:\s(\d+)\s/g.exec(tempText);
+            // console.log("regexResult : " + regexResult);
+            return (regexResult) ? regexResult[1] : 0;
+        },
+    
+        getResultSet: function () {
+            return this.buildResultSet();
+        },
+        
+        buildRequest: function (searchString, pageNumber) {
             
             var urlArray = [
                 "proxy-signets.php?specif=",
@@ -1059,21 +794,26 @@ $(document).ready(function () {
             
             return url;
         },
+         
+        buildItemUrl: function (identifier) {
+            return null; // return "proxy.php?DonneXML=true&" + identifier;
+        },
 
-        _buildResultSet: function (rawXmlData) {
+        buildResultSet: function () {
           // console.log("Beginning of _buildResultSet. Results set building !");
-
+            var $rawData = this.data;
+            
             var resultSet = new CatalogResultSet();
 
-            var wrappingTable = $(rawXmlData).find("#table247");
+            var wrappingTable = $rawData.find("#table247");
           // console.log("wrappingTable : " + wrappingTable);
             
-            var tempText = wrappingTable.find('tr:nth-child(2)>td>p').text();
+            //var tempText = wrappingTable.find('tr:nth-child(2)>td>p').text();
             // /:\s(\d+)\s/g
             // console.log("tempText : " + tempText);
-            var regexResult = /:\s(\d+)\s/g.exec(tempText);
+            //var regexResult = /:\s(\d+)\s/g.exec(tempText);
             // console.log("regexResult : " + regexResult);
-            resultSet.numberOfResults   = (regexResult) ? regexResult[1] : 0;
+            resultSet.numberOfResults   = this.getTotalOfResults();
           // console.log("resultSet.numberOfResults : " + resultSet.numberOfResults);
             resultSet.currentPage       = 25;
 
@@ -1084,7 +824,7 @@ $(document).ready(function () {
             var _self = this;
             wrappingTable.find('tr').each(function (index, value) {
                 if (index > 6) { // Il faut aussi exclure le dernier TR
-                    tempDataItem = _self._buildDataItem($(value));
+                    tempDataItem = _self.buildDataItem($(value));
                     tempItems.push(tempDataItem);
                 }
             });
@@ -1111,7 +851,7 @@ $(document).ready(function () {
              *      - div > font.text -> Tag (plusieurs occurrences)
              *
             */
-        _buildDataItem: function (rawXmlData) {
+        buildDataItem: function (rawXmlData) {
             var item = new CatalogItem();
             
             var cell2 = rawXmlData.find('td:nth-child(2)');
@@ -1123,7 +863,6 @@ $(document).ready(function () {
             // console.log("regexResult : " + regexResult)
             item.author         = (regexResult) ? regexResult[1] : "";
             
-            
             item.publisher      = rawXmlData.find('PUBLISHER>data>text').text();
             
             item.description    = cell2.find('div > i').text();
@@ -1131,8 +870,6 @@ $(document).ready(function () {
             // Récupération de la date de publication
             regexResult = /(\d{4})\.?/g.exec(cell2.find('div').text());
             item.publishedDate  = (regexResult) ? regexResult[1] : "";
-            // item.isbn           = rawXmlData.find('isbn').text();
-            // item.catalogUrl     = this._BASE_URL + "?uri=" + item.func + "&amp;source=" + item.sourceId;
             item.onlineAccessUrl      = cell2.find('p > a').attr("href");
         
 
@@ -1144,41 +881,12 @@ $(document).ready(function () {
             return item;
         },
 
-        _buildDetailedDataItem: function (rawXmlData) {
-
-            var copies = [];
-            var currentCopy = null;
-            var tempString = "";
-            
-            $(rawXmlData).find('searchresponse>items>searchresults>results>row').each(function () {
-                
-                var currentNode = $(this);
-                currentCopy = {};
-
-                tempString = currentNode.find('LOCALLOCATION>data>text').text();
-                
-                if (tempString.indexOf("Médecine") != -1) {
-                    tempString = "Médecine";
-                } else if (tempString.indexOf("Pharmacie") != -1) {
-                    tempString = "Pharmacie";
-                } else {
-                    tempString = "";
-                }
-                currentCopy.library = tempString;
-
-                currentCopy.precisePlace    = currentNode.find('TEMPORARYLOCATION:first-of-type>data>text').text();
-                currentCopy.cote            = currentNode.find('CALLNUMBER>data>text').text();
-                currentCopy.conditions      = currentNode.find('cell:nth-of-type(5)>data>text').text();
-
-                copies.push(currentCopy);
-              // console.log("Details added !");
-            });
-
-            return copies;
-
+        buildDetailedDataItem: function () {
+            throw "Exception : UnsupportedOperationException";
         }
 
     };
+    
     
             /*********************************
     *   CLASS ThesisSpecificDataProvider
@@ -1448,7 +1156,7 @@ $(document).ready(function () {
                 new ResultsArea("Ouvrages", "Catalogue général", "book", this, dpf.getInstance("HipBook"))
         );
         this._resultAreas.push(
-                new ResultsArea("Livres électroniques", "Catalogue spécifique", "tablet", this, new EBookDataProvider())
+                new ResultsArea("Livres électroniques", "Catalogue spécifique", "tablet", this, dpf.getInstance("EBookSpecific"))
         );
         this._resultAreas.push(
                 new ResultsArea("Périodiques", "Catalogue général", "newspaper", this, dpf.getInstance("HipPeriodical"))
