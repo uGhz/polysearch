@@ -168,17 +168,16 @@
                     {{ /thesisType }}
                     </p>
                     
+                    {{ #directAccesses.length }}
                     <div class="ui divided selection list">
                     {{ #directAccesses }}
                       <div class="item">
                         <button class="right floated compact ui button online-access-link" data-online-access-url="{{ url }}">En ligne<i class="right chevron icon"></i></button>
-                        <!-- <img class="ui avatar image" src="/images/avatar/small/justen.jpg">
-                        <div class="content">
-                          <div class="header">[Test.]</div>
-                        </div>
-                      </div> -->
                     {{ /directAccesses }}
                     </div>
+                    {{ /directAccesses.length }}
+                    
+                    {{ #copies.length }}
                     
                     <div class="ui divided list">
                     {{ #copies }}
@@ -196,7 +195,6 @@
                                 </span>
                         </div>
                         <div class="content">
-                            <!-- <div class="header"></div> -->
                             <div class="description">
                             {{holdings}}
                             </div>
@@ -204,23 +202,26 @@
                       </div>
                     {{ /copies }}
                     </div>
+                    
+                    {{ /copies.length }}
                 </div>
                 
-                <div class="extra">
-                    
                     {{ #catalogUrl }}
+                    <div class="extra">
                     <button class="ui basic tiny right floated button catalog-link" data-catalog-url="{{ catalogUrl }}">
                         Voir dans le catalogue<i class="right chevron icon"></i>
                     </button>
+                    </div>
                     {{ /catalogUrl }}
                     
+                    <div class="extra">
                     {{ #onlineAccessUrl }}
                     <button class="ui basic tiny right floated button online-access-link" data-online-access-url="{{ onlineAccessUrl }}">
                         Voir en ligne<i class="right chevron icon"></i>
                     </button>
+                    </div>
                     {{ /onlineAccessUrl }}
-                    
-                </div>
+
             </div>
         </div>
     </script>

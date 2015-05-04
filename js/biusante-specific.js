@@ -211,10 +211,6 @@ $(document).ready(function () {
 
     FacadeDataProvider.prototype = {
         
-        // Propriété constante
-        // _BASE_URL: "http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp",
-        // _MAX_RESULTS_PER_PAGE: 20,
-        
         // Fonction publique, que les ResultAreas sont susceptibles d'appeler.
         getSearchResults: function (searchString, pageNumber) {
             
@@ -332,8 +328,7 @@ $(document).ready(function () {
         
    
     };
-    
-    
+     
     function HipDataAnalyzer () {}
     
     HipDataAnalyzer.prototype = {
@@ -380,21 +375,36 @@ $(document).ready(function () {
             }
 
             return item;
+        },
+        
+        buildResultSet: function () {
+            // console.log("Results set building !");
+            var $rawXmlData = this.data;
+            // var listRoot = $("<div class='ui items'></div>");
+            var resultSet = new CatalogResultSet();
+
+            // resultSet.numberOfResults = $rawXmlData.find('searchresponse>yoursearch>hits').text();
+
+            // Récupérer, ligne à ligne, les données, les mettre en forme et les attacher à la liste
+            var tempItems = [];
+            var tempDataItem = null;
+
+            var _self = this;
+            $rawXmlData.find('searchresponse>summary>searchresults>results>row').each(function (index, value) {
+                tempDataItem = _self.buildDataItem($(value));
+                tempItems.push(tempDataItem);
+            });
+
+            resultSet.results = tempItems;
+            // console.log("Results set is built !");
+            return resultSet;
         }
     };
     
     function HipBookDataAnalyzer () {}
     
     HipBookDataAnalyzer.prototype = {
-        /*
-        setData: function (data) {
-            this.data = $(data);  
-        },
-        
-        unsetData: function () {
-          this.data = null;  
-        },
-        */
+
         getPageNumber: function () {
             return parseInt(this.data.find('searchresponse>yoursearch>view>currpage').text(), 10);
         },
@@ -403,11 +413,6 @@ $(document).ready(function () {
             return parseInt(this.data.find('searchresponse>yoursearch>hits').text(), 10);
         },
         
-        /*
-        getResultSet: function () {
-            return this.buildResultSet();
-        },
-        */
         buildRequestUrl: function (searchString, pageNumber) {
             
             var urlArray = [
@@ -434,31 +439,6 @@ $(document).ready(function () {
         
         buildItemUrl: function (identifier) {
             return "proxy.php?DonneXML=true&" + identifier;
-        },
-
-        buildResultSet: function (rawXmlData) {
-            rawXmlData = null;
-            // console.log("Results set building !");
-            var $rawXmlData = this.data;
-            
-            // var listRoot = $("<div class='ui items'></div>");
-            var resultSet = new CatalogResultSet();
-
-            // resultSet.numberOfResults   = $rawXmlData.find('searchresponse>yoursearch>hits').text();
-
-            // Récupérer, ligne à ligne, les données, les mettre en forme et les attacher à la liste
-            var tempItems = [];
-            var tempDataItem = null;
-
-            var _self = this;
-            $rawXmlData.find('searchresponse>summary>searchresults>results>row').each(function (index, value) {
-                tempDataItem = _self.buildDataItem($(value));
-                tempItems.push(tempDataItem);
-            });
-
-            resultSet.results = tempItems;
-            // console.log("Results set is built !");
-            return resultSet;
         },
 
         buildDetailedDataItem: function (rawXmlData) {
@@ -554,29 +534,6 @@ $(document).ready(function () {
 
         buildItemUrl: function (identifier) {
             return "proxy.php?DonneXML=true&" + identifier;
-        },
-        
-        buildResultSet: function () {
-            // console.log("Results set building !");
-            var $rawXmlData = this.data;
-            // var listRoot = $("<div class='ui items'></div>");
-            var resultSet = new CatalogResultSet();
-
-            // resultSet.numberOfResults = $rawXmlData.find('searchresponse>yoursearch>hits').text();
-
-            // Récupérer, ligne à ligne, les données, les mettre en forme et les attacher à la liste
-            var tempItems = [];
-            var tempDataItem = null;
-
-            var _self = this;
-            $rawXmlData.find('searchresponse>summary>searchresults>results>row').each(function (index, value) {
-                tempDataItem = _self.buildDataItem($(value));
-                tempItems.push(tempDataItem);
-            });
-
-            resultSet.results = tempItems;
-            // console.log("Results set is built !");
-            return resultSet;
         },
 
         buildDetailedDataItem: function (rawXmlData) {
@@ -681,29 +638,6 @@ $(document).ready(function () {
    
         buildItemUrl: function (identifier) {
             return "proxy.php?DonneXML=true&" + identifier;
-        },
-        
-        buildResultSet: function () {
-            // console.log("Results set building !");
-            var $rawXmlData = this.data;
-            // var listRoot = $("<div class='ui items'></div>");
-            var resultSet = new CatalogResultSet();
-
-            // resultSet.numberOfResults = $rawXmlData.find('searchresponse>yoursearch>hits').text();
-
-            // Récupérer, ligne à ligne, les données, les mettre en forme et les attacher à la liste
-            var tempItems = [];
-            var tempDataItem = null;
-
-            var _self = this;
-            $rawXmlData.find('searchresponse>summary>searchresults>results>row').each(function (index, value) {
-                tempDataItem = _self.buildDataItem($(value));
-                tempItems.push(tempDataItem);
-            });
-
-            resultSet.results = tempItems;
-            // console.log("Results set is built !");
-            return resultSet;
         },
 
         buildDetailedDataItem: function (rawXmlData) {
