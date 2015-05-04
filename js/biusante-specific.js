@@ -1,9 +1,9 @@
 /*jslint browser: true*/
 /*global  $, Mustache */
 // Using the module pattern for a jQuery feature
+
 $(document).ready(function () {
     "use strict";
-
     /*********************************
     *   CLASS GoogleDataProvider
     *
@@ -224,10 +224,10 @@ $(document).ready(function () {
             var queryUrl = null;
             console.log("getSearchResults. pageNumber : " + pageNumber);
             if (pageNumber && pageNumber > 1) {            
-                queryUrl = _self._analyzer.buildRequest(this._currentQueryString, this._currentPageNumber + 1);
+                queryUrl = _self._analyzer.buildRequestUrl(this._currentQueryString, this._currentPageNumber + 1);
             } else {
                 this._currentQueryString = searchString;
-                queryUrl = _self._analyzer.buildRequest(searchString);
+                queryUrl = _self._analyzer.buildRequestUrl(searchString);
             }
             // console.log("getSearchResults. queryUrl : " + queryUrl);
             
@@ -246,14 +246,14 @@ $(document).ready(function () {
         getFreshSearchResults: function ( searchString ) {
 
             this._currentQueryString = searchString;
-            var queryUrl = this._analyzer.buildRequest(this._currentQueryString);
+            var queryUrl = this._analyzer.buildRequestUrl(this._currentQueryString);
             
             return this._sendRequest(queryUrl);
         },
         
         getNextSearchResults: function () {
             
-            var queryUrl = this._analyzer.buildRequest(
+            var queryUrl = this._analyzer.buildRequestUrl(
                                 this._currentQueryString,
                                 this._currentPageNumber + 1);
             
@@ -333,12 +333,60 @@ $(document).ready(function () {
    
     };
     
-    function HipBookDataAnalyzer() {
-        this.data = null;
-    }
+    
+    function HipDataAnalyzer () {}
+    
+    HipDataAnalyzer.prototype = {
+        data: null,
+        
+        setData: function (data) {
+            this.data = $(data);  
+        },
+        
+        unsetData: function () {
+            this.data = null;  
+        },
+        
+        getPageNumber: function () {
+            throw "NotImplementedOperation";
+        },
+    
+        getTotalOfResults: function () {
+            throw "NotImplementedOperation";
+        },
+    
+        getResultSet: function () {
+            return this.buildResultSet();
+        },
+        
+        buildDataItem: function (rawXmlData) {
+            var item = new CatalogItem();
+
+            item.title          = rawXmlData.find('TITLE>data>text').text();
+            item.author         = rawXmlData.find('AUTHOR>data>text').text();
+            item.publisher      = rawXmlData.find('PUBLISHER>data>text').text();
+            item.publishedDate  = rawXmlData.find('PUBDATE>data>text').text();
+            var sourceId        = rawXmlData.find('sourceid').text();
+            var func            = rawXmlData.find('TITLE>data>link>func').text();
+            item.isbn           = rawXmlData.find('isbn').text();
+            item.issn           = rawXmlData.find('issn').text();
+            item.thumbnailUrl   = "images/image.png";
+            item.catalogUrl     = "http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=" + func + "&amp;source=" + sourceId;
+            item.detailsAvailable = true;
+            
+            var vDocumentType   = rawXmlData.find('cell:nth-of-type(14)>data>text').text();
+            if (vDocumentType) {
+                item.documentType = vDocumentType.slice(vDocumentType.lastIndexOf(' ') + 1, vDocumentType.length - "$html$".length);
+            }
+
+            return item;
+        }
+    };
+    
+    function HipBookDataAnalyzer () {}
     
     HipBookDataAnalyzer.prototype = {
-        
+        /*
         setData: function (data) {
             this.data = $(data);  
         },
@@ -346,7 +394,7 @@ $(document).ready(function () {
         unsetData: function () {
           this.data = null;  
         },
-        
+        */
         getPageNumber: function () {
             return parseInt(this.data.find('searchresponse>yoursearch>view>currpage').text(), 10);
         },
@@ -354,12 +402,13 @@ $(document).ready(function () {
         getTotalOfResults: function () {
             return parseInt(this.data.find('searchresponse>yoursearch>hits').text(), 10);
         },
-    
+        
+        /*
         getResultSet: function () {
             return this.buildResultSet();
         },
-        
-        buildRequest: function (searchString, pageNumber) {
+        */
+        buildRequestUrl: function (searchString, pageNumber) {
             
             var urlArray = [
                 "proxy.php?DonneXML=true&index=",
@@ -412,28 +461,6 @@ $(document).ready(function () {
             return resultSet;
         },
 
-        buildDataItem: function (rawXmlData) {
-            var item = new CatalogItem();
-
-            item.title          = rawXmlData.find('TITLE>data>text').text();
-            item.author         = rawXmlData.find('AUTHOR>data>text').text();
-            item.publisher      = rawXmlData.find('PUBLISHER>data>text').text();
-            item.publishedDate  = rawXmlData.find('PUBDATE>data>text').text();
-            var sourceId        = rawXmlData.find('sourceid').text();
-            var func            = rawXmlData.find('TITLE>data>link>func').text();
-            item.isbn           = rawXmlData.find('isbn').text();
-            item.thumbnailUrl   = "images/image.png";
-            item.catalogUrl     = "http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=" + func + "&amp;source=" + sourceId;
-            item.detailsAvailable = true;
-            
-            var vDocumentType   = rawXmlData.find('cell:nth-of-type(14)>data>text').text();
-            if (vDocumentType) {
-                item.documentType = vDocumentType.slice(vDocumentType.lastIndexOf(' ') + 1, vDocumentType.length - "$html$".length);
-            }
-
-            return item;
-        },
-
         buildDetailedDataItem: function (rawXmlData) {
 
             var copies = [];
@@ -486,19 +513,13 @@ $(document).ready(function () {
 
     };
     
+    HipBookDataAnalyzer.prototype = $.extend({}, HipDataAnalyzer.prototype, HipBookDataAnalyzer.prototype);
+    
     function HipThesisDataAnalyzer() {
         this.data = null;
     }
     
     HipThesisDataAnalyzer.prototype = {
-        setData: function (data) {
-            this.data = $(data);  
-        },
-        
-        unsetData: function () {
-          this.data = null;  
-        },
-    
         getPageNumber: function () {
             return parseInt(this.data.find('searchresponse>yoursearch>view>currpage').text(), 10);
         },
@@ -506,12 +527,8 @@ $(document).ready(function () {
         getTotalOfResults: function () {
             return parseInt(this.data.find('searchresponse>yoursearch>hits').text(), 10);
         },
-    
-        getResultSet: function () {
-            return this.buildResultSet();
-        },
-        
-        buildRequest: function (searchString, pageNumber) {
+ 
+        buildRequestUrl: function (searchString, pageNumber) {
             
             var urlArray = [
                 "proxy.php?DonneXML=true&index=",
@@ -562,28 +579,6 @@ $(document).ready(function () {
             return resultSet;
         },
 
-        buildDataItem: function (rawXmlData) {
-            var item = new CatalogItem();
-
-            item.title          = rawXmlData.find('TITLE>data>text').text();
-            item.author         = rawXmlData.find('AUTHOR>data>text').text();
-            item.publisher      = rawXmlData.find('PUBLISHER>data>text').text();
-            item.publishedDate  = rawXmlData.find('PUBDATE>data>text').text();
-            var sourceId        = rawXmlData.find('sourceid').text();
-            var func            = rawXmlData.find('TITLE>data>link>func').text();
-            item.isbn           = rawXmlData.find('isbn').text();
-            item.thumbnailUrl   = "images/image.png";
-            item.catalogUrl     = "http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=" + func + "&amp;source=" + sourceId;
-            item.detailsAvailable   = true;
-            
-            var vDocumentType   = rawXmlData.find('cell:nth-of-type(14)>data>text').text();
-            if (vDocumentType) {
-                item.documentType = vDocumentType.slice(vDocumentType.lastIndexOf(' ') + 1, vDocumentType.length - "$html$".length);
-            }
-
-            return item;
-        },
-
         buildDetailedDataItem: function (rawXmlData) {
 
             var copies = [];
@@ -644,20 +639,14 @@ $(document).ready(function () {
         }
     };
     
+    HipThesisDataAnalyzer.prototype = $.extend({}, HipDataAnalyzer.prototype, HipThesisDataAnalyzer.prototype);
+    
     function HipPeriodicalDataAnalyzer() {
         this.data = null;
     }
     
     HipPeriodicalDataAnalyzer.prototype = {
-            
-        setData: function (data) {
-            this.data = $(data);  
-        },
-        
-        unsetData: function () {
-          this.data = null;  
-        },
-    
+
         getPageNumber: function () {
             return parseInt(this.data.find('searchresponse>yoursearch>view>currpage').text(), 10);
         },
@@ -665,12 +654,8 @@ $(document).ready(function () {
         getTotalOfResults: function () {
             return parseInt(this.data.find('searchresponse>yoursearch>hits').text(), 10);
         },
-    
-        getResultSet: function () {
-            return this.buildResultSet();
-        },
-        
-        buildRequest: function (searchString, pageNumber) {
+
+        buildRequestUrl: function (searchString, pageNumber) {
             
             var urlArray = [
                 "proxy.php?DonneXML=true&index=",
@@ -721,31 +706,9 @@ $(document).ready(function () {
             return resultSet;
         },
 
-        buildDataItem: function (rawXmlData) {
-            var item = new CatalogItem();
-
-            item.title          = rawXmlData.find('TITLE>data>text').text();
-            item.author         = rawXmlData.find('AUTHOR>data>text').text();
-            item.publisher      = rawXmlData.find('PUBLISHER>data>text').text();
-            item.publishedDate  = rawXmlData.find('PUBDATE>data>text').text();
-            var sourceId        = rawXmlData.find('sourceid').text();
-            var func            = rawXmlData.find('TITLE>data>link>func').text();
-            item.issn           = rawXmlData.find('issn').text();
-            item.catalogUrl     = "http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?uri=" + func + "&amp;source=" + sourceId;
-            item.detailsAvailable = true;
-            
-            var vDocumentType   = rawXmlData.find('cell:nth-of-type(14)>data>text').text();
-            if (vDocumentType) {
-                item.documentType = vDocumentType.slice(vDocumentType.lastIndexOf(' ') + 1, vDocumentType.length - "$html$".length);
-            }
-
-            return item;
-        },
-
         buildDetailedDataItem: function (rawXmlData) {
 
             var copies = [];
-            var currentCopy = null;
             var tempString = "";
 
             /**
@@ -771,7 +734,6 @@ $(document).ready(function () {
             item.catalogUrl     = (tempNode) ? "http://www.biusante.parisdescartes.fr/" + tempNode.text().replace(/ppn\s/g, "ppn?") : "";
             
             var vLocalisation   = null;
-            var currentNode     = null;
             var ic              = null;
             
             generalDataRoot.find('cell:nth-of-type(75)>data').each(function () {
@@ -842,6 +804,8 @@ $(document).ready(function () {
 
     };
     
+    HipPeriodicalDataAnalyzer.prototype = $.extend({}, HipDataAnalyzer.prototype, HipPeriodicalDataAnalyzer.prototype);
+    
     function EBookSpecificDataAnalyzer() {
         this.data = null;
     }
@@ -874,7 +838,7 @@ $(document).ready(function () {
             return this.buildResultSet();
         },
         
-        buildRequest: function (searchString, pageNumber) {
+        buildRequestUrl: function (searchString, pageNumber) {
             
             var urlArray = [
                 "proxy-signets.php?specif=",
@@ -1059,7 +1023,7 @@ $(document).ready(function () {
             return this.buildResultSet();
         },
         
-        buildRequest: function (searchString, pageNumber) {
+        buildRequestUrl: function (searchString, pageNumber) {
             
             // http://www2.biusante.parisdescartes.fr/theses/index.las?toutindex=victor&p=2
             var urlArray = [
@@ -1134,7 +1098,7 @@ $(document).ready(function () {
             
             // Récupération de la cote et de la date.
             var tempText = rawXmlData.find('tr:nth-child(1)>td:nth-child(2)>p>i').text();
-            console.log("tempText : " + tempText);
+            // console.log("tempText : " + tempText);
             var regexResult = /^(\d+)\s/g.exec(tempText);
             if (regexResult !== null) {
                 item.publishedDate = regexResult[1];
