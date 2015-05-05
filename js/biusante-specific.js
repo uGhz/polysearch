@@ -188,10 +188,6 @@ $(document).ready(function () {
     
     - Méthodes :
         - Publiques :
-        --- getSearchResults
-            @param  searchString  // La chaîne de recherche saisie.
-            @param  pageNumber    // La page de résultats attendue
-            @return resultSet     // Un objet CatalogResultSet
         --- getDetailedItem
             @param  url           // Pointant sur une représentation distante et détaillée de la ressource
             @return copies        // Un tableau d'informations sur des exemplaires de la ressources
@@ -210,25 +206,6 @@ $(document).ready(function () {
     }
 
     FacadeDataProvider.prototype = {
-        
-        // Fonction publique, que les ResultAreas sont susceptibles d'appeler.
-        getSearchResults: function (searchString, pageNumber) {
-            
-            var _self = this;
-            // console.log("getSearchResults. searchString : " + searchString);
-            
-            var queryUrl = null;
-            console.log("getSearchResults. pageNumber : " + pageNumber);
-            if (pageNumber && pageNumber > 1) {            
-                queryUrl = _self._analyzer.buildRequestUrl(this._currentQueryString, this._currentPageNumber + 1);
-            } else {
-                this._currentQueryString = searchString;
-                queryUrl = _self._analyzer.buildRequestUrl(searchString);
-            }
-            // console.log("getSearchResults. queryUrl : " + queryUrl);
-            
-            return this._sendRequest(queryUrl);
-        },
         
         // Fonction publique, que les ResultAreas sont susceptibles d'appeler.
         moreResultsAvailable: function () {
@@ -356,6 +333,10 @@ $(document).ready(function () {
             return this.buildResultSet();
         },
         
+        buildItemUrl: function (identifier) {
+            return "proxy.php?DonneXML=true&" + identifier;
+        },
+        
         buildDataItem: function (rawXmlData) {
             var item = new CatalogItem();
 
@@ -429,10 +410,6 @@ $(document).ready(function () {
             var url = urlArray.join("");
             
             return url;
-        },
-        
-        buildItemUrl: function (identifier) {
-            return "proxy.php?DonneXML=true&" + identifier;
         },
 
         buildDetailedDataItem: function (rawXmlData) {
@@ -517,10 +494,6 @@ $(document).ready(function () {
             var url = urlArray.join("");
             
             return url;
-        },
-
-        buildItemUrl: function (identifier) {
-            return "proxy.php?DonneXML=true&" + identifier;
         },
 
         buildDetailedDataItem: function (rawXmlData) {
@@ -613,10 +586,6 @@ $(document).ready(function () {
             var url = urlArray.join("");
             
             return url;
-        },
-   
-        buildItemUrl: function (identifier) {
-            return "proxy.php?DonneXML=true&" + identifier;
         },
 
         buildDetailedDataItem: function (rawXmlData) {
