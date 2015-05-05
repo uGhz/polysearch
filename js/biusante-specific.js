@@ -539,8 +539,10 @@ $(document).ready(function () {
         _convertDetailPageIntoCatalogItem: function (rawXmlData) {
 
             var copies = [];
+            var directAccesses = [];
             var currentCopy = null;
             var tempString = "";
+            var tempTab = null;
 
             /**
              * Autres champs sous "searchresponse>fullnonmarc>searchresults>results>row"
@@ -589,6 +591,35 @@ $(document).ready(function () {
                 // console.log("Details added !");
             });
             
+            var vDirectAccess = "";
+            var da = null;
+            var regexResult = null;
+            
+            // Trouver les éventuels liens d'accès en ligne
+            generalDataRoot.find('cell:nth-of-type(6)>data').each(function () {
+                
+                vDirectAccess       = $(this).children('text').text();
+                if (vDirectAccess !== undefined && vDirectAccess !== null & vDirectAccess.length > 0) {
+                    console.log("vDirectAccess is defined !");
+                    tempTab = vDirectAccess.split("$html$");
+                    if (tempTab.length > 1) {
+                        console.log("vDirectAccess has been splitted !");
+                        vDirectAccess = tempTab[1];
+                        da = new DirectAccess();
+                        
+                       regexResult = /href="(.+?)"/g.exec(vDirectAccess);
+                        if (regexResult) {
+                            console.log("regex successful !");
+                            // = parseInt(regexResult[1], 10) + 1;
+                            da.url = regexResult[1];
+                            directAccesses.push(da);
+                        }
+                         
+                    }
+                }
+            });
+            
+            item.directAccesses = directAccesses;
             item.copies = copies;
             
             return item;
