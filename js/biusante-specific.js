@@ -318,6 +318,8 @@ $(document).ready(function () {
         _numberOfResults: 0,
         _resultingResultSet: null,
         
+        _SEARCH_RESTRICTION: "",
+        
         
         analyze: function (data) {
             this._data = $(data);
@@ -346,6 +348,30 @@ $(document).ready(function () {
         
         buildItemUrl: function (identifier) {
             return "proxy.php?DonneXML=true&" + identifier;
+        },
+        
+        buildRequestUrl: function (searchString, pageNumber) {
+            
+            var urlArray = [
+                "proxy.php?DonneXML=true&index=",
+                encodeURIComponent(".GK"),
+                "&limitbox_1=",
+                encodeURIComponent(this._SEARCH_RESTRICTION),
+                "&limitbox_3=",
+                "&term=",
+                encodeURIComponent(searchString)
+            ];
+            
+            if (pageNumber) {
+                urlArray = urlArray.concat([
+                    "&page=",
+                    encodeURIComponent(pageNumber)
+                ]);
+            }
+            
+            var url = urlArray.join("");
+            
+            return url;
         },
         
         _buildDataItem: function (rawXmlData) {
@@ -413,129 +439,8 @@ $(document).ready(function () {
             resultSet.results = tempItems;
             // console.log("Results set is built !");
             this._resultingResultSet = resultSet;
-        }
-    };
-    
-    function HipBookDataAnalyzer () {
-        this._data = null;
-        this._pageNumber = 0;
-        this._numberOfResults = 0;
-        this._resultingResultSet = null;
-    }
-    
-    HipBookDataAnalyzer.prototype = {
+        },
         
-        buildRequestUrl: function (searchString, pageNumber) {
-            
-            var urlArray = [
-                "proxy.php?DonneXML=true&index=",
-                encodeURIComponent(".GK"),
-                "&limitbox_1=",
-                encodeURIComponent("$LAB7 = a or $LAB7 = c or $LAB7 = i or $LAB7 = m not $TH = *"),
-                "&limitbox_3=",
-                "&term=",
-                encodeURIComponent(searchString)
-            ];
-            
-            if (pageNumber) {
-                urlArray = urlArray.concat([
-                    "&page=",
-                    encodeURIComponent(pageNumber)
-                ]);
-            }
-            
-            var url = urlArray.join("");
-            
-            return url;
-        },
-
-        _convertDetailPageIntoCatalogItem: function (rawXmlData) {
-
-            var copies = [];
-            var currentCopy = null;
-            var tempString = "";
-                                    
-            var item = new CatalogItem();
-            var generalDataRoot = $(rawXmlData).find('searchresponse>fullnonmarc>searchresults>results>row:first-of-type');
-
-
-            item.title          = generalDataRoot.find('TITLE>data>text').text();
-            item.author         = generalDataRoot.find('AUTHOR>data>text').text();
-            item.publisher      = generalDataRoot.find('cell:nth-of-type(13)>data>text').text();
-            // item.publishedDate  = rawXmlData.find('PUBDATE>data>text').text();
-            item.isbn           = generalDataRoot.find('isbn').text();
-            
-            var tempNode = generalDataRoot.find('PPN>data>text');
-            item.catalogUrl     = (tempNode) ? "http://www.biusante.parisdescartes.fr/" + tempNode.text().replace(/ppn\s/g, "ppn?") : "";
-            item.thumbnailUrl   = "images/image.png";
-            
-            $(rawXmlData).find('searchresponse>items>searchresults>results>row').each(function () {
-                
-                var currentNode = $(this);
-                currentCopy = {};
-
-                tempString = currentNode.find('LOCALLOCATION>data>text').text();
-                
-                if (tempString.indexOf("Médecine") != -1) {
-                    tempString = "Médecine";
-                } else if (tempString.indexOf("Pharmacie") != -1) {
-                    tempString = "Pharmacie";
-                } else {
-                    tempString = "";
-                }
-                currentCopy.library = tempString;
-
-                currentCopy.precisePlace    = currentNode.find('TEMPORARYLOCATION:first-of-type>data>text').text();
-                currentCopy.callNumber            = currentNode.find('CALLNUMBER>data>text').text();
-                currentCopy.conditions      = currentNode.find('cell:nth-of-type(5)>data>text').text();
-
-                copies.push(currentCopy);
-                // console.log("Details added !");
-            });
-            
-            item.copies = copies;
-            
-            return item;
-
-        }
-
-    };
-    
-    HipBookDataAnalyzer.prototype = $.extend({}, HipDataAnalyzer.prototype, HipBookDataAnalyzer.prototype);
-    
-    function HipThesisDataAnalyzer() {
-        this._data = null;
-        this._pageNumber = 0;
-        this._numberOfResults = 0;
-        this._resultingResultSet = null;
-    }
-    
-    HipThesisDataAnalyzer.prototype = {
- 
-        buildRequestUrl: function (searchString, pageNumber) {
-            
-            var urlArray = [
-                "proxy.php?DonneXML=true&index=",
-                encodeURIComponent(".GK"),
-                "&limitbox_1=",
-                encodeURIComponent("$TH = *"),
-                "&limitbox_3=",
-                "&term=",
-                encodeURIComponent(searchString)
-            ];
-            
-            if (pageNumber) {
-                urlArray = urlArray.concat([
-                    "&page=",
-                    encodeURIComponent(pageNumber)
-                ]);
-            }
-            
-            var url = urlArray.join("");
-            
-            return url;
-        },
-
         _convertDetailPageIntoCatalogItem: function (rawXmlData) {
 
             var copies = [];
@@ -562,11 +467,14 @@ $(document).ready(function () {
             item.publisher      = generalDataRoot.find('cell:nth-of-type(13)>data>text').text();
             // item.publishedDate  = rawXmlData.find('PUBDATE>data>text').text();
             item.isbn           = generalDataRoot.find('isbn').text();
+            item.issn           = generalDataRoot.find('issn').text();
             
             var tempNode = generalDataRoot.find('PPN>data>text');
             item.catalogUrl     = (tempNode) ? "http://www.biusante.parisdescartes.fr/" + tempNode.text().replace(/ppn\s/g, "ppn?") : "";
             item.thumbnailUrl   = "images/image.png";
             
+            var ic              = null;
+            // Trouver les éventuelles localisations de monographies
             $(rawXmlData).find('searchresponse>items>searchresults>results>row').each(function () {
                 
                 var currentNode = $(this);
@@ -582,121 +490,21 @@ $(document).ready(function () {
                 }
                 
                 if (tempString.length > 0) {
-                    currentCopy = new ItemCopy();
-                    currentCopy.library = tempString;
+                    ic = new ItemCopy();
+                    ic.library = tempString;
 
-                    currentCopy.precisePlace    = currentNode.find('TEMPORARYLOCATION:first-of-type>data>text').text();
-                    currentCopy.callNumber      = currentNode.find('CALLNUMBER>data>text').text();
-                    currentCopy.conditions      = currentNode.find('cell:nth-of-type(5)>data>text').text();
+                    ic.precisePlace    = currentNode.find('TEMPORARYLOCATION:first-of-type>data>text').text();
+                    ic.callNumber      = currentNode.find('CALLNUMBER>data>text').text();
+                    ic.conditions      = currentNode.find('cell:nth-of-type(5)>data>text').text();
 
-                    copies.push(currentCopy);
+                    copies.push(ic);
                 }
                 // console.log("Details added !");
             });
             
-            var vDirectAccess = "";
-            var da = null;
-            var regexResult = null;
-            
-            // Trouver les éventuels liens d'accès en ligne
-            generalDataRoot.find('cell:nth-of-type(6)>data').each(function () {
-                
-                vDirectAccess       = $(this).children('text').text();
-                if (vDirectAccess !== undefined && vDirectAccess !== null & vDirectAccess.length > 0) {
-                    console.log("vDirectAccess is defined !");
-                    tempTab = vDirectAccess.split("$html$");
-                    if (tempTab.length > 1) {
-                        console.log("vDirectAccess has been splitted !");
-                        vDirectAccess = tempTab[1];
-                        da = new DirectAccess();
-                        
-                       regexResult = /href="(.+?)"/g.exec(vDirectAccess);
-                        if (regexResult) {
-                            console.log("regex successful !");
-                            // = parseInt(regexResult[1], 10) + 1;
-                            da.url = regexResult[1];
-                            directAccesses.push(da);
-                        }
-                         
-                    }
-                }
-            });
-            
-            item.directAccesses = directAccesses;
-            item.copies = copies;
-            
-            return item;
-
-        }
-    };
-    
-    HipThesisDataAnalyzer.prototype = $.extend({}, HipDataAnalyzer.prototype, HipThesisDataAnalyzer.prototype);
-    
-    function HipPeriodicalDataAnalyzer() {
-        this._data = null;
-        this._pageNumber = 0;
-        this._numberOfResults = 0;
-        this._resultingResultSet = null;
-    }
-    
-    HipPeriodicalDataAnalyzer.prototype = {
-
-        buildRequestUrl: function (searchString, pageNumber) {
-            
-            var urlArray = [
-                "proxy.php?DonneXML=true&index=",
-                encodeURIComponent(".GK"),
-                "&limitbox_1=",
-                encodeURIComponent("$LAB7 = s or $LAB7 = i"),
-                "&limitbox_3=",
-                "&term=",
-                encodeURIComponent(searchString)
-            ];
-            
-            if (pageNumber) {
-                urlArray = urlArray.concat([
-                    "&page=",
-                    encodeURIComponent(pageNumber)
-                ]);
-            }
-            
-            var url = urlArray.join("");
-            
-            return url;
-        },
-
-        _convertDetailPageIntoCatalogItem: function (rawXmlData) {
-
-            var copies = [];
-            var directAccesses = [];
-            var tempString = "";
-
-            /**
-             * Autres champs sous "searchresponse>fullnonmarc>searchresults>results>row"
-             *      titre -> 'TITLE>data>text'
-             *      author -> 'cell:nth-of-type(11)>data>text' ou 'AUTHORS>data[Plus. occurrences poss.]>text'
-             *      [Edition informations] -> author -> 'cell:nth-of-type(13)>data>text'
-             *      ISBN / ISSN -> 'cell:nth-of-type(36)>data>text' ou ISBN -> 'isbn'
-             *      catalog URL -> "http://www.biusante.parisdescartes.fr/" + 'PPN>data>text'
-             */
-                                    
-            var item = new CatalogItem();
-            var generalDataRoot = $(rawXmlData).find('searchresponse>fullnonmarc>searchresults>results>row:first-of-type');
-
-
-            item.title          = generalDataRoot.find('TITLE>data>text').text();
-            item.author         = generalDataRoot.find('AUTHOR>data>text').text();
-            item.publisher      = generalDataRoot.find('cell:nth-of-type(13)>data>text').text();
-            // item.publishedDate  = rawXmlData.find('PUBDATE>data>text').text();
-            item.issn           = generalDataRoot.find('issn').text();
-            
-            var tempNode        = generalDataRoot.find('PPN>data>text');
-            item.catalogUrl     = (tempNode) ? "http://www.biusante.parisdescartes.fr/" + tempNode.text().replace(/ppn\s/g, "ppn?") : "";
-            
             var vLocalisation   = null;
-            var ic              = null;
-            var tempTab         = null;
-            // Trouver les éventuelles localisations physiques
+            tempTab         = null;
+            // Trouver les éventuelles localisations physiques de périodique
             generalDataRoot.find('cell:nth-of-type(75)>data').each(function () {
                 
                 vLocalisation       = $(this).children('text').text();
@@ -767,12 +575,51 @@ $(document).ready(function () {
             item.directAccesses = directAccesses;
             item.copies = copies;
             
-            console.log("item.directAccesses.length : " + item.directAccesses.length);
-            console.log("item.copies.length : " + item.copies.length);
-            
             return item;
 
         }
+    };
+    
+    function HipBookDataAnalyzer () {
+        this._data = null;
+        this._pageNumber = 0;
+        this._numberOfResults = 0;
+        this._resultingResultSet = null;
+    }
+    
+    HipBookDataAnalyzer.prototype = {
+        
+        _SEARCH_RESTRICTION: "$LAB7 = a or $LAB7 = c or $LAB7 = i or $LAB7 = m not $TH = *"
+        
+    };
+    
+    HipBookDataAnalyzer.prototype = $.extend({}, HipDataAnalyzer.prototype, HipBookDataAnalyzer.prototype);
+    
+    function HipThesisDataAnalyzer() {
+        this._data = null;
+        this._pageNumber = 0;
+        this._numberOfResults = 0;
+        this._resultingResultSet = null;
+    }
+    
+    HipThesisDataAnalyzer.prototype = {
+ 
+        _SEARCH_RESTRICTION: "$TH = *"
+        
+    };
+    
+    HipThesisDataAnalyzer.prototype = $.extend({}, HipDataAnalyzer.prototype, HipThesisDataAnalyzer.prototype);
+    
+    function HipPeriodicalDataAnalyzer() {
+        this._data = null;
+        this._pageNumber = 0;
+        this._numberOfResults = 0;
+        this._resultingResultSet = null;
+    }
+    
+    HipPeriodicalDataAnalyzer.prototype = {
+
+        _SEARCH_RESTRICTION: "$LAB7 = s or $LAB7 = i"
 
     };
     
