@@ -124,7 +124,6 @@ $(document).ready(function () {
         }    
     };
 
-    
     function DataProviderFactory() {}
     
     DataProviderFactory.prototype = {
@@ -194,14 +193,16 @@ $(document).ready(function () {
 
     */
     function FacadeDataProvider( parametersMap ) {
+        // Propriétéliées au paramétrage du modèle
         this._analyzer              = parametersMap.implementation;
         this._MAX_RESULTS_PER_PAGE  = parametersMap.maxResultsPerPage;
         this._DATA_TYPE             = parametersMap.dataType;
         
+        // Propriétés gérant l'état du modèle
         this._currentQueryString    = "";
         this._currentPageNumber     = 0;
         this._currentTotalOfResults = 0;
-        this._moreResultsAvailable  = null;
+        this._moreResultsAvailable  = false;
 
     }
 
@@ -209,8 +210,8 @@ $(document).ready(function () {
         
         // Fonction publique, que les ResultAreas sont susceptibles d'appeler.
         moreResultsAvailable: function () {
-            var maxPageNumber = Math.ceil(this._currentTotalOfResults / this._MAX_RESULTS_PER_PAGE);
-            if (maxPageNumber > this._currentPageNumber) {
+            var lastPageNumber = Math.ceil(this._currentTotalOfResults / this._MAX_RESULTS_PER_PAGE);
+            if (lastPageNumber > this._currentPageNumber) {
                 return true;
             }
             
@@ -256,14 +257,15 @@ $(document).ready(function () {
             });
             
             ajaxPromise.done(function (response) {
-                    _self._analyzer.setData(response);
-                    // var resultSet = _self._analyzer._buildResultSet(response);
+                
+                    _self._analyzer.analyze(response);
                     _self._currentPageNumber        = _self._analyzer.getPageNumber();
                     _self._currentTotalOfResults    = _self._analyzer.getTotalOfResults();
-                
                     var resultSet                   = _self._analyzer.getResultSet();
-                    // console.log("Records found !");
-                    // console.log("resultSet : " + resultSet);
+                
+                    console.log("_sendRequest. Records found !");
+                    console.log("_self._currentPageNumber : " + _self._currentPageNumber);
+                    console.log("_self._currentTotalOfResults : " + _self._currentTotalOfResults);
                 
                     _self._analyzer.unsetData();
                     promisedResults.resolve(resultSet);
@@ -271,7 +273,7 @@ $(document).ready(function () {
             });
             
             ajaxPromise.always(function () {
-                    // console.log("The request for getSearchResults is complete!");
+                    // console.log("The request for _sendRequest is complete!");
             });
 
             return promisedResults;
@@ -294,7 +296,7 @@ $(document).ready(function () {
             
             
             ajaxPromise.done(function (response) {
-                    var detailedItem = _self._analyzer.buildDetailedDataItem(response);
+                    var detailedItem = _self._analyzer.getAsCatalogItem(response);
                     // console.log("Copies found !");
                     promisedResults.resolve(detailedItem);
             });
@@ -311,33 +313,42 @@ $(document).ready(function () {
     function HipDataAnalyzer () {}
     
     HipDataAnalyzer.prototype = {
-        data: null,
+        _data: null,
+        _pageNumber: 0,
+        _numberOfResults: 0,
+        _resultingResultSet: null,
         
-        setData: function (data) {
-            this.data = $(data);  
+        
+        analyze: function (data) {
+            this._data = $(data);
+            this._buildResultSet();
         },
         
         unsetData: function () {
-            this.data = null;  
+            this._data = null;  
         },
         
         getPageNumber: function () {
-            return parseInt(this.data.find('searchresponse>yoursearch>view>currpage').text(), 10);
+            return this._pageNumber;
         },
     
         getTotalOfResults: function () {
-            return parseInt(this.data.find('searchresponse>yoursearch>hits').text(), 10);
+            return this._numberOfResults;
         },
     
         getResultSet: function () {
-            return this.buildResultSet();
+            return this._resultingResultSet;
+        },
+        
+        getAsCatalogItem : function (rawXmlData) {
+            return this._convertDetailPageIntoCatalogItem(rawXmlData);
         },
         
         buildItemUrl: function (identifier) {
             return "proxy.php?DonneXML=true&" + identifier;
         },
         
-        buildDataItem: function (rawXmlData) {
+        _buildDataItem: function (rawXmlData) {
             var item = new CatalogItem();
 
             item.title          = rawXmlData.find('TITLE>data>text').text();
@@ -360,31 +371,57 @@ $(document).ready(function () {
             return item;
         },
         
-        buildResultSet: function () {
+        _buildResultSet: function () {
             // console.log("Results set building !");
-            var $rawXmlData = this.data;
-            // var listRoot = $("<div class='ui items'></div>");
+            var $rawXmlData = this._data;
+
             var resultSet = new CatalogResultSet();
-
-            // resultSet.numberOfResults = $rawXmlData.find('searchresponse>yoursearch>hits').text();
-
-            // Récupérer, ligne à ligne, les données, les mettre en forme et les attacher à la liste
             var tempItems = [];
-            var tempDataItem = null;
-
             var _self = this;
-            $rawXmlData.find('searchresponse>summary>searchresults>results>row').each(function (index, value) {
-                tempDataItem = _self.buildDataItem($(value));
-                tempItems.push(tempDataItem);
-            });
+            
+            // Récupérer le nombre de résultats
+            this._numberOfResults = parseInt(this._data.find('searchresponse>yoursearch>hits').text(), 10);
+            console.log("Number of results found : " + this._numberOfResults);
+            // Calculer le numéro de la page courante
+            switch (this._numberOfResults) {
+                case 0:
+                    this._pageNumber = 0;
+                    break;
+                case 1:
+                    this._pageNumber = 1;
+                    break;
+                default:
+                    this._pageNumber = parseInt(this._data.find('searchresponse>yoursearch>view>currpage').text(), 10);
+                    break;
+            }
+            console.log("Page number found : " + this._pageNumber);
+            
+            // Si l'élément "fullnonmarc" est absent du XML, on a affaire à une page de résultats.
+            if ($rawXmlData.find('searchresponse>fullnonmarc').length < 1) {
+                
+                // Récupérer, ligne à ligne, les données, les mettre en forme et les attacher à la liste
+                var tempDataItem = null;
+                $rawXmlData.find('searchresponse>summary>searchresults>results>row').each(function (index, value) {
+                    tempDataItem = _self._buildDataItem($(value));
+                    tempItems.push(tempDataItem);
+                });
+                
+            }else {
+                tempItems.push(_self.getAsCatalogItem($rawXmlData));
+            }
 
             resultSet.results = tempItems;
             // console.log("Results set is built !");
-            return resultSet;
+            this._resultingResultSet = resultSet;
         }
     };
     
-    function HipBookDataAnalyzer () {}
+    function HipBookDataAnalyzer () {
+        this._data = null;
+        this._pageNumber = 0;
+        this._numberOfResults = 0;
+        this._resultingResultSet = null;
+    }
     
     HipBookDataAnalyzer.prototype = {
         
@@ -412,7 +449,7 @@ $(document).ready(function () {
             return url;
         },
 
-        buildDetailedDataItem: function (rawXmlData) {
+        _convertDetailPageIntoCatalogItem: function (rawXmlData) {
 
             var copies = [];
             var currentCopy = null;
@@ -467,7 +504,10 @@ $(document).ready(function () {
     HipBookDataAnalyzer.prototype = $.extend({}, HipDataAnalyzer.prototype, HipBookDataAnalyzer.prototype);
     
     function HipThesisDataAnalyzer() {
-        this.data = null;
+        this._data = null;
+        this._pageNumber = 0;
+        this._numberOfResults = 0;
+        this._resultingResultSet = null;
     }
     
     HipThesisDataAnalyzer.prototype = {
@@ -496,7 +536,7 @@ $(document).ready(function () {
             return url;
         },
 
-        buildDetailedDataItem: function (rawXmlData) {
+        _convertDetailPageIntoCatalogItem: function (rawXmlData) {
 
             var copies = [];
             var currentCopy = null;
@@ -559,7 +599,10 @@ $(document).ready(function () {
     HipThesisDataAnalyzer.prototype = $.extend({}, HipDataAnalyzer.prototype, HipThesisDataAnalyzer.prototype);
     
     function HipPeriodicalDataAnalyzer() {
-        this.data = null;
+        this._data = null;
+        this._pageNumber = 0;
+        this._numberOfResults = 0;
+        this._resultingResultSet = null;
     }
     
     HipPeriodicalDataAnalyzer.prototype = {
@@ -588,7 +631,7 @@ $(document).ready(function () {
             return url;
         },
 
-        buildDetailedDataItem: function (rawXmlData) {
+        _convertDetailPageIntoCatalogItem: function (rawXmlData) {
 
             var copies = [];
             var tempString = "";
@@ -650,34 +693,6 @@ $(document).ready(function () {
                 
             });
             
-            /*
-            vLocalisation       = generalDataRoot.find('cell:nth-of-type(75)>data>text').text();
-            console.log("vLocalisation set !");
-            console.log("Raw Localisation : " + vLocalisation);
-            vLocalisation = vLocalisation.split("$html$")[1];
-            
-            var tempTab = vLocalisation.split("Cote : ");
-            ic.callNumber = tempTab[1];
-            
-            tempTab = tempTab[0].split("collection : ");
-            vLocalisation = tempTab[1];
-            ic.holdings = vLocalisation;
-            
-            tempString = tempTab[0];
-            if (tempString.indexOf("Médecine") != -1) {
-                tempString = "Médecine";
-            } else if (tempString.indexOf("Pharmacie") != -1) {
-                tempString = "Pharmacie";
-            } else {
-                tempString = "";
-            }
-            ic.library = tempString;
-            
-            
-            console.log("Raw Localisation : " + vLocalisation);
-            
-            copies.push(ic);
-            */
             item.copies = copies;
             
             return item;
@@ -689,35 +704,35 @@ $(document).ready(function () {
     HipPeriodicalDataAnalyzer.prototype = $.extend({}, HipDataAnalyzer.prototype, HipPeriodicalDataAnalyzer.prototype);
     
     function EBookSpecificDataAnalyzer() {
-        this.data = null;
+        this._data = null;
+        this._pageNumber = 0;
+        this._numberOfResults = 0;
+        this._resultingResultSet = null;
     }
     
     EBookSpecificDataAnalyzer.prototype = {
         
         _authorRegex: /Par\s(.*)\s*\.[A-Z]{3,}/g,
         
-        setData: function (data) {
-            this.data = $(data);  
+        analyze: function (data) {
+            this._data = $(data);
+            this._buildResultSet();
         },
         
         unsetData: function () {
-          this.data = null;  
+          this._data = null;  
         },
     
         getPageNumber: function () {
-            return parseInt(this.data.find('searchresponse>yoursearch>view>currpage').text(), 10);
+            return this._pageNumber;
         },
     
         getTotalOfResults: function () {
-            var wrappingTable = this.data.find("#table247");
-            var tempText = wrappingTable.find('tr:nth-child(2)>td>p').text();
-            var regexResult = /:\s(\d+)\s/g.exec(tempText);
-            // console.log("regexResult : " + regexResult);
-            return (regexResult) ? regexResult[1] : 0;
+            return this._numberOfResults;
         },
     
         getResultSet: function () {
-            return this.buildResultSet();
+            return this._resultingResultSet;
         },
         
         buildRequestUrl: function (searchString, pageNumber) {
@@ -745,18 +760,46 @@ $(document).ready(function () {
         buildItemUrl: function () {
             return null;
         },
+        
+        _extractPageNumber: function () {
+            var result = 1;
+            
+            var wrappingTable = this._data.find("#table247");
+            
+            var $flecheGauche = wrappingTable
+                            .find("tr:nth-child(2)>td")
+                            .find("img[src='http://www.biusante.parisdescartes.fr/imutil/flecheptg.gif'][alt^='page ']");
+            
+            console.log("EBookSpecificDataProvider. $flecheGauche found : " + $flecheGauche.length);
+            if ($flecheGauche.length > 0) {
+                
+                var urlPagePrecedente = $flecheGauche.parent().attr("href");
+                console.log("urlPagePrecedente found : " + urlPagePrecedente);
+                var regexResult = /p=(\d+)/g.exec(urlPagePrecedente);
+                
+                if (regexResult) {
+                    result = parseInt(regexResult[1], 10) + 1;
+                }
+            }
+                
+            console.log("EBook page number : " + result);
+            return result;
+        },
 
-        buildResultSet: function () {
+        _buildResultSet: function () {
           // console.log("Beginning of _buildResultSet. Results set building !");
-            var $rawData = this.data;
+            var $rawData = this._data;
             
             var resultSet = new CatalogResultSet();
-
             var wrappingTable = $rawData.find("#table247");
-          // console.log("wrappingTable : " + wrappingTable);
-    
-            // resultSet.numberOfResults   = this.getTotalOfResults();
-          // console.log("resultSet.numberOfResults : " + resultSet.numberOfResults);
+            
+            // Récupérer le nombre de résultats
+            var tempText = wrappingTable.find('tr:nth-child(2)>td>p').text();
+            var regexResult = /:\s(\d+)\s/g.exec(tempText);
+            this._numberOfResults = (regexResult) ? regexResult[1] : 0;
+            
+            // Calculer le numéro de la page courante
+            this._pageNumber = this._extractPageNumber();
 
             // Récupérer, ligne à ligne, les données, les mettre en forme et les attacher à la liste
             var tempItems = [];
@@ -764,16 +807,17 @@ $(document).ready(function () {
 
             var _self = this;
             wrappingTable.find('tr').each(function (index, value) {
-                if (index > 6) { // Il faut aussi exclure le dernier TR
-                    tempDataItem = _self.buildDataItem($(value));
+                if (index > 6) { 
+                    tempDataItem = _self._buildDataItem($(value));
                     tempItems.push(tempDataItem);
                 }
             });
+            // Il faut aussi exclure le dernier TR
             tempItems.pop();
 
             resultSet.results = tempItems;
           // console.log("Results set is built !");
-            return resultSet;
+            this._resultingResultSet = resultSet;
         },
 
         
@@ -792,7 +836,7 @@ $(document).ready(function () {
              *      - div > font.text -> Tag (plusieurs occurrences)
              *
             */
-        buildDataItem: function (rawXmlData) {
+        _buildDataItem: function (rawXmlData) {
             var item = new CatalogItem();
             
             var cell2 = rawXmlData.find('td:nth-child(2)');
@@ -802,22 +846,18 @@ $(document).ready(function () {
             // Récupération de l'auteur
             var tempText = cell2.find('div').text();
             var regexResult = /Par\s(.*?)\s?\.?(PAYS|LANGUE)/g.exec(tempText);
-            // console.log("regexResult : " + regexResult)
+
             item.author         = (regexResult) ? regexResult[1] : "";
-            
             item.publisher      = cell2.find('div > a').text();
-            
             item.description    = cell2.find('div > i').text();
             
             // Récupération de la date de publication
             regexResult = /(\d{4})\.?/g.exec(tempText);
             item.publishedDate  = (regexResult) ? regexResult[1] : "";
-            //item.onlineAccessUrl      = cell2.find('p > a').attr("href");
             
             var directAccess = new DirectAccess();
             directAccess.url = cell2.find('p > a').attr("href");
             item.directAccesses.push(directAccess);
-        
 
             var vDocumentType   = rawXmlData.find('cell:nth-of-type(14)>data>text').text();
             if (vDocumentType) {
@@ -827,34 +867,48 @@ $(document).ready(function () {
             return item;
         },
 
-        buildDetailedDataItem: function () {
+        getAsCatalogItem: function () {
             throw "Exception : UnsupportedOperationException";
         }
 
     };
     
     function ThesisSpecificDataAnalyzer() {
-        this.data = null;
+        this._data = null;
+        this._pageNumber = 0;
+        this._numberOfResults = 0;
+        this._resultingResultSet = null;
     }
     
     ThesisSpecificDataAnalyzer.prototype = {
         
-        setData: function (data) {
-            this.data = $(data);  
+        analyze: function (data) {
+            this._data = $(data);
+            this._buildResultSet();
         },
         
         unsetData: function () {
-          this.data = null;  
+            this._data = null;  
         },
     
         getPageNumber: function () {
-            // throw "Not implemented method.";
-            
+            return this._pageNumber;
+        },
+    
+        getTotalOfResults: function () {
+            return this._numberOfResults;
+        },
+    
+        getResultSet: function () {
+            return this._resultingResultSet;
+        },
+        
+        _extractPageNumber: function () {
             var result = 1;
             
-            var $flecheGauche = this.data.find("img[src='http://www.biusante.parisdescartes.fr/imutil/flecheptg.gif'][alt='page précédente']");
+            var $flecheGauche = this._data.find("img[src='http://www.biusante.parisdescartes.fr/imutil/flecheptg.gif'][alt^='page ']");
             console.log("$flecheGauche found : " + $flecheGauche);
-            if ($flecheGauche) {
+            if ($flecheGauche.length > 0) {
                 
                 var urlPagePrecedente = $flecheGauche.parent().attr("href");
                 console.log("urlPagePrecedente found : " + urlPagePrecedente);
@@ -868,10 +922,9 @@ $(document).ready(function () {
             console.log("Thesis page number : " + result);
             return result;
         },
-    
-        getTotalOfResults: function () {
-            
-            var wrappingTable = this.data.find("#table245");
+        
+        _extractNumberOfResults: function () {
+            var wrappingTable = this._data.find("#table245");
             var result = 0;
             
             // S'il y a des résultats, les analyser et alimenter le CatalogResultSet
@@ -883,7 +936,7 @@ $(document).ready(function () {
 
             } else {
 
-                wrappingTable = this.data.find("#table241");
+                wrappingTable = this._data.find("#table241");
                 
                 var messageCell = wrappingTable.find("tr:nth-child(2) > td:nth-child(1)");
                 
@@ -899,10 +952,6 @@ $(document).ready(function () {
             }
             
             return result;
-        },
-    
-        getResultSet: function () {
-            return this.buildResultSet();
         },
         
         buildRequestUrl: function (searchString, pageNumber) {
@@ -930,17 +979,23 @@ $(document).ready(function () {
             return null;
         },
 
-        buildResultSet: function () {
-            // console.log("ThesisSpecificDataProvider... Beginning of _buildResultSet. Results set building !");
+        _buildResultSet: function () {
+            console.log("ThesisSpecificDataProvider... Beginning of _buildResultSet. Results set building !");
             
-            var $rawXmlData = this.data;
+            var $rawXmlData = this._data;
             
             var resultSet = new CatalogResultSet();
 
+            // Récupérer le nombre de résultats
+            this._numberOfResults = this._extractNumberOfResults();
+            
+            // Calculer le numéro de la page courante
+            this._pageNumber = this._extractPageNumber();
+            
             var wrappingTable = $rawXmlData.find("#table245");
             
             // S'il y a des résultats, les analyser et alimenter le CatalogResultSet
-            if (wrappingTable.length) {
+            if (wrappingTable.length > 0) {
                 
                 // Récupérer, ligne à ligne, les données, les mettre en forme et les attacher à la liste
                 var tempItems = [];
@@ -948,10 +1003,8 @@ $(document).ready(function () {
 
                 var _self = this;
                 wrappingTable.find('tr > td > table').each(function (index, value) {
-                    // if (index > 2) { // Il faut aussi exclure le dernier TR
-                        tempDataItem = _self.buildDataItem($(value));
-                        tempItems.push(tempDataItem);
-                    // }
+                    tempDataItem = _self._buildDataItem($(value));
+                    tempItems.push(tempDataItem);
                 });
 
                 resultSet.results = tempItems;
@@ -967,12 +1020,10 @@ $(document).ready(function () {
                 
             }
             
-            
-          // console.log("Results set is built !");
-            return resultSet;
+            this._resultingResultSet = resultSet;
         },
 
-        buildDataItem: function (rawXmlData) {
+        _buildDataItem: function (rawXmlData) {
             var item = new CatalogItem();
             
             // Récupération de l'auteur
@@ -1004,7 +1055,7 @@ $(document).ready(function () {
             return item;
         },
 
-        buildDetailedDataItem: function () {
+        getAsCatalogItem: function () {
             throw "Exception : UnsupportedOperationException";
         }
 

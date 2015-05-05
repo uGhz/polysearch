@@ -1,1 +1,1357 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?><searchresponse><version>3.20c_75.00</version><session>143012U9711Q6.132</session><profile>biusante2</profile><lang>fre</lang><expirepage>300</expirepage><illurl></illurl><httpserver><servername>catalogue.biusante.parisdescartes.fr</servername><host>catalogue.biusante.parisdescartes.fr</host><port>80</port></httpserver><browser><type>NN</type><majorversion>5</majorversion><minorversion>0</minorversion><os>Windows NT</os><addr>193.51.83.101</addr></browser><bookbag><size>0</size></bookbag><security><auth>false</auth><name></name></security><toolbar><active_tab>search</active_tab><bgcolor>F7F7E7</bgcolor><bg>null</bg><userlimits><aspectentry><aspectlabel>Date de publication</aspectlabel><aspectnumber>3100035</aspectnumber><shortcut>$DA</shortcut><keywordbrowseview></keywordbrowseview></aspectentry></userlimits><tab><name>Catalogue </name><alt>Catalogue</alt><value>search</value><active>true</active></tab><tab><name>Revues en ligne</name><alt>Revues en ligne</alt><value>tab58</value><href>http://www2.biusante.parisdescartes.fr/perio/</href><active>false</active></tab><tab><name>Th&#232;ses M&#233;d./Ch.dent.</name><alt>Th&#232;ses Bib. M&#233;decine et Odontologie</alt><value>tab46</value><href>http://www2.biusante.parisdescartes.fr/theses/theses_rech.htm</href><active>false</active></tab><tab><name>Manuscrits</name><alt>Manuscrits</alt><value>tab62</value><active>false</active></tab><tab><name>Images</name><alt>Base d'images et portraits</alt><value>tab59</value><href>http://www2.biusante.parisdescartes.fr/img/</href><active>false</active></tab><tab><name>Biographies</name><alt>Base de biographies</alt><value>tab60</value><href>http://www2.biusante.parisdescartes.fr/bio/debut.htm</href><active>false</active></tab><tab><name>Compte lecteur</name><alt>Votre compte emprunteur &#224; la Biblioth&#232;que de Pharmacie</alt><value>account</value><active>false</active></tab><tab><name>Nouveaut&#233;s</name><alt>Liste de nouveaut&#233;s </alt><value>dsiTab</value><active>false</active></tab><submenu><name>Recherche simple </name><alt>Recherche simple </alt><value>subtab98</value><active>true</active></submenu><submenu><name>Recherche avanc&#233;e</name><alt>Recherche avanc&#233;e</alt><value>subtab93</value><active>false</active></submenu><submenu><name>Feuilletage des index</name><alt>Feuilletage des index</alt><value>subtab94</value><active>false</active></submenu><submenu><name>Recherche sp&#233;cialisee</name><alt>Recherche pro </alt><value>subtab104</value><active>false</active></submenu><submenu><name>Historique</name><alt>Historique</alt><value>history</value><active>false</active></submenu><submenu><name>Contenu du catalogue</name><alt>Contenu du catalogue</alt><value>subtab134</value><active>false</active></submenu><bestseller></bestseller><help>help.html</help><logoinfo><logo>/hipres/images/rien.gif</logo><homepageurl>http://www.biusante.parisdescartes.fr/</homepageurl><homepagelinktext></homepagelinktext></logoinfo></toolbar><active_aspect>subtab98</active_aspect><active_menu><simple><value>simple</value><desc>Recherche simple </desc><explanation></explanation></simple></active_menu><aspectlist><aspectentry><aspectlabel>Tous les mots</aspectlabel><aspectnumber>3100029</aspectnumber><shortcut>.GK</shortcut><keywordbrowseview></keywordbrowseview></aspectentry><aspectentry><aspectlabel>Mots cl&#233;s (titre, sujet, r&#233;sum&#233;)</aspectlabel><aspectnumber>3100049</aspectnumber><shortcut>.KW</shortcut><keywordbrowseview></keywordbrowseview></aspectentry><aspectentry><aspectlabel>Auteur/Titre</aspectlabel><aspectnumber>3100050</aspectnumber><shortcut>.AT</shortcut><keywordbrowseview></keywordbrowseview></aspectentry><aspectentry><aspectlabel>Auteur</aspectlabel><aspectnumber>3100030</aspectnumber><shortcut>.AU</shortcut><keywordbrowseview></keywordbrowseview></aspectentry><aspectentry><aspectlabel>Titre</aspectlabel><aspectnumber>3100031</aspectnumber><shortcut>.TI</shortcut><keywordbrowseview></keywordbrowseview></aspectentry><aspectentry><aspectlabel>Editeur et lieu d'&#233;dition</aspectlabel><aspectnumber>3100047</aspectnumber><shortcut>.EDI</shortcut><keywordbrowseview></keywordbrowseview></aspectentry><aspectentry><aspectlabel>Collection</aspectlabel><aspectnumber>3100033</aspectnumber><shortcut>.CO</shortcut><keywordbrowseview></keywordbrowseview></aspectentry><aspectentry><aspectlabel>Th&#232;ses (type,discipl., &#233;tabl.,no,dir.)</aspectlabel><aspectnumber>3100048</aspectnumber><shortcut>.THE</shortcut><keywordbrowseview></keywordbrowseview></aspectentry><aspectentry><aspectlabel>Sujet </aspectlabel><aspectnumber>3100032</aspectnumber><shortcut>.SU</shortcut><keywordbrowseview></keywordbrowseview></aspectentry><aspectentry><aspectlabel>ISBN</aspectlabel><aspectnumber>3100020</aspectnumber><shortcut>ISBN</shortcut><keywordbrowseview></keywordbrowseview></aspectentry><aspectentry><aspectlabel>ISSN</aspectlabel><aspectnumber>3100021</aspectnumber><shortcut>ISSN</shortcut><keywordbrowseview></keywordbrowseview></aspectentry></aspectlist><operators><op_and>AND</op_and><op_or>OR</op_or><op_not>NOT</op_not><op_xor>XOR</op_xor></operators><predefsortlist><sortentry><label>date (du plus r&#233;cent au plus ancien)</label><sortview>3100024</sortview></sortentry><sortentry><label>date (du plus ancien au plus r&#233;cent)</label><sortview>3100014</sortview></sortentry><sortentry><label>auteur</label><sortview>3100013</sortview></sortentry><sortentry><label>titre</label><sortview>3100012</sortview></sortentry></predefsortlist><predefinedlimits><limitbox><desc>Type de document</desc><predeflimitentry><label>Tous </label><limit>$LAB = *</limit></predeflimitentry><predeflimitentry><label>Livres (tous supports)</label><limit>$LAB7 = a or $LAB7 = c or $LAB7 = i or $LAB7 = m not $TH = *</limit></predeflimitentry><predeflimitentry><label>Th&#232;ses (tous supports)</label><limit>$TH = *</limit></predeflimitentry><predeflimitentry><label>Revues (tous supports)</label><limit>$LAB7 = s or $LAB7 = i</limit></predeflimitentry><predeflimitentry><label>Audiovisuel/Multimedia</label><limit>$LAB6 = g or $LAB6 = i or $LAB6 = j or $LAB6 = m</limit></predeflimitentry><predeflimitentry><label>Doc. en ligne (tous types)</label><limit>IT01 = WEL</limit></predeflimitentry></limitbox><limitbox><desc>Langue</desc><predeflimitentry><label>Toutes </label><limit>$LAB = *</limit></predeflimitentry><predeflimitentry><label>fran&#231;ais</label><limit>$LANG = fre</limit></predeflimitentry><predeflimitentry><label>anglais</label><limit>$LANG = eng</limit></predeflimitentry><predeflimitentry><label>allemand</label><limit>$LANG = ger</limit></predeflimitentry><predeflimitentry><label>espagnol</label><limit>$LANG = spa</limit></predeflimitentry><predeflimitentry><label>italien</label><limit>$LANG = ita</limit></predeflimitentry><predeflimitentry><label>latin</label><limit>$LANG = lat</limit></predeflimitentry><predeflimitentry><label>grec anc.</label><limit>$LANG = grc</limit></predeflimitentry></limitbox><limitbox><desc>Biblioth&#232;que</desc><predeflimitentry><label>Les 2 biblioth&#232;ques</label><limit>$LAB = *</limit></predeflimitentry><predeflimitentry><label>Bib. M&#233;decine/Odonto.</label><limit>$930B = bibmed</limit></predeflimitentry><predeflimitentry><label>Bib. Pharmacie</label><limit>$930B = bibpharma or LO01 = BIUP or $990B = bibpharma</limit></predeflimitentry></limitbox><limitbox><desc>Fonds</desc><predeflimitentry><label>Tous</label><limit>$LAB = *</limit></predeflimitentry><predeflimitentry><label>M&#233;d. Salle Actualit&#233;</label><limit>CO01 = MEDACTU or $930C = MEDPACTU</limit></predeflimitentry><predeflimitentry><label>Odonto. Salle Landouzy</label><limit>CO01 = MEDLAN or $930C = MEDPLAN</limit></predeflimitentry><predeflimitentry><label>Histoire M&#233;d. Usuels</label><limit>CO01 = MEDSALHM or $930C = MEDPSALHM</limit></predeflimitentry><predeflimitentry><label>M&#233;d. Magasins</label><limit>CO01 = MEDMAG</limit></predeflimitentry><predeflimitentry><label>Pharma. Manuels </label><limit>CO01 = SLEML or CO01 = SLML</limit></predeflimitentry><predeflimitentry><label>Pharma. Usuels </label><limit>CO01 = PHAUSU or $856X = p or $930E = p or $999U = p</limit></predeflimitentry><predeflimitentry><label>Pharma. Libre acc&#232;s </label><limit>CO01 = PHASLAC</limit></predeflimitentry><predeflimitentry><label>Pharma. Magasins</label><limit>CO01 = PHAMAG</limit></predeflimitentry></limitbox></predefinedlimits><reservelocations></reservelocations><viewingbooklist>false</viewingbooklist><lang>frc</lang><items><searchresults><parenttype>1</parenttype><header><col><label>Biblioth&#232;que</label></col><col><label>Emplacement</label></col><col><label>Fascicule</label></col><col><label>Cote </label></col><col><label>Consultation</label></col><col><label>Disponibilit&#233; </label></col><col><label>Date de retour</label></col><col><label>Note</label></col><col><label>(Inventaire)</label></col><col><label>(Provenance)</label></col></header><results><row><sourceid>~!apothicat</sourceid><cell><data><text>Bib. M&#233;decine et Odontologie</text></data></cell><cell><data><text>Magasins</text></data></cell><cell><data><text></text></data></cell><cell><data><text>271773/1-4</text></data></cell><cell><data><text>magasin, &#224; demander par bulletin</text></data></cell><cell><data><text>En rayon</text></data></cell><cell><data><text></text></data></cell><cell><data><text></text></data></cell><cell><data><text>271773/1-4</text></data></cell><cell><data><text></text></data></cell><error></error><key>677357</key><displayRequestButton>true</displayRequestButton><showCopyLink>false</showCopyLink><LOCALLOCATION><data><text>Bib. M&#233;decine et Odontologie</text></data></LOCALLOCATION><TEMPORARYLOCATION><data><text>Magasins</text></data></TEMPORARYLOCATION><CALLNUMBER><data><text>271773/1-4</text></data></CALLNUMBER><TEMPORARYLOCATION><data><text>En rayon</text></data></TEMPORARYLOCATION><AVAILABILITYDATE><data><text></text></data></AVAILABILITYDATE><dimrow>true</dimrow><tablename></tablename><my_list>false</my_list></row></results><otherlocations>true</otherlocations><hitcount></hitcount><resultid>1</resultid><error></error></searchresults></items><youritems><hits>1</hits><view><npp>20</npp><currpage>0</currpage><start>1</start><end>1</end></view><pagenumbers><group>0</group></pagenumbers></youritems><view>items</view><yoursearch><searchdata><search><shortcut>.GK</shortcut><term>victor</term></search><plimits><plimitbox><plimit><term>$TH = *</term></plimit></plimitbox></plimits></searchdata><sources><source><id>~!apothicat</id></source></sources><sorts><sort>3100024</sort></sorts><staffonly></staffonly><searchdata><link>full%3D3100001%7E%21480537%7E%217</link></searchdata><searchdata><link>full%3D3100001%7E%21480537%7E%217</link></searchdata><hits>1</hits><totalhits>1</totalhits><view><npp>10</npp><currpage>0</currpage><start>1</start><end>1</end></view><pagenumbers><group>0</group></pagenumbers></yoursearch><lang>frc</lang><fullnonmarc><searchresults><parenttype>1</parenttype><header><col><label>Type de document</label></col><col><label>Type de document</label></col><col><label>Type de document</label></col><col><label>Type de document</label></col><col><label>Acc&#232;s web libre</label></col><col><label>Acc&#232;s web r&#233;serv&#233;</label></col><col><label>Acc&#232;s web r&#233;serv&#233;</label></col><col><label>Collection en ligne</label></col><col><label>Fournisseur</label></col><col><label>Consultation de la th&#232;se</label></col><col><label>Auteur(s)</label></col><col><label>Edition</label></col><col><label>Adr. biblio.</label></col><col><label>Description</label></col><col><label>Collection</label></col><col><label>Titre de l'ensemble</label></col><col><label>Res. &#233;lectronique</label></col><col><label>Notes</label></col><col><label>Notes</label></col><col><label>Notes</label></col><col><label>P&#233;riodicit&#233;</label></col><col><label>P&#233;riodicit&#233;</label></col><col><label>Contient</label></col><col><label>Reproduction de</label></col><col><label>Reproduction Medic@ de</label></col><col><label>LIen vers cette r&#233;f&#233;rence</label></col><col><label>Reproduction</label></col><col><label>Autre &#233;dition</label></col><col><label>En ligne dans Medic@</label></col><col><label>Sujet</label></col><col><label>Notes sujets</label></col><col><label>Indice(s) Dewey</label></col><col><label>Indice(s) NLM</label></col><col><label>ISBN / ISSN</label></col><col><label>R&#233;sum&#233;</label></col><col><label>Contient</label></col><col><label>Table mati&#232;res</label></col><col><label>Titre pr&#233;c&#233;dent</label></col><col><label>Autre(s) forme(s) du titre</label></col><col><label>Traduction du titre</label></col><col><label>Collection</label></col><col><label>Tir&#233; &#224; part ou extrait de</label></col><col><label>A pour tir&#233; &#224; part ou extrait</label></col><col><label>Contenu dans</label></col><col><label>A pour suppl&#233;ment</label></col><col><label>Est suppl&#233;ment de</label></col><col><label>Publi&#233; avec</label></col><col><label>Titre en relation</label></col><col><label>Titre en relation</label></col><col><label>Mis &#224; jour par</label></col><col><label>Met &#224; jour</label></col><col><label>Suite de</label></col><col><label>Suite partielle de</label></col><col><label>Suite de</label></col><col><label>Suite partielle de</label></col><col><label>Absorbe</label></col><col><label>Absorb&#233; partiellement</label></col><col><label>Titre(s) avant fusion</label></col><col><label>Suite partielle de</label></col><col><label>Devient</label></col><col><label>Devient partiellement</label></col><col><label>Devient</label></col><col><label>Devient partiellement</label></col><col><label>Absorb&#233; par</label></col><col><label>Absorb&#233; partiellement par</label></col><col><label>Devient apr&#232;s scission</label></col><col><label>Fusionne </label></col><col><label>Redevient</label></col><col><label>Identifiant de la notice</label></col><col><label>Provenance des exemplaires</label></col><col><label>Note sur l'(es) exemplaire(s)</label></col><col><label> </label></col><col><label>Commander une reproduction </label></col><col><label>Consultation de la th&#232;se</label></col><col><label>Localisation</label></col></header><results><row><sourceid>~!apothicat</sourceid><cell><data><text></text></data></cell><cell><data><text></text></data></cell><cell><data><text></text></data></cell><cell><data><text>Th&#232;se de doctorat : Epist&#233;mologie, histoire des sciences et techniques : Nantes : 2008</text></data></cell><cell><data><text></text></data></cell><cell><data><text></text></data></cell><cell><data><text></text></data></cell><cell><data><text></text></data></cell><cell><data><text></text></data></cell><cell><data><text></text></data></cell><cell><data><text>Dupuis , Guy. Auteur</text></data><data><text>Pigeaud , Jackie. Directeur de th&#232;se</text></data><data><text>Centre Fran&#231;ois Vi&#232;te , Nantes. Organisme de soutenance</text></data></cell><cell><data><text></text></data></cell><cell><data><text>[S.l.] , [s.n.] -- 2008</text></data></cell><cell><data><text>4 vol. (948 p. ; 940 p.) : fac-sim., graph. ; 30 cm</text></data></cell><cell><data><text></text></data></cell><cell><data><text></text></data></cell><cell><data><text></text></data></cell><cell><data><text></text></data></cell><cell><data><text>Bibliogr. des vol. 1-2 p. 937-948. Notes bibliogr.</text></data></cell><cell><data><text></text></data></cell><cell><data><text></text></data></cell><cell><data><text></text></data></cell><cell><data><text></text></data></cell><cell><data><text></text></data></cell><cell><data><text></text></data></cell><cell><data><text></text><link><func>search=.GK~!</func></link></data></cell><cell><data><text></text></data></cell><cell><data><text>Pour une approche temporalis&#233;e et &#233;pist&#233;mologique de l'autisme Ressource &#233;lectronique   le Sauvage de l'Aveyron au sein de l'oeuvre m&#233;dico-philosophique de Jean Marc Gaspard Itard (1774-1838) comme pr&#233;mices de la complexe figure future de l'enfant autiste th&#232;se... pr&#233;sent&#233;e...par Guy Dupuis,... Edition &#233;lectronique Paris BIUM [Diff] Ascl&#233;piades</text></data></cell><cell><data><text>164614362 Pour une approche temporalis&#233;e et &#233;pist&#233;mologique de l'autisme Ressource &#233;lectronique   le Sauvage de l'Aveyron au sein de l'oeuvre m&#233;dico-philosophique de Jean Marc Gaspard Itard (1774-1838) comme pr&#233;mices de la complexe figure future de l'enfant autiste th&#232;se... pr&#233;sent&#233;e...par Guy Dupuis,... Edition &#233;lectronique Paris BIUM [Diff] Ascl&#233;piades</text><link><func>search=.GK~!164614362 Pour une approche temporalis&#233;e et &#233;pist&#233;mologique de l'autisme Ressource &#233;lectronique   le Sauvage de l'Aveyron au sein de l'oeuvre m&#233;dico-philosophique de Jean Marc Gaspard Itard (1774-1838) comme pr&#233;mices de la complexe figure future de l'enfant autiste th&#232;se... pr&#233;sent&#233;e...par Guy Dupuis,... Edition &#233;lectronique Paris BIUM [Diff] Ascl&#233;piades</func></link></data></cell><cell><data><text>Autisme infantile -- France -- Th&#232;ses et &#233;crits acad&#233;miques</text></data><data><text>Enfants -- Psychiatrie -- France -- Th&#232;ses et &#233;crits acad&#233;miques</text></data><data><text>P&#233;dopsychiatrie -- France -- Dissertations acad&#233;miques</text></data><data><text>Itard , Jean Marc Gaspard - 1774-1838 -- Oeuvres -- &#201;crits -- Th&#232;ses et &#233;crits acad&#233;miques</text></data><data><text>Victor - 178.-1828 - enfant sauvage -- Aspect m&#233;dical -- Th&#232;ses et &#233;crits acad&#233;miques</text></data></cell><cell><data><text></text></data></cell><cell><data><text></text></data></cell><cell><data><text></text></data></cell><cell><data><text></text></data></cell><cell><data><text></text></data></cell><cell><data><text></text></data></cell><cell><data><text></text></data></cell><cell><data><text></text></data></cell><cell><data><text></text></data></cell><cell><data><text>For a time-related and epistemological approach to autism : the Wild Boy of Aveyron in the philosophical work of Jean Marc Gaspard Itard as premises of the complex future figure of the autistic child</text></data></cell><cell><data><text></text></data></cell><cell><data><text></text></data></cell><cell><data><text></text></data></cell><cell><data><text></text></data></cell><cell><data><text></text><link><func>search=.TI~!</func></link></data></cell><cell><data><text></text><link><func>search=.TI~!</func></link></data></cell><cell><data><text></text></data></cell><cell><data><text></text><link><func>search=.TI~!</func></link></data></cell><cell><data><text></text></data></cell><cell><data><text></text><link><func>search=.TI~!</func></link></data></cell><cell><data><text></text><link><func>search=.TI~!</func></link></data></cell><cell><data><text></text><link><func>search=.TI~!</func></link></data></cell><cell><data><text></text><link><func>search=.TI~!</func></link></data></cell><cell><data><text></text><link><func>search=.TI~!</func></link></data></cell><cell><data><text></text><link><func>search=.TI~!</func></link></data></cell><cell><data><text></text><link><func>search=.TI~!</func></link></data></cell><cell><data><text></text><link><func>search=.TI~!</func></link></data></cell><cell><data><text></text><link><func>search=.TI~!</func></link></data></cell><cell><data><text></text><link><func>search=.TI~!</func></link></data></cell><cell><data><text></text><link><func>search=.TI~!</func></link></data></cell><cell><data><text></text><link><func>search=.TI~!</func></link></data></cell><cell><data><text></text><link><func>search=.TI~!</func></link></data></cell><cell><data><text></text><link><func>search=.TI~!</func></link></data></cell><cell><data><text></text><link><func>search=.TI~!</func></link></data></cell><cell><data><text></text><link><func>search=.TI~!</func></link></data></cell><cell><data><text></text><link><func>search=.TI~!</func></link></data></cell><cell><data><text></text><link><func>search=.TI~!</func></link></data></cell><cell><data><text></text><link><func>search=.TI~!</func></link></data></cell><cell><data><text>http://www.biusante.parisdescartes.fr/ppn?139528210</text><link><url>http://www.biusante.parisdescartes.fr/ppn?139528210</url></link></data></cell><cell><data><text></text></data></cell><cell><data><text></text></data></cell><cell><data><text></text></data></cell><cell><data><text></text><link><url></url></link></data></cell><cell><data><text></text></data></cell><cell><data><text></text></data></cell><error></error><key>480537</key><marcleader7>m</marcleader7><displayRequestButton>true</displayRequestButton><showCopyLink>false</showCopyLink><TITLE><data><text>Pour une approche temporalis&#233;e et &#233;pist&#233;mologique de l'autisme : le Sauvage de l'Aveyron au sein de l'oeuvre m&#233;dico-philosophique de Jean Marc Gaspard Itard (1774-1838) comme pr&#233;mices de la complexe figure future de l'enfant autiste -- th&#232;se... pr&#233;sent&#233;e...par Guy Dupuis,... ; directeur : Monsieur le Professeur Jackie Pigeaud,...</text></data></TITLE><SUBJECT><data><text>Autisme infantile -- France -- Th&#232;ses et &#233;crits acad&#233;miques</text></data><data><text>Enfants -- Psychiatrie -- France -- Th&#232;ses et &#233;crits acad&#233;miques</text></data><data><text>P&#233;dopsychiatrie -- France -- Dissertations acad&#233;miques</text></data><data><text>Itard , Jean Marc Gaspard - 1774-1838 -- Oeuvres -- &#201;crits -- Th&#232;ses et &#233;crits acad&#233;miques</text></data><data><text>Victor - 178.-1828 - enfant sauvage -- Aspect m&#233;dical -- Th&#232;ses et &#233;crits acad&#233;miques</text></data></SUBJECT><EOD><data><text>Itard</text></data><data><text>Victor</text></data></EOD><SERIES><data><text></text></data></SERIES><AUTHOR><data><text>Dupuis , Guy -- 1965-....</text></data><data><text>Pigeaud , Jackie -- 1937-....</text></data><data><text>Centre Fran&#231;ois Vi&#232;te , Nantes</text></data></AUTHOR><PPN><data><text>ppn&#032;139528210</text></data></PPN><dimrow>true</dimrow><tablename>BIB</tablename><my_list>true</my_list></row></results><hitcount></hitcount><resultid>1</resultid><error></error></searchresults></fullnonmarc><OpenURL><no_links/></OpenURL><CommercialStore><no_links/></CommercialStore><bibinfo><subscriptionsummary>false</subscriptionsummary><volumes>false</volumes><closedstack>false</closedstack><items>true</items><error></error></bibinfo><group><pools><id>biusante2</id><datapool><emailreplyto>cat@biusante.parisdescartes.fr</emailreplyto><emailpostmaster>cat@biusante.parisdescartes.fr</emailpostmaster><source><sourcelabel>BIU Sant&#233;</sourcelabel><id>~!apothicat</id><type>200</type><requesttype>0</requesttype><loginrequired>false</loginrequired><maxhitlimit>5000</maxhitlimit><sortviewnum>3100024</sortviewnum><sourcenum>3100001</sourcenum></source><opensource><source><sorthitlimit>2000</sorthitlimit><limitmaxhitlimit>0</limitmaxhitlimit><sortviewnum>3100024</sortviewnum><id>~!apothicat</id><opened>true</opened><error></error></source></opensource></datapool></pools><size>1</size><dedup_option_id>1</dedup_option_id></group><dedup_checked>0</dedup_checked><returnURL>http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?session=1430E266VU068.78&amp;menu=search&amp;aspect=subtab98&amp;npp=20&amp;ipp=20&amp;spp=20&amp;profile=biusante2&amp;ri=&amp;index=.GK&amp;term=victor&amp;x=0&amp;y=0&amp;aspect=subtab98&amp;limitbox_1=$TH+=+*&amp;ultype=&amp;uloper==&amp;ullimit=&amp;ultype=&amp;uloper==&amp;ullimit=&amp;sort=</returnURL><method>GET</method></searchresponse>
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<searchresponse>
+    <version>3.20c_75.00</version>
+    <session>143012U9711Q6.132</session>
+    <profile>biusante2</profile>
+    <lang>fre</lang>
+    <expirepage>300</expirepage>
+    <illurl></illurl>
+    <httpserver>
+        <servername>catalogue.biusante.parisdescartes.fr</servername>
+        <host>catalogue.biusante.parisdescartes.fr</host>
+        <port>80</port>
+    </httpserver>
+    <browser>
+        <type>NN</type>
+        <majorversion>5</majorversion>
+        <minorversion>0</minorversion>
+        <os>Windows NT</os>
+        <addr>193.51.83.101</addr>
+    </browser>
+    <bookbag>
+        <size>0</size>
+    </bookbag>
+    <security>
+        <auth>false</auth>
+        <name></name>
+    </security>
+    <toolbar>
+        <active_tab>search</active_tab>
+        <bgcolor>F7F7E7</bgcolor>
+        <bg>null</bg>
+        <userlimits>
+            <aspectentry>
+                <aspectlabel>Date de publication</aspectlabel>
+                <aspectnumber>3100035</aspectnumber>
+                <shortcut>$DA</shortcut>
+                <keywordbrowseview></keywordbrowseview>
+            </aspectentry>
+        </userlimits>
+        <tab>
+            <name>Catalogue </name>
+            <alt>Catalogue</alt>
+            <value>search</value>
+            <active>true</active>
+        </tab>
+        <tab>
+            <name>Revues en ligne</name>
+            <alt>Revues en ligne</alt>
+            <value>tab58</value>
+            <href>http://www2.biusante.parisdescartes.fr/perio/</href>
+            <active>false</active>
+        </tab>
+        <tab>
+            <name>Th&#232;ses M&#233;d./Ch.dent.</name>
+            <alt>Th&#232;ses Bib. M&#233;decine et Odontologie</alt>
+            <value>tab46</value>
+            <href>http://www2.biusante.parisdescartes.fr/theses/theses_rech.htm</href>
+            <active>false</active>
+        </tab>
+        <tab>
+            <name>Manuscrits</name>
+            <alt>Manuscrits</alt>
+            <value>tab62</value>
+            <active>false</active>
+        </tab>
+        <tab>
+            <name>Images</name>
+            <alt>Base d'images et portraits</alt>
+            <value>tab59</value>
+            <href>http://www2.biusante.parisdescartes.fr/img/</href>
+            <active>false</active>
+        </tab>
+        <tab>
+            <name>Biographies</name>
+            <alt>Base de biographies</alt>
+            <value>tab60</value>
+            <href>http://www2.biusante.parisdescartes.fr/bio/debut.htm</href>
+            <active>false</active>
+        </tab>
+        <tab>
+            <name>Compte lecteur</name>
+            <alt>Votre compte emprunteur &#224; la Biblioth&#232;que de Pharmacie</alt>
+            <value>account</value>
+            <active>false</active>
+        </tab>
+        <tab>
+            <name>Nouveaut&#233;s</name>
+            <alt>Liste de nouveaut&#233;s </alt>
+            <value>dsiTab</value>
+            <active>false</active>
+        </tab>
+        <submenu>
+            <name>Recherche simple </name>
+            <alt>Recherche simple </alt>
+            <value>subtab98</value>
+            <active>true</active>
+        </submenu>
+        <submenu>
+            <name>Recherche avanc&#233;e</name>
+            <alt>Recherche avanc&#233;e</alt>
+            <value>subtab93</value>
+            <active>false</active>
+        </submenu>
+        <submenu>
+            <name>Feuilletage des index</name>
+            <alt>Feuilletage des index</alt>
+            <value>subtab94</value>
+            <active>false</active>
+        </submenu>
+        <submenu>
+            <name>Recherche sp&#233;cialisee</name>
+            <alt>Recherche pro </alt>
+            <value>subtab104</value>
+            <active>false</active>
+        </submenu>
+        <submenu>
+            <name>Historique</name>
+            <alt>Historique</alt>
+            <value>history</value>
+            <active>false</active>
+        </submenu>
+        <submenu>
+            <name>Contenu du catalogue</name>
+            <alt>Contenu du catalogue</alt>
+            <value>subtab134</value>
+            <active>false</active>
+        </submenu>
+        <bestseller></bestseller>
+        <help>help.html</help>
+        <logoinfo>
+            <logo>/hipres/images/rien.gif</logo>
+            <homepageurl>http://www.biusante.parisdescartes.fr/</homepageurl>
+            <homepagelinktext></homepagelinktext>
+        </logoinfo>
+    </toolbar>
+    <active_aspect>subtab98</active_aspect>
+    <active_menu>
+        <simple>
+            <value>simple</value>
+            <desc>Recherche simple </desc>
+            <explanation></explanation>
+        </simple>
+    </active_menu>
+    <aspectlist>
+        <aspectentry>
+            <aspectlabel>Tous les mots</aspectlabel>
+            <aspectnumber>3100029</aspectnumber>
+            <shortcut>.GK</shortcut>
+            <keywordbrowseview></keywordbrowseview>
+        </aspectentry>
+        <aspectentry>
+            <aspectlabel>Mots cl&#233;s (titre, sujet, r&#233;sum&#233;)</aspectlabel>
+            <aspectnumber>3100049</aspectnumber>
+            <shortcut>.KW</shortcut>
+            <keywordbrowseview></keywordbrowseview>
+        </aspectentry>
+        <aspectentry>
+            <aspectlabel>Auteur/Titre</aspectlabel>
+            <aspectnumber>3100050</aspectnumber>
+            <shortcut>.AT</shortcut>
+            <keywordbrowseview></keywordbrowseview>
+        </aspectentry>
+        <aspectentry>
+            <aspectlabel>Auteur</aspectlabel>
+            <aspectnumber>3100030</aspectnumber>
+            <shortcut>.AU</shortcut>
+            <keywordbrowseview></keywordbrowseview>
+        </aspectentry>
+        <aspectentry>
+            <aspectlabel>Titre</aspectlabel>
+            <aspectnumber>3100031</aspectnumber>
+            <shortcut>.TI</shortcut>
+            <keywordbrowseview></keywordbrowseview>
+        </aspectentry>
+        <aspectentry>
+            <aspectlabel>Editeur et lieu d'&#233;dition</aspectlabel>
+            <aspectnumber>3100047</aspectnumber>
+            <shortcut>.EDI</shortcut>
+            <keywordbrowseview></keywordbrowseview>
+        </aspectentry>
+        <aspectentry>
+            <aspectlabel>Collection</aspectlabel>
+            <aspectnumber>3100033</aspectnumber>
+            <shortcut>.CO</shortcut>
+            <keywordbrowseview></keywordbrowseview>
+        </aspectentry>
+        <aspectentry>
+            <aspectlabel>Th&#232;ses (type,discipl., &#233;tabl.,no,dir.)</aspectlabel>
+            <aspectnumber>3100048</aspectnumber>
+            <shortcut>.THE</shortcut>
+            <keywordbrowseview></keywordbrowseview>
+        </aspectentry>
+        <aspectentry>
+            <aspectlabel>Sujet </aspectlabel>
+            <aspectnumber>3100032</aspectnumber>
+            <shortcut>.SU</shortcut>
+            <keywordbrowseview></keywordbrowseview>
+        </aspectentry>
+        <aspectentry>
+            <aspectlabel>ISBN</aspectlabel>
+            <aspectnumber>3100020</aspectnumber>
+            <shortcut>ISBN</shortcut>
+            <keywordbrowseview></keywordbrowseview>
+        </aspectentry>
+        <aspectentry>
+            <aspectlabel>ISSN</aspectlabel>
+            <aspectnumber>3100021</aspectnumber>
+            <shortcut>ISSN</shortcut>
+            <keywordbrowseview></keywordbrowseview>
+        </aspectentry>
+    </aspectlist>
+    <operators>
+        <op_and>AND</op_and>
+        <op_or>OR</op_or>
+        <op_not>NOT</op_not>
+        <op_xor>XOR</op_xor>
+    </operators>
+    <predefsortlist>
+        <sortentry>
+            <label>date (du plus r&#233;cent au plus ancien)</label>
+            <sortview>3100024</sortview>
+        </sortentry>
+        <sortentry>
+            <label>date (du plus ancien au plus r&#233;cent)</label>
+            <sortview>3100014</sortview>
+        </sortentry>
+        <sortentry>
+            <label>auteur</label>
+            <sortview>3100013</sortview>
+        </sortentry>
+        <sortentry>
+            <label>titre</label>
+            <sortview>3100012</sortview>
+        </sortentry>
+    </predefsortlist>
+    <predefinedlimits>
+        <limitbox>
+            <desc>Type de document</desc>
+            <predeflimitentry>
+                <label>Tous </label>
+                <limit>$LAB = *</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>Livres (tous supports)</label>
+                <limit>$LAB7 = a or $LAB7 = c or $LAB7 = i or $LAB7 = m not $TH = *</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>Th&#232;ses (tous supports)</label>
+                <limit>$TH = *</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>Revues (tous supports)</label>
+                <limit>$LAB7 = s or $LAB7 = i</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>Audiovisuel/Multimedia</label>
+                <limit>$LAB6 = g or $LAB6 = i or $LAB6 = j or $LAB6 = m</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>Doc. en ligne (tous types)</label>
+                <limit>IT01 = WEL</limit>
+            </predeflimitentry>
+        </limitbox>
+        <limitbox>
+            <desc>Langue</desc>
+            <predeflimitentry>
+                <label>Toutes </label>
+                <limit>$LAB = *</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>fran&#231;ais</label>
+                <limit>$LANG = fre</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>anglais</label>
+                <limit>$LANG = eng</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>allemand</label>
+                <limit>$LANG = ger</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>espagnol</label>
+                <limit>$LANG = spa</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>italien</label>
+                <limit>$LANG = ita</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>latin</label>
+                <limit>$LANG = lat</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>grec anc.</label>
+                <limit>$LANG = grc</limit>
+            </predeflimitentry>
+        </limitbox>
+        <limitbox>
+            <desc>Biblioth&#232;que</desc>
+            <predeflimitentry>
+                <label>Les 2 biblioth&#232;ques</label>
+                <limit>$LAB = *</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>Bib. M&#233;decine/Odonto.</label>
+                <limit>$930B = bibmed</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>Bib. Pharmacie</label>
+                <limit>$930B = bibpharma or LO01 = BIUP or $990B = bibpharma</limit>
+            </predeflimitentry>
+        </limitbox>
+        <limitbox>
+            <desc>Fonds</desc>
+            <predeflimitentry>
+                <label>Tous</label>
+                <limit>$LAB = *</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>M&#233;d. Salle Actualit&#233;</label>
+                <limit>CO01 = MEDACTU or $930C = MEDPACTU</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>Odonto. Salle Landouzy</label>
+                <limit>CO01 = MEDLAN or $930C = MEDPLAN</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>Histoire M&#233;d. Usuels</label>
+                <limit>CO01 = MEDSALHM or $930C = MEDPSALHM</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>M&#233;d. Magasins</label>
+                <limit>CO01 = MEDMAG</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>Pharma. Manuels </label>
+                <limit>CO01 = SLEML or CO01 = SLML</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>Pharma. Usuels </label>
+                <limit>CO01 = PHAUSU or $856X = p or $930E = p or $999U = p</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>Pharma. Libre acc&#232;s </label>
+                <limit>CO01 = PHASLAC</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>Pharma. Magasins</label>
+                <limit>CO01 = PHAMAG</limit>
+            </predeflimitentry>
+        </limitbox>
+    </predefinedlimits>
+    <reservelocations></reservelocations>
+    <viewingbooklist>false</viewingbooklist>
+    <lang>frc</lang>
+    <items>
+        <searchresults>
+            <parenttype>1</parenttype>
+            <header>
+                <col>
+                    <label>Biblioth&#232;que</label>
+                </col>
+                <col>
+                    <label>Emplacement</label>
+                </col>
+                <col>
+                    <label>Fascicule</label>
+                </col>
+                <col>
+                    <label>Cote </label>
+                </col>
+                <col>
+                    <label>Consultation</label>
+                </col>
+                <col>
+                    <label>Disponibilit&#233; </label>
+                </col>
+                <col>
+                    <label>Date de retour</label>
+                </col>
+                <col>
+                    <label>Note</label>
+                </col>
+                <col>
+                    <label>(Inventaire)</label>
+                </col>
+                <col>
+                    <label>(Provenance)</label>
+                </col>
+            </header>
+            <results>
+                <row>
+                    <sourceid>~!apothicat</sourceid>
+                    <cell>
+                        <data>
+                            <text>Bib. M&#233;decine et Odontologie</text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text>Magasins</text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text>271773/1-4</text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text>magasin, &#224; demander par bulletin</text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text>En rayon</text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text>271773/1-4</text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <error></error>
+                    <key>677357</key>
+                    <displayRequestButton>true</displayRequestButton>
+                    <showCopyLink>false</showCopyLink>
+                    <LOCALLOCATION>
+                        <data>
+                            <text>Bib. M&#233;decine et Odontologie</text>
+                        </data>
+                    </LOCALLOCATION>
+                    <TEMPORARYLOCATION>
+                        <data>
+                            <text>Magasins</text>
+                        </data>
+                    </TEMPORARYLOCATION>
+                    <CALLNUMBER>
+                        <data>
+                            <text>271773/1-4</text>
+                        </data>
+                    </CALLNUMBER>
+                    <TEMPORARYLOCATION>
+                        <data>
+                            <text>En rayon</text>
+                        </data>
+                    </TEMPORARYLOCATION>
+                    <AVAILABILITYDATE>
+                        <data>
+                            <text></text>
+                        </data>
+                    </AVAILABILITYDATE>
+                    <dimrow>true</dimrow>
+                    <tablename></tablename>
+                    <my_list>false</my_list>
+                </row>
+            </results>
+            <otherlocations>true</otherlocations>
+            <hitcount></hitcount>
+            <resultid>1</resultid>
+            <error></error>
+        </searchresults>
+    </items>
+    <youritems>
+        <hits>1</hits>
+        <view>
+            <npp>20</npp>
+            <currpage>0</currpage>
+            <start>1</start>
+            <end>1</end>
+        </view>
+        <pagenumbers>
+            <group>0</group>
+        </pagenumbers>
+    </youritems>
+    <view>items</view>
+    <yoursearch>
+        <searchdata>
+            <search>
+                <shortcut>.GK</shortcut>
+                <term>victor</term>
+            </search>
+            <plimits>
+                <plimitbox>
+                    <plimit>
+                        <term>$TH = *</term>
+                    </plimit>
+                </plimitbox>
+            </plimits>
+        </searchdata>
+        <sources>
+            <source>
+                <id>~!apothicat</id>
+            </source>
+        </sources>
+        <sorts>
+            <sort>3100024</sort>
+        </sorts>
+        <staffonly></staffonly>
+        <searchdata>
+            <link>full%3D3100001%7E%21480537%7E%217</link>
+        </searchdata>
+        <searchdata>
+            <link>full%3D3100001%7E%21480537%7E%217</link>
+        </searchdata>
+        <hits>1</hits>
+        <totalhits>1</totalhits>
+        <view>
+            <npp>10</npp>
+            <currpage>0</currpage>
+            <start>1</start>
+            <end>1</end>
+        </view>
+        <pagenumbers>
+            <group>0</group>
+        </pagenumbers>
+    </yoursearch>
+    <lang>frc</lang>
+    <fullnonmarc>
+        <searchresults>
+            <parenttype>1</parenttype>
+            <header>
+                <col>
+                    <label>Type de document</label>
+                </col>
+                <col>
+                    <label>Type de document</label>
+                </col>
+                <col>
+                    <label>Type de document</label>
+                </col>
+                <col>
+                    <label>Type de document</label>
+                </col>
+                <col>
+                    <label>Acc&#232;s web libre</label>
+                </col>
+                <col>
+                    <label>Acc&#232;s web r&#233;serv&#233;</label>
+                </col>
+                <col>
+                    <label>Acc&#232;s web r&#233;serv&#233;</label>
+                </col>
+                <col>
+                    <label>Collection en ligne</label>
+                </col>
+                <col>
+                    <label>Fournisseur</label>
+                </col>
+                <col>
+                    <label>Consultation de la th&#232;se</label>
+                </col>
+                <col>
+                    <label>Auteur(s)</label>
+                </col>
+                <col>
+                    <label>Edition</label>
+                </col>
+                <col>
+                    <label>Adr. biblio.</label>
+                </col>
+                <col>
+                    <label>Description</label>
+                </col>
+                <col>
+                    <label>Collection</label>
+                </col>
+                <col>
+                    <label>Titre de l'ensemble</label>
+                </col>
+                <col>
+                    <label>Res. &#233;lectronique</label>
+                </col>
+                <col>
+                    <label>Notes</label>
+                </col>
+                <col>
+                    <label>Notes</label>
+                </col>
+                <col>
+                    <label>Notes</label>
+                </col>
+                <col>
+                    <label>P&#233;riodicit&#233;</label>
+                </col>
+                <col>
+                    <label>P&#233;riodicit&#233;</label>
+                </col>
+                <col>
+                    <label>Contient</label>
+                </col>
+                <col>
+                    <label>Reproduction de</label>
+                </col>
+                <col>
+                    <label>Reproduction Medic@ de</label>
+                </col>
+                <col>
+                    <label>LIen vers cette r&#233;f&#233;rence</label>
+                </col>
+                <col>
+                    <label>Reproduction</label>
+                </col>
+                <col>
+                    <label>Autre &#233;dition</label>
+                </col>
+                <col>
+                    <label>En ligne dans Medic@</label>
+                </col>
+                <col>
+                    <label>Sujet</label>
+                </col>
+                <col>
+                    <label>Notes sujets</label>
+                </col>
+                <col>
+                    <label>Indice(s) Dewey</label>
+                </col>
+                <col>
+                    <label>Indice(s) NLM</label>
+                </col>
+                <col>
+                    <label>ISBN / ISSN</label>
+                </col>
+                <col>
+                    <label>R&#233;sum&#233;</label>
+                </col>
+                <col>
+                    <label>Contient</label>
+                </col>
+                <col>
+                    <label>Table mati&#232;res</label>
+                </col>
+                <col>
+                    <label>Titre pr&#233;c&#233;dent</label>
+                </col>
+                <col>
+                    <label>Autre(s) forme(s) du titre</label>
+                </col>
+                <col>
+                    <label>Traduction du titre</label>
+                </col>
+                <col>
+                    <label>Collection</label>
+                </col>
+                <col>
+                    <label>Tir&#233; &#224; part ou extrait de</label>
+                </col>
+                <col>
+                    <label>A pour tir&#233; &#224; part ou extrait</label>
+                </col>
+                <col>
+                    <label>Contenu dans</label>
+                </col>
+                <col>
+                    <label>A pour suppl&#233;ment</label>
+                </col>
+                <col>
+                    <label>Est suppl&#233;ment de</label>
+                </col>
+                <col>
+                    <label>Publi&#233; avec</label>
+                </col>
+                <col>
+                    <label>Titre en relation</label>
+                </col>
+                <col>
+                    <label>Titre en relation</label>
+                </col>
+                <col>
+                    <label>Mis &#224; jour par</label>
+                </col>
+                <col>
+                    <label>Met &#224; jour</label>
+                </col>
+                <col>
+                    <label>Suite de</label>
+                </col>
+                <col>
+                    <label>Suite partielle de</label>
+                </col>
+                <col>
+                    <label>Suite de</label>
+                </col>
+                <col>
+                    <label>Suite partielle de</label>
+                </col>
+                <col>
+                    <label>Absorbe</label>
+                </col>
+                <col>
+                    <label>Absorb&#233; partiellement</label>
+                </col>
+                <col>
+                    <label>Titre(s) avant fusion</label>
+                </col>
+                <col>
+                    <label>Suite partielle de</label>
+                </col>
+                <col>
+                    <label>Devient</label>
+                </col>
+                <col>
+                    <label>Devient partiellement</label>
+                </col>
+                <col>
+                    <label>Devient</label>
+                </col>
+                <col>
+                    <label>Devient partiellement</label>
+                </col>
+                <col>
+                    <label>Absorb&#233; par</label>
+                </col>
+                <col>
+                    <label>Absorb&#233; partiellement par</label>
+                </col>
+                <col>
+                    <label>Devient apr&#232;s scission</label>
+                </col>
+                <col>
+                    <label>Fusionne </label>
+                </col>
+                <col>
+                    <label>Redevient</label>
+                </col>
+                <col>
+                    <label>Identifiant de la notice</label>
+                </col>
+                <col>
+                    <label>Provenance des exemplaires</label>
+                </col>
+                <col>
+                    <label>Note sur l'(es) exemplaire(s)</label>
+                </col>
+                <col>
+                    <label> </label>
+                </col>
+                <col>
+                    <label>Commander une reproduction </label>
+                </col>
+                <col>
+                    <label>Consultation de la th&#232;se</label>
+                </col>
+                <col>
+                    <label>Localisation</label>
+                </col>
+            </header>
+            <results>
+                <row>
+                    <sourceid>~!apothicat</sourceid>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text>Th&#232;se de doctorat : Epist&#233;mologie, histoire des sciences et techniques : Nantes : 2008</text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text>Dupuis , Guy. Auteur</text>
+                        </data>
+                        <data>
+                            <text>Pigeaud , Jackie. Directeur de th&#232;se</text>
+                        </data>
+                        <data>
+                            <text>Centre Fran&#231;ois Vi&#232;te , Nantes. Organisme de soutenance</text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text>[S.l.] , [s.n.] -- 2008</text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text>4 vol. (948 p. ; 940 p.) : fac-sim., graph. ; 30 cm</text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text>Bibliogr. des vol. 1-2 p. 937-948. Notes bibliogr.</text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.GK~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text>Pour une approche temporalis&#233;e et &#233;pist&#233;mologique de l'autisme Ressource &#233;lectronique le Sauvage de l'Aveyron au sein de l'oeuvre m&#233;dico-philosophique de Jean Marc Gaspard Itard (1774-1838) comme pr&#233;mices de la complexe figure future de l'enfant autiste th&#232;se... pr&#233;sent&#233;e...par Guy Dupuis,... Edition &#233;lectronique Paris BIUM [Diff] Ascl&#233;piades</text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text>164614362 Pour une approche temporalis&#233;e et &#233;pist&#233;mologique de l'autisme Ressource &#233;lectronique le Sauvage de l'Aveyron au sein de l'oeuvre m&#233;dico-philosophique de Jean Marc Gaspard Itard (1774-1838) comme pr&#233;mices de la complexe figure future de l'enfant autiste th&#232;se... pr&#233;sent&#233;e...par Guy Dupuis,... Edition &#233;lectronique Paris BIUM [Diff] Ascl&#233;piades</text>
+                            <link>
+                            <func>search=.GK~!164614362 Pour une approche temporalis&#233;e et &#233;pist&#233;mologique de l'autisme Ressource &#233;lectronique le Sauvage de l'Aveyron au sein de l'oeuvre m&#233;dico-philosophique de Jean Marc Gaspard Itard (1774-1838) comme pr&#233;mices de la complexe figure future de l'enfant autiste th&#232;se... pr&#233;sent&#233;e...par Guy Dupuis,... Edition &#233;lectronique Paris BIUM [Diff] Ascl&#233;piades</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text>Autisme infantile -- France -- Th&#232;ses et &#233;crits acad&#233;miques</text>
+                        </data>
+                        <data>
+                            <text>Enfants -- Psychiatrie -- France -- Th&#232;ses et &#233;crits acad&#233;miques</text>
+                        </data>
+                        <data>
+                            <text>P&#233;dopsychiatrie -- France -- Dissertations acad&#233;miques</text>
+                        </data>
+                        <data>
+                            <text>Itard , Jean Marc Gaspard - 1774-1838 -- Oeuvres -- &#201;crits -- Th&#232;ses et &#233;crits acad&#233;miques</text>
+                        </data>
+                        <data>
+                            <text>Victor - 178.-1828 - enfant sauvage -- Aspect m&#233;dical -- Th&#232;ses et &#233;crits acad&#233;miques</text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text>For a time-related and epistemological approach to autism : the Wild Boy of Aveyron in the philosophical work of Jean Marc Gaspard Itard as premises of the complex future figure of the autistic child</text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text>http://www.biusante.parisdescartes.fr/ppn?139528210</text>
+                            <link>
+                            <url>http://www.biusante.parisdescartes.fr/ppn?139528210</url>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <url></url>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <error></error>
+                    <key>480537</key>
+                    <marcleader7>m</marcleader7>
+                    <displayRequestButton>true</displayRequestButton>
+                    <showCopyLink>false</showCopyLink>
+                    <TITLE>
+                        <data>
+                            <text>Pour une approche temporalis&#233;e et &#233;pist&#233;mologique de l'autisme : le Sauvage de l'Aveyron au sein de l'oeuvre m&#233;dico-philosophique de Jean Marc Gaspard Itard (1774-1838) comme pr&#233;mices de la complexe figure future de l'enfant autiste -- th&#232;se... pr&#233;sent&#233;e...par Guy Dupuis,... ; directeur : Monsieur le Professeur Jackie Pigeaud,...</text>
+                        </data>
+                    </TITLE>
+                    <SUBJECT>
+                        <data>
+                            <text>Autisme infantile -- France -- Th&#232;ses et &#233;crits acad&#233;miques</text>
+                        </data>
+                        <data>
+                            <text>Enfants -- Psychiatrie -- France -- Th&#232;ses et &#233;crits acad&#233;miques</text>
+                        </data>
+                        <data>
+                            <text>P&#233;dopsychiatrie -- France -- Dissertations acad&#233;miques</text>
+                        </data>
+                        <data>
+                            <text>Itard , Jean Marc Gaspard - 1774-1838 -- Oeuvres -- &#201;crits -- Th&#232;ses et &#233;crits acad&#233;miques</text>
+                        </data>
+                        <data>
+                            <text>Victor - 178.-1828 - enfant sauvage -- Aspect m&#233;dical -- Th&#232;ses et &#233;crits acad&#233;miques</text>
+                        </data>
+                    </SUBJECT>
+                    <EOD>
+                        <data>
+                            <text>Itard</text>
+                        </data>
+                        <data>
+                            <text>Victor</text>
+                        </data>
+                    </EOD>
+                    <SERIES>
+                        <data>
+                            <text></text>
+                        </data>
+                    </SERIES>
+                    <AUTHOR>
+                        <data>
+                            <text>Dupuis , Guy -- 1965-....</text>
+                        </data>
+                        <data>
+                            <text>Pigeaud , Jackie -- 1937-....</text>
+                        </data>
+                        <data>
+                            <text>Centre Fran&#231;ois Vi&#232;te , Nantes</text>
+                        </data>
+                    </AUTHOR>
+                    <PPN>
+                        <data>
+                            <text>ppn&#032;139528210</text>
+                        </data>
+                    </PPN>
+                    <dimrow>true</dimrow>
+                    <tablename>BIB</tablename>
+                    <my_list>true</my_list>
+                </row>
+            </results>
+            <hitcount></hitcount>
+            <resultid>1</resultid>
+            <error></error>
+        </searchresults>
+    </fullnonmarc>
+    <OpenURL>
+        <no_links/>
+    </OpenURL>
+    <CommercialStore>
+        <no_links/>
+    </CommercialStore>
+    <bibinfo>
+        <subscriptionsummary>false</subscriptionsummary>
+        <volumes>false</volumes>
+        <closedstack>false</closedstack>
+        <items>true</items>
+        <error></error>
+    </bibinfo>
+    <group>
+        <pools>
+            <id>biusante2</id>
+            <datapool>
+                <emailreplyto>cat@biusante.parisdescartes.fr</emailreplyto>
+                <emailpostmaster>cat@biusante.parisdescartes.fr</emailpostmaster>
+                <source>
+                    <sourcelabel>BIU Sant&#233;</sourcelabel>
+                    <id>~!apothicat</id>
+                    <type>200</type>
+                    <requesttype>0</requesttype>
+                    <loginrequired>false</loginrequired>
+                    <maxhitlimit>5000</maxhitlimit>
+                    <sortviewnum>3100024</sortviewnum>
+                    <sourcenum>3100001</sourcenum>
+                </source>
+                <opensource>
+                    <source>
+                        <sorthitlimit>2000</sorthitlimit>
+                        <limitmaxhitlimit>0</limitmaxhitlimit>
+                        <sortviewnum>3100024</sortviewnum>
+                        <id>~!apothicat</id>
+                        <opened>true</opened>
+                        <error></error>
+                    </source>
+                </opensource>
+            </datapool>
+        </pools>
+        <size>1</size>
+        <dedup_option_id>1</dedup_option_id>
+    </group>
+    <dedup_checked>0</dedup_checked>
+    <returnURL>http://catalogue.biusante.parisdescartes.fr/ipac20/ipac.jsp?session=1430E266VU068.78&amp;menu=search&amp;aspect=subtab98&amp;npp=20&amp;ipp=20&amp;spp=20&amp;profile=biusante2&amp;ri=&amp;index=.GK&amp;term=victor&amp;x=0&amp;y=0&amp;aspect=subtab98&amp;limitbox_1=$TH+=+*&amp;ultype=&amp;uloper==&amp;ullimit=&amp;ultype=&amp;uloper==&amp;ullimit=&amp;sort=</returnURL>
+    <method>GET</method>
+</searchresponse>
