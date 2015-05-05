@@ -178,49 +178,40 @@
                     {{ /directAccesses.length }}
                     
                     {{ #copies.length }}
-                    
                     <div class="ui divided list">
-                    {{ #copies }}
-                      <div class="item">
-                        <div class="ui image">
-                                {{#conditions}}
-                                <span class='ui horizontal label popup-conditions' data-title='Conditions de consultation' data-content='{{conditions}}'>
-                                {{/conditions}}
-                                
-                                {{^conditions}}
-                                <span class='ui horizontal label'>
-                                {{/conditions}}
-                                
-                                    {{library}}<span class='detail'>Cote : {{callNumber}}</span>
-                                </span>
-                        </div>
-                        <div class="content">
-                            <div class="description">
-                            {{holdings}}
+                        {{ #copies }}
+                            <div class="item">
+                                <div class="ui image">
+                                    {{#conditions}}
+                                    <span class='ui horizontal label popup-conditions' data-title='Conditions de consultation' data-content='{{conditions}}'>
+                                    {{/conditions}}
+
+                                    {{^conditions}}
+                                    <span class='ui horizontal label'>
+                                    {{/conditions}}
+
+                                        {{library}}<span class='detail'>Cote : {{callNumber}}</span>
+                                    </span>
+                                </div>
+                                <div class="content">
+                                    <div class="description">
+                                    {{holdings}}
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                      </div>
-                    {{ /copies }}
+                        {{ /copies }}
                     </div>
-                    
                     {{ /copies.length }}
+                    
                 </div>
                 
                     {{ #catalogUrl }}
                     <div class="extra">
-                    <button class="ui basic tiny right floated button catalog-link" data-catalog-url="{{ catalogUrl }}">
-                        Voir dans le catalogue<i class="right chevron icon"></i>
-                    </button>
+                        <button class="ui basic tiny right floated button catalog-link" data-catalog-url="{{ catalogUrl }}">
+                            Voir dans le catalogue<i class="right chevron icon"></i>
+                        </button>
                     </div>
                     {{ /catalogUrl }}
-                    
-                    <div class="extra">
-                    {{ #onlineAccessUrl }}
-                    <button class="ui basic tiny right floated button online-access-link" data-online-access-url="{{ onlineAccessUrl }}">
-                        Voir en ligne<i class="right chevron icon"></i>
-                    </button>
-                    </div>
-                    {{ /onlineAccessUrl }}
 
             </div>
         </div>

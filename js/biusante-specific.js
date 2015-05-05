@@ -230,6 +230,7 @@ $(document).ready(function () {
             return this._sendRequest(queryUrl);
         },
         
+        // Fonction publique, que les ResultAreas sont susceptibles d'appeler.
         moreResultsAvailable: function () {
             var maxPageNumber = Math.ceil(this._currentTotalOfResults / this._MAX_RESULTS_PER_PAGE);
             if (maxPageNumber > this._currentPageNumber) {
@@ -239,6 +240,7 @@ $(document).ready(function () {
             return false;
         },
         
+        // Fonction publique, que les ResultAreas sont susceptibles d'appeler.
         getFreshSearchResults: function ( searchString ) {
 
             this._currentQueryString = searchString;
@@ -247,6 +249,7 @@ $(document).ready(function () {
             return this._sendRequest(queryUrl);
         },
         
+        // Fonction publique, que les ResultAreas sont susceptibles d'appeler.
         getNextSearchResults: function () {
             
             var queryUrl = this._analyzer.buildRequestUrl(
@@ -257,6 +260,7 @@ $(document).ready(function () {
             
         },
         
+        // Fonction publique, que les ResultAreas sont susceptibles d'appeler.
         getTotalOfResults: function () {
           return this._currentTotalOfResults;  
         },
@@ -325,8 +329,6 @@ $(document).ready(function () {
             
             return promisedResults;
         }
-        
-   
     };
      
     function HipDataAnalyzer () {}
@@ -343,11 +345,11 @@ $(document).ready(function () {
         },
         
         getPageNumber: function () {
-            throw "NotImplementedOperation";
+            return parseInt(this.data.find('searchresponse>yoursearch>view>currpage').text(), 10);
         },
     
         getTotalOfResults: function () {
-            throw "NotImplementedOperation";
+            return parseInt(this.data.find('searchresponse>yoursearch>hits').text(), 10);
         },
     
         getResultSet: function () {
@@ -404,14 +406,6 @@ $(document).ready(function () {
     function HipBookDataAnalyzer () {}
     
     HipBookDataAnalyzer.prototype = {
-
-        getPageNumber: function () {
-            return parseInt(this.data.find('searchresponse>yoursearch>view>currpage').text(), 10);
-        },
-    
-        getTotalOfResults: function () {
-            return parseInt(this.data.find('searchresponse>yoursearch>hits').text(), 10);
-        },
         
         buildRequestUrl: function (searchString, pageNumber) {
             
@@ -500,13 +494,6 @@ $(document).ready(function () {
     }
     
     HipThesisDataAnalyzer.prototype = {
-        getPageNumber: function () {
-            return parseInt(this.data.find('searchresponse>yoursearch>view>currpage').text(), 10);
-        },
-    
-        getTotalOfResults: function () {
-            return parseInt(this.data.find('searchresponse>yoursearch>hits').text(), 10);
-        },
  
         buildRequestUrl: function (searchString, pageNumber) {
             
@@ -603,14 +590,6 @@ $(document).ready(function () {
     }
     
     HipPeriodicalDataAnalyzer.prototype = {
-
-        getPageNumber: function () {
-            return parseInt(this.data.find('searchresponse>yoursearch>view>currpage').text(), 10);
-        },
-    
-        getTotalOfResults: function () {
-            return parseInt(this.data.find('searchresponse>yoursearch>hits').text(), 10);
-        },
 
         buildRequestUrl: function (searchString, pageNumber) {
             
