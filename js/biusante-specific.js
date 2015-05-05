@@ -570,10 +570,9 @@ $(document).ready(function () {
             $(rawXmlData).find('searchresponse>items>searchresults>results>row').each(function () {
                 
                 var currentNode = $(this);
-                currentCopy = {};
 
                 tempString = currentNode.find('LOCALLOCATION>data>text').text();
-                
+ 
                 if (tempString.indexOf("Médecine") != -1) {
                     tempString = "Médecine";
                 } else if (tempString.indexOf("Pharmacie") != -1) {
@@ -581,13 +580,17 @@ $(document).ready(function () {
                 } else {
                     tempString = "";
                 }
-                currentCopy.library = tempString;
+                
+                if (tempString.length > 0) {
+                    currentCopy = new ItemCopy();
+                    currentCopy.library = tempString;
 
-                currentCopy.precisePlace    = currentNode.find('TEMPORARYLOCATION:first-of-type>data>text').text();
-                currentCopy.callNumber            = currentNode.find('CALLNUMBER>data>text').text();
-                currentCopy.conditions      = currentNode.find('cell:nth-of-type(5)>data>text').text();
+                    currentCopy.precisePlace    = currentNode.find('TEMPORARYLOCATION:first-of-type>data>text').text();
+                    currentCopy.callNumber      = currentNode.find('CALLNUMBER>data>text').text();
+                    currentCopy.conditions      = currentNode.find('cell:nth-of-type(5)>data>text').text();
 
-                copies.push(currentCopy);
+                    copies.push(currentCopy);
+                }
                 // console.log("Details added !");
             });
             
