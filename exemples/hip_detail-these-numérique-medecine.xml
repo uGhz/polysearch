@@ -1,0 +1,1376 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<searchresponse>
+    <version>3.20c_75.00</version>
+    <session>14B083431KM62.673</session>
+    <profile>biusante2</profile>
+    <lang>fre</lang>
+    <expirepage>300</expirepage>
+    <illurl></illurl>
+    <httpserver>
+        <servername>catalogue.biusante.parisdescartes.fr</servername>
+        <host>catalogue.biusante.parisdescartes.fr</host>
+        <port>80</port>
+    </httpserver>
+    <browser>
+        <type>NN</type>
+        <majorversion>5</majorversion>
+        <minorversion>0</minorversion>
+        <os>Windows NT</os>
+        <addr>128.79.179.162</addr>
+    </browser>
+    <bookbag>
+        <size>0</size>
+    </bookbag>
+    <security>
+        <auth>false</auth>
+        <name></name>
+    </security>
+    <toolbar>
+        <active_tab>search</active_tab>
+        <bgcolor>F7F7E7</bgcolor>
+        <bg>null</bg>
+        <userlimits>
+            <aspectentry>
+                <aspectlabel>limitation date de publication</aspectlabel>
+                <aspectnumber>3100035</aspectnumber>
+                <shortcut>$DA</shortcut>
+                <keywordbrowseview></keywordbrowseview>
+            </aspectentry>
+        </userlimits>
+        <tab>
+            <name>Catalogue </name>
+            <alt>Catalogue</alt>
+            <value>search</value>
+            <active>true</active>
+        </tab>
+        <tab>
+            <name>Revues en ligne</name>
+            <alt>Revues en ligne</alt>
+            <value>tab58</value>
+            <href>http://www2.biusante.parisdescartes.fr/perio/</href>
+            <active>false</active>
+        </tab>
+        <tab>
+            <name>Th&#232;ses M&#233;d./Ch.dent.</name>
+            <alt>Th&#232;ses Bib. M&#233;decine et Odontologie</alt>
+            <value>tab46</value>
+            <href>http://www2.biusante.parisdescartes.fr/theses/theses_rech.htm</href>
+            <active>false</active>
+        </tab>
+        <tab>
+            <name>Manuscrits</name>
+            <alt>Manuscrits</alt>
+            <value>tab62</value>
+            <active>false</active>
+        </tab>
+        <tab>
+            <name>Images</name>
+            <alt>Base d'images et portraits</alt>
+            <value>tab59</value>
+            <href>http://www2.biusante.parisdescartes.fr/img/</href>
+            <active>false</active>
+        </tab>
+        <tab>
+            <name>Biographies</name>
+            <alt>Base de biographies</alt>
+            <value>tab60</value>
+            <href>http://www2.biusante.parisdescartes.fr/bio/debut.htm</href>
+            <active>false</active>
+        </tab>
+        <tab>
+            <name>Compte lecteur</name>
+            <alt>Votre compte emprunteur &#224; la Biblioth&#232;que de Pharmacie</alt>
+            <value>account</value>
+            <active>false</active>
+        </tab>
+        <tab>
+            <name>Nouveaut&#233;s</name>
+            <alt>Liste de nouveaut&#233;s </alt>
+            <value>dsiTab</value>
+            <active>false</active>
+        </tab>
+        <submenu>
+            <name>Recherche simple </name>
+            <alt>Recherche simple </alt>
+            <value>subtab98</value>
+            <active>false</active>
+        </submenu>
+        <submenu>
+            <name>Recherche avanc&#233;e</name>
+            <alt>Recherche avanc&#233;e</alt>
+            <value>subtab93</value>
+            <active>false</active>
+        </submenu>
+        <submenu>
+            <name>Feuilletage des index</name>
+            <alt>Feuilletage des index</alt>
+            <value>subtab94</value>
+            <active>false</active>
+        </submenu>
+        <submenu>
+            <name>Recherche sp&#233;cialisee</name>
+            <alt>Recherche pro </alt>
+            <value>subtab104</value>
+            <active>true</active>
+        </submenu>
+        <submenu>
+            <name>Historique</name>
+            <alt>Historique</alt>
+            <value>history</value>
+            <active>false</active>
+        </submenu>
+        <submenu>
+            <name>Contenu du catalogue</name>
+            <alt>Contenu du catalogue</alt>
+            <value>subtab134</value>
+            <active>false</active>
+        </submenu>
+        <bestseller></bestseller>
+        <help>help.html</help>
+        <logoinfo>
+            <logo>/hipres/images/rien.gif</logo>
+            <homepageurl>http://www.biusante.parisdescartes.fr/</homepageurl>
+            <homepagelinktext></homepagelinktext>
+        </logoinfo>
+    </toolbar>
+    <active_aspect>subtab104</active_aspect>
+    <active_menu>
+        <simple>
+            <value>simple</value>
+            <desc>Recherche pro </desc>
+            <explanation></explanation>
+        </simple>
+    </active_menu>
+    <aspectlist>
+        <aspectentry>
+            <aspectlabel>Auteur/Titre</aspectlabel>
+            <aspectnumber>3100050</aspectnumber>
+            <shortcut>.AT</shortcut>
+            <keywordbrowseview></keywordbrowseview>
+        </aspectentry>
+        <aspectentry>
+            <aspectlabel>Tous mots</aspectlabel>
+            <aspectnumber>3100029</aspectnumber>
+            <shortcut>.GK</shortcut>
+            <keywordbrowseview></keywordbrowseview>
+        </aspectentry>
+        <aspectentry>
+            <aspectlabel>No Sudoc (ppn)</aspectlabel>
+            <aspectnumber>3100052</aspectnumber>
+            <shortcut>.PPN</shortcut>
+            <keywordbrowseview></keywordbrowseview>
+        </aspectentry>
+        <aspectentry>
+            <aspectlabel>No Horizon (bib#)</aspectlabel>
+            <aspectnumber>3100019</aspectnumber>
+            <shortcut>BIB</shortcut>
+            <keywordbrowseview></keywordbrowseview>
+        </aspectentry>
+        <aspectentry>
+            <aspectlabel>Exemplaires : particularit&#233;s et provenance</aspectlabel>
+            <aspectnumber>3100068</aspectnumber>
+            <shortcut>.RPC</shortcut>
+            <keywordbrowseview></keywordbrowseview>
+        </aspectentry>
+        <aspectentry>
+            <aspectlabel>Cotes Bib. M&#233;decine/Odonto Magasins</aspectlabel>
+            <aspectnumber>3100057</aspectnumber>
+            <shortcut>CALLSD</shortcut>
+            <keywordbrowseview></keywordbrowseview>
+        </aspectentry>
+        <aspectentry>
+            <aspectlabel>Cotes Bib. M&#233;decine/Odonto P&#233;riodiques </aspectlabel>
+            <aspectnumber>3100059</aspectnumber>
+            <shortcut>COTPMO</shortcut>
+            <keywordbrowseview></keywordbrowseview>
+        </aspectentry>
+        <aspectentry>
+            <aspectlabel>Cotes Bib. M&#233;decine/Odonto Salles (NLM)</aspectlabel>
+            <aspectnumber>3100056</aspectnumber>
+            <shortcut>CALLLC</shortcut>
+            <keywordbrowseview></keywordbrowseview>
+        </aspectentry>
+        <aspectentry>
+            <aspectlabel>Cotes Bib. Pharmacie Magasins</aspectlabel>
+            <aspectnumber>3100022</aspectnumber>
+            <shortcut>CALLNLM</shortcut>
+            <keywordbrowseview></keywordbrowseview>
+        </aspectentry>
+        <aspectentry>
+            <aspectlabel>Cotes Bib. Pharmacie P&#233;riodiques </aspectlabel>
+            <aspectnumber>3100060</aspectnumber>
+            <shortcut>COTPPHA</shortcut>
+            <keywordbrowseview></keywordbrowseview>
+        </aspectentry>
+        <aspectentry>
+            <aspectlabel>Cotes Bib. Pharmacie Salles (Dewey)</aspectlabel>
+            <aspectnumber>3100058</aspectnumber>
+            <shortcut>CALLDD</shortcut>
+            <keywordbrowseview></keywordbrowseview>
+        </aspectentry>
+        <aspectentry>
+            <aspectlabel>Indice de classification de la notice (Dewey ou NLM)</aspectlabel>
+            <aspectnumber>3100061</aspectnumber>
+            <shortcut>.CLAS</shortcut>
+            <keywordbrowseview></keywordbrowseview>
+        </aspectentry>
+    </aspectlist>
+    <operators>
+        <op_and>AND</op_and>
+        <op_or>OR</op_or>
+        <op_not>NOT</op_not>
+        <op_xor>XOR</op_xor>
+    </operators>
+    <predefsortlist>
+        <sortentry>
+            <label>date (du plus r&#233;cent au plus ancien)</label>
+            <sortview>3100024</sortview>
+        </sortentry>
+        <sortentry>
+            <label>date (du plus ancien au plus r&#233;cent)</label>
+            <sortview>3100014</sortview>
+        </sortentry>
+        <sortentry>
+            <label>auteur</label>
+            <sortview>3100013</sortview>
+        </sortentry>
+        <sortentry>
+            <label>titre</label>
+            <sortview>3100012</sortview>
+        </sortentry>
+    </predefsortlist>
+    <predefinedlimits>
+        <limitbox>
+            <desc>Type de document</desc>
+            <predeflimitentry>
+                <label>Tous </label>
+                <limit>$LAB = *</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>Livres (tous supports)</label>
+                <limit>$LAB7 = a or $LAB7 = c or $LAB7 = i or $LAB7 = m not $TH = *</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>Th&#232;ses (tous supports)</label>
+                <limit>$TH = *</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>Revues (tous supports)</label>
+                <limit>$LAB7 = s or $LAB7 = i</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>Audiovisuel/Multimedia</label>
+                <limit>$LAB6 = g or $LAB6 = i or $LAB6 = j or $LAB6 = m</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>Doc. en ligne (tous types)</label>
+                <limit>IT01 = WEL</limit>
+            </predeflimitentry>
+        </limitbox>
+        <limitbox>
+            <desc>Langue</desc>
+            <predeflimitentry>
+                <label>Toutes </label>
+                <limit>$LAB = *</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>fran&#231;ais</label>
+                <limit>$LANG = fre</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>anglais</label>
+                <limit>$LANG = eng</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>allemand</label>
+                <limit>$LANG = ger</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>espagnol</label>
+                <limit>$LANG = spa</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>italien</label>
+                <limit>$LANG = ita</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>latin</label>
+                <limit>$LANG = lat</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>grec anc.</label>
+                <limit>$LANG = grc</limit>
+            </predeflimitentry>
+        </limitbox>
+        <limitbox>
+            <desc>Biblioth&#232;que</desc>
+            <predeflimitentry>
+                <label>Les 2 biblioth&#232;ques</label>
+                <limit>$LAB = *</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>Bib. M&#233;decine/Odonto.</label>
+                <limit>$930B = bibmed</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>Bib. Pharmacie</label>
+                <limit>$930B = bibpharma or LO01 = BIUP or $990B = bibpharma</limit>
+            </predeflimitentry>
+        </limitbox>
+        <limitbox>
+            <desc>Fonds</desc>
+            <predeflimitentry>
+                <label>Tous</label>
+                <limit>$LAB = *</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>M&#233;d. Salle Actualit&#233;</label>
+                <limit>CO01 = MEDACTU or $930C = MEDPACTU</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>Odonto. Salle Landouzy</label>
+                <limit>CO01 = MEDLAN or $930C = MEDPLAN</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>Histoire M&#233;d. Usuels</label>
+                <limit>CO01 = MEDSALHM or $930C = MEDPSALHM</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>M&#233;d. Magasins</label>
+                <limit>CO01 = MEDMAG</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>Pharma. Manuels </label>
+                <limit>CO01 = SLEML or CO01 = SLML</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>Pharma. Usuels </label>
+                <limit>CO01 = PHAUSU or $856X = p or $930E = p or $999U = p</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>Pharma. Libre acc&#232;s </label>
+                <limit>CO01 = PHASLAC</limit>
+            </predeflimitentry>
+            <predeflimitentry>
+                <label>Pharma. Magasins</label>
+                <limit>CO01 = PHAMAG</limit>
+            </predeflimitentry>
+        </limitbox>
+    </predefinedlimits>
+    <reservelocations></reservelocations>
+    <viewingbooklist>false</viewingbooklist>
+    <fromlink>link=direct</fromlink>
+    <lang>frc</lang>
+    <items>
+        <searchresults>
+            <parenttype>5</parenttype>
+            <header>
+                <col>
+                    <label>Biblioth&#232;que</label>
+                </col>
+                <col>
+                    <label>Emplacement</label>
+                </col>
+                <col>
+                    <label>Fascicule</label>
+                </col>
+                <col>
+                    <label>Cote </label>
+                </col>
+                <col>
+                    <label>Consultation</label>
+                </col>
+                <col>
+                    <label>Disponibilit&#233; </label>
+                </col>
+                <col>
+                    <label>Date de retour</label>
+                </col>
+                <col>
+                    <label>Note</label>
+                </col>
+                <col>
+                    <label>(Inventaire)</label>
+                </col>
+                <col>
+                    <label>(Provenance)</label>
+                </col>
+            </header>
+            <results>
+                <row>
+                    <sourceid>~!apothicat</sourceid>
+                    <cell>
+                        <data>
+                            <text>BIU Sant&#233; En ligne</text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text>Th&#232;se en ligne de l'Universit&#233; Paris Descartes</text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text>Document en ligne</text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text>En ligne</text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <error></error>
+                    <key>746361</key>
+                    <displayRequestButton>true</displayRequestButton>
+                    <showCopyLink>false</showCopyLink>
+                    <LOCALLOCATION>
+                        <data>
+                            <text>BIU Sant&#233; En ligne</text>
+                        </data>
+                    </LOCALLOCATION>
+                    <TEMPORARYLOCATION>
+                        <data>
+                            <text>Th&#232;se en ligne de l'Universit&#233; Paris Descartes</text>
+                        </data>
+                    </TEMPORARYLOCATION>
+                    <CALLNUMBER>
+                        <data>
+                            <text></text>
+                        </data>
+                    </CALLNUMBER>
+                    <TEMPORARYLOCATION>
+                        <data>
+                            <text>En ligne</text>
+                        </data>
+                    </TEMPORARYLOCATION>
+                    <AVAILABILITYDATE>
+                        <data>
+                            <text></text>
+                        </data>
+                    </AVAILABILITYDATE>
+                    <dimrow>true</dimrow>
+                    <tablename></tablename>
+                    <my_list>false</my_list>
+                </row>
+            </results>
+            <otherlocations>true</otherlocations>
+            <hitcount></hitcount>
+            <resultid>1</resultid>
+            <error></error>
+        </searchresults>
+    </items>
+    <youritems>
+        <hits>1</hits>
+        <view>
+            <npp>10</npp>
+            <currpage>0</currpage>
+            <start>1</start>
+            <end>1</end>
+        </view>
+        <pagenumbers>
+            <group>0</group>
+        </pagenumbers>
+    </youritems>
+    <view>items</view>
+    <yoursearch>
+        <searchdata>
+            <search>
+                <shortcut>.PPN</shortcut>
+                <term>16922032X</term>
+            </search>
+        </searchdata>
+        <sources>
+            <source>
+                <id>~!apothicat</id>
+            </source>
+        </sources>
+        <sorts>
+            <sort>3100024</sort>
+        </sorts>
+        <searchdata>
+            <link>full%3D3100008%7E%21542325%7E%210</link>
+        </searchdata>
+        <hits>1</hits>
+        <totalhits>1</totalhits>
+        <view>
+            <npp>10</npp>
+            <currpage>0</currpage>
+            <start>1</start>
+            <end>1</end>
+        </view>
+        <pagenumbers>
+            <group>0</group>
+        </pagenumbers>
+    </yoursearch>
+    <lang>frc</lang>
+    <fullnonmarc>
+        <searchresults>
+            <parenttype>5</parenttype>
+            <header>
+                <col>
+                    <label>Type de document</label>
+                </col>
+                <col>
+                    <label>Type de document</label>
+                </col>
+                <col>
+                    <label>Type de document</label>
+                </col>
+                <col>
+                    <label>Type de document</label>
+                </col>
+                <col>
+                    <label>Acc&#232;s web libre</label>
+                </col>
+                <col>
+                    <label>Acc&#232;s web r&#233;serv&#233;</label>
+                </col>
+                <col>
+                    <label>Acc&#232;s web r&#233;serv&#233;</label>
+                </col>
+                <col>
+                    <label>Collection en ligne</label>
+                </col>
+                <col>
+                    <label>Fournisseur</label>
+                </col>
+                <col>
+                    <label>Consultation de la th&#232;se</label>
+                </col>
+                <col>
+                    <label>Auteur(s)</label>
+                </col>
+                <col>
+                    <label>Edition</label>
+                </col>
+                <col>
+                    <label>Adr. biblio.</label>
+                </col>
+                <col>
+                    <label>Description</label>
+                </col>
+                <col>
+                    <label>Collection</label>
+                </col>
+                <col>
+                    <label>Titre de l'ensemble</label>
+                </col>
+                <col>
+                    <label>Res. &#233;lectronique</label>
+                </col>
+                <col>
+                    <label>Notes</label>
+                </col>
+                <col>
+                    <label>Notes</label>
+                </col>
+                <col>
+                    <label>Notes</label>
+                </col>
+                <col>
+                    <label>P&#233;riodicit&#233;</label>
+                </col>
+                <col>
+                    <label>P&#233;riodicit&#233;</label>
+                </col>
+                <col>
+                    <label>Contient</label>
+                </col>
+                <col>
+                    <label>Reproduction de</label>
+                </col>
+                <col>
+                    <label>Reproduction Medic@ de</label>
+                </col>
+                <col>
+                    <label>LIen vers cette r&#233;f&#233;rence</label>
+                </col>
+                <col>
+                    <label>Reproduction</label>
+                </col>
+                <col>
+                    <label>Autre &#233;dition</label>
+                </col>
+                <col>
+                    <label>En ligne dans Medic@</label>
+                </col>
+                <col>
+                    <label>Sujet</label>
+                </col>
+                <col>
+                    <label>Notes sujets</label>
+                </col>
+                <col>
+                    <label>Indice(s) Dewey</label>
+                </col>
+                <col>
+                    <label>Indice(s) NLM</label>
+                </col>
+                <col>
+                    <label>ISBN / ISSN</label>
+                </col>
+                <col>
+                    <label>R&#233;sum&#233;</label>
+                </col>
+                <col>
+                    <label>Contient</label>
+                </col>
+                <col>
+                    <label>Table mati&#232;res</label>
+                </col>
+                <col>
+                    <label>Titre pr&#233;c&#233;dent</label>
+                </col>
+                <col>
+                    <label>Autre(s) forme(s) du titre</label>
+                </col>
+                <col>
+                    <label>Traduction du titre</label>
+                </col>
+                <col>
+                    <label>Collection</label>
+                </col>
+                <col>
+                    <label>Tir&#233; &#224; part ou extrait de</label>
+                </col>
+                <col>
+                    <label>A pour tir&#233; &#224; part ou extrait</label>
+                </col>
+                <col>
+                    <label>Contenu dans</label>
+                </col>
+                <col>
+                    <label>A pour suppl&#233;ment</label>
+                </col>
+                <col>
+                    <label>Est suppl&#233;ment de</label>
+                </col>
+                <col>
+                    <label>Publi&#233; avec</label>
+                </col>
+                <col>
+                    <label>Titre en relation</label>
+                </col>
+                <col>
+                    <label>Titre en relation</label>
+                </col>
+                <col>
+                    <label>Mis &#224; jour par</label>
+                </col>
+                <col>
+                    <label>Met &#224; jour</label>
+                </col>
+                <col>
+                    <label>Suite de</label>
+                </col>
+                <col>
+                    <label>Suite partielle de</label>
+                </col>
+                <col>
+                    <label>Suite de</label>
+                </col>
+                <col>
+                    <label>Suite partielle de</label>
+                </col>
+                <col>
+                    <label>Absorbe</label>
+                </col>
+                <col>
+                    <label>Absorb&#233; partiellement</label>
+                </col>
+                <col>
+                    <label>Titre(s) avant fusion</label>
+                </col>
+                <col>
+                    <label>Suite partielle de</label>
+                </col>
+                <col>
+                    <label>Devient</label>
+                </col>
+                <col>
+                    <label>Devient partiellement</label>
+                </col>
+                <col>
+                    <label>Devient</label>
+                </col>
+                <col>
+                    <label>Devient partiellement</label>
+                </col>
+                <col>
+                    <label>Absorb&#233; par</label>
+                </col>
+                <col>
+                    <label>Absorb&#233; partiellement par</label>
+                </col>
+                <col>
+                    <label>Devient apr&#232;s scission</label>
+                </col>
+                <col>
+                    <label>Fusionne </label>
+                </col>
+                <col>
+                    <label>Redevient</label>
+                </col>
+                <col>
+                    <label>Identifiant de la notice</label>
+                </col>
+                <col>
+                    <label>Provenance des exemplaires</label>
+                </col>
+                <col>
+                    <label>Note sur l'(es) exemplaire(s)</label>
+                </col>
+                <col>
+                    <label> </label>
+                </col>
+                <col>
+                    <label>Commander une reproduction </label>
+                </col>
+                <col>
+                    <label>Consultation de la th&#232;se</label>
+                </col>
+                <col>
+                    <label>Localisation</label>
+                </col>
+            </header>
+            <results>
+                <row>
+                    <sourceid>~!apothicat</sourceid>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text>Th&#232;se de doctorat : Pharmacologie : Paris 5 : 2013</text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text>$html$&lt;a href=&quot;http://app.parisdescartes.fr/cgi-bin/WebObjects/TheseWeb.woa/wa/show?t=315&amp;f=707&quot; target=&quot;new&quot;&gt;Acc&#232;s r&#233;serv&#233; au texte int&#233;gral&lt;/a&gt;$html$</text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text>El Amki , Mohamad. Auteur</text>
+                        </data>
+                        <data>
+                            <text>Margaill , Isabelle. Directeur de th&#232;se</text>
+                        </data>
+                        <data>
+                            <text>Universit&#233; Ren&#233; Descartes , Paris. Organisme de soutenance</text>
+                        </data>
+                        <data>
+                            <text>&#201;cole doctorale M&#233;dicament, Toxicologie, Chimie, Environnement , Paris. Organisme de soutenance</text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text>[S.l.] , [s.n.] -- 2013</text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text>Donn&#233;es textuelles</text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text>Th&#232;se soutenue sur un ensemble de travaux</text>
+                        </data>
+                        <data>
+                            <text>Titre provenant de l'&#233;cran-titre</text>
+                        </data>
+                        <data>
+                            <text>Th&#232;se soutenue sur un ensemble de travaux</text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text>Experimental modeling of recombinant tissue plasminogen activator effects after ischemic stroke / El Amki, Mohamad, Lerouet, Dominique, Coqueran, B&#233;rard, Curis, Emmanuel, Orset, Cyrille, Vivien, Denis, Plotkine, Michel, Marchand-Leroux, Catherine, Margaill, Isabelle. - Experimental neurology, 2012.</text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.GK~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.GK~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text>Isch&#233;mie c&#233;r&#233;brale -- Th&#232;ses et &#233;crits acad&#233;miques</text>
+                        </data>
+                        <data>
+                            <text>Poly (ADP-ribose) polym&#233;rase -- Th&#232;ses et &#233;crits acad&#233;miques</text>
+                        </data>
+                        <data>
+                            <text>Activateur tissulaire du plasminog&#232;ne -- Th&#232;ses et &#233;crits acad&#233;miques</text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text>Souris</text>
+                        </data>
+                        <data>
+                            <text>Thrombine</text>
+                        </data>
+                        <data>
+                            <text>Rt-PA</text>
+                        </data>
+                        <data>
+                            <text>Transformations h&#233;morragiques</text>
+                        </data>
+                        <data>
+                            <text>Poly(ADP-ribose)polym&#233;rase</text>
+                        </data>
+                        <data>
+                            <text>Barri&#232;re h&#233;mato-enc&#233;phalique</text>
+                        </data>
+                        <data>
+                            <text>PJ34</text>
+                        </data>
+                        <data>
+                            <text>L&#233;sion c&#233;r&#233;brale</text>
+                        </data>
+                        <data>
+                            <text>D&#233;ficit neurologique</text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text>Les accidents vasculaires c&#233;r&#233;braux (AVC) constituent un probl&#232;me majeur de sant&#233; publique, puisqu ils repr&#233;sentent la 3&#232;me cause de mortalit&#233; dans les pays industrialis&#233;s. &#192; l heure actuelle, l activateur tissulaire du plasminog&#232;ne recombinant (rt-PA) est le seul traitement pharmacologique &#224; la phase aigu&#235; des AVC isch&#233;miques. Il s agit d un thrombolytique dont l utilisation reste tr&#232;s limit&#233;e (&lt;2% des patients). En effet, quand le rt-PA est administr&#233; au-del&#224; de 4h30, aucune r&#233;cup&#233;ration fonctionnelle n est observ&#233;e chez le patient. De plus, les donn&#233;es cliniques et exp&#233;rimentales ont montr&#233; que l administration du rt-PA augmente fortement la survenue de transformations h&#233;morragiques. Il appara&#238;t donc indispensable de d&#233;velopper des strat&#233;gies permettant, d une part, de s opposer &#224; ces transformations h&#233;morragiques, et d autre part, d augmenter la fen&#234;tre th&#233;rapeutique du rt-PA. Au vu de ces donn&#233;es, mon travail a consist&#233; &#224; pr&#233;ciser l int&#233;r&#234;t th&#233;rapeutique d inhiber une enzyme, la poly(ADP-ribose)polym&#233;rase (PARP) pour s opposer aux effets d&#233;l&#233;t&#232;res du rt-PA au niveau vasculaire. Ces &#233;tudes ont &#233;t&#233; men&#233;es sur un mod&#232;le d isch&#233;mie c&#233;r&#233;brale thromboembolique r&#233;alis&#233; chez la souris, consistant en une injection de thrombine dans l art&#232;re c&#233;r&#233;brale moyenne. Dans un 1er temps, nous avons caract&#233;ris&#233; ce mod&#232;le, r&#233;cemment d&#233;crit dans la litt&#233;rature (2007) et nouveau dans notre laboratoire. Nos travaux ont montr&#233; pour la premi&#232;re fois que, dans ce mod&#232;le, le rt-PA &#224; la dose de 0,9 mg/kg (dose utilis&#233;e chez l homme) reproduit fid&#232;lement les 2 visages du thrombolytique en clinique : la thrombolyse pr&#233;coce (30 min apr&#232;s l isch&#233;mie) est associ&#233;e &#224; des effets b&#233;n&#233;fiques, en r&#233;duisant le d&#233;ficit neurologique, le volume de la l&#233;sion et l œd&#232;me c&#233;r&#233;bral, alors que l administration tardive de rt-PA (4h apr&#232;s l isch&#233;mie) entra&#238;ne une aggravation des transformations h&#233;morragiques et une perte de l am&#233;lioration fonctionnelle. Dans un 2&#232;me temps, nous avons &#233;tudi&#233; l implication de la PARP dans les transformations h&#233;morragiques induites par l administration tardive de rt-PA. Le traitement par le PJ34(1 et 3 mg/kg), un puissant inhibiteur de cette enzyme, r&#233;duit la d&#233;gradation des prot&#233;ines de jonction de la barri&#232;re h&#233;mato-enc&#233;phalique et les transformations h&#233;morragiques induites par le rt-PA. De plus, le PJ34 s oppose non seulement &#224; la toxicit&#233; vasculaire du rt-PA, mais r&#233;duit &#233;galement le d&#233;ficit neurologique, le volume de la l&#233;sion et l œd&#232;me c&#233;r&#233;bral. En conclusion, l ensemble de ce travail montre que l inhibition de la PARP prolonge la fen&#234;tre th&#233;rapeutique du rt-PA et permet une thrombolyse s&#233;curis&#233;e . Cette strat&#233;gie pourrait &#234;tre mise en place de mani&#232;re pr&#233;coce apr&#232;s l isch&#233;mie (avant m&#234;me l arriv&#233;e du patient &#224; l h&#244;pital) et augmenter le nombre de patients pouvant b&#233;n&#233;ficier d une thrombolyse.</text>
+                        </data>
+                        <data>
+                            <text>Stroke is the third leading cause of death worldwide and a major cause of disability. Tissue plasminogen activator (rt-PA) is the only approved treatment in the United States and Europe for acute ischemic stroke. Clinical data show that beyond its therapeutic time window (4.5 hours after stroke onset), rt-PA exerts no more neuroprotective effects. Furthermore, clinical data showed that rt-PA increases the hemorrhagic transformations. Therefore, there is a critical need to develop a novel drug that can reduce rt-PA s deleterious effects and extend its therapeutic window. The aim of the present study was to examine whether Poly(ADP-ribose)polymerase (PARP) mediates the hemorrhagic transformations induced by rt-PA administration. We used a mouse model of thromboembolic stroke, which consists of a microinjection of thrombin in the middle cerebral artery. First, we showed that in the mouse thrombin stroke model, the &quot;human&quot; dose of rt-PA exhibits effects close to those observed in clinic. Later, we showed PARP is implicated in the vascular toxicity of rt-PA after cerebral ischemia. PJ34, a PARP inhibitor, preserves the blood brain barrier integrity, reduces rt-PA-induced hemorrhagic transformations, improves neurological outcomes and reduces brain infarction and edema. In conclusion, this work showed that PARP inhibitors could be relevant candidates to extend the therapeutic time window of rt-PA after stroke without increasing the risk of hemorrhagic transformations.</text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text>Role of poly (ADP-ribose) polymerase in hemorrhagic transformations induced by rt-PA after cerebral ischemia</text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text>Experimental modeling of recombinant tissue plasminogen activator effects after ischemic stroke</text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <func>search=.TI~!</func>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text>http://www.biusante.parisdescartes.fr/ppn?16922032X</text>
+                            <link>
+                            <url>http://www.biusante.parisdescartes.fr/ppn?16922032X</url>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                            <link>
+                            <url></url>
+                            </link>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <cell>
+                        <data>
+                            <text></text>
+                        </data>
+                    </cell>
+                    <error></error>
+                    <key>542325</key>
+                    <marcleader7>m</marcleader7>
+                    <displayRequestButton>true</displayRequestButton>
+                    <showCopyLink>false</showCopyLink>
+                    <TITLE>
+                        <data>
+                            <text>R&#244;le de la poly(ADP-ribose)polym&#233;rase dans les transformations h&#233;morragiques induites par le rt-PA apr&#232;s une isch&#233;mie c&#233;r&#233;brale -- Mohamad El Amki ; sous la direction de Isabelle Margaill</text>
+                        </data>
+                    </TITLE>
+                    <SUBJECT>
+                        <data>
+                            <text>Isch&#233;mie c&#233;r&#233;brale -- Th&#232;ses et &#233;crits acad&#233;miques</text>
+                        </data>
+                        <data>
+                            <text>Poly (ADP-ribose) polym&#233;rase -- Th&#232;ses et &#233;crits acad&#233;miques</text>
+                        </data>
+                        <data>
+                            <text>Activateur tissulaire du plasminog&#232;ne -- Th&#232;ses et &#233;crits acad&#233;miques</text>
+                        </data>
+                    </SUBJECT>
+                    <EOD>
+                        <data>
+                            <text></text>
+                        </data>
+                    </EOD>
+                    <SERIES>
+                        <data>
+                            <text></text>
+                        </data>
+                    </SERIES>
+                    <AUTHOR>
+                        <data>
+                            <text>El Amki , Mohamad -- 1985-....</text>
+                        </data>
+                        <data>
+                            <text>Margaill , Isabelle</text>
+                        </data>
+                        <data>
+                            <text>Universit&#233; Ren&#233; Descartes , Paris</text>
+                        </data>
+                        <data>
+                            <text>&#201;cole doctorale M&#233;dicament, Toxicologie, Chimie, Environnement , Paris</text>
+                        </data>
+                    </AUTHOR>
+                    <PPN>
+                        <data>
+                            <text>ppn&#032;16922032X</text>
+                        </data>
+                    </PPN>
+                    <dimrow>true</dimrow>
+                    <tablename>BIB</tablename>
+                    <my_list>true</my_list>
+                </row>
+            </results>
+            <hitcount></hitcount>
+            <resultid>1</resultid>
+            <error></error>
+        </searchresults>
+    </fullnonmarc>
+    <OpenURL>
+        <no_links/>
+    </OpenURL>
+    <CommercialStore>
+        <no_links/>
+    </CommercialStore>
+    <bibinfo>
+        <subscriptionsummary>false</subscriptionsummary>
+        <volumes>false</volumes>
+        <closedstack>false</closedstack>
+        <items>true</items>
+        <error></error>
+    </bibinfo>
+    <group>
+        <pools>
+            <id>biusante2</id>
+            <datapool>
+                <emailreplyto>cat@biusante.parisdescartes.fr</emailreplyto>
+                <emailpostmaster>cat@biusante.parisdescartes.fr</emailpostmaster>
+                <source>
+                    <sourcelabel>BIU Sant&#233;</sourcelabel>
+                    <id>~!apothicat</id>
+                    <type>200</type>
+                    <requesttype>0</requesttype>
+                    <loginrequired>false</loginrequired>
+                    <maxhitlimit>5000</maxhitlimit>
+                    <sortviewnum>3100024</sortviewnum>
+                    <sourcenum>3100001</sourcenum>
+                </source>
+                <opensource>
+                    <source>
+                        <sorthitlimit>2000</sorthitlimit>
+                        <limitmaxhitlimit>0</limitmaxhitlimit>
+                        <sortviewnum>3100024</sortviewnum>
+                        <id>~!apothicat</id>
+                        <opened>true</opened>
+                        <error></error>
+                    </source>
+                </opensource>
+            </datapool>
+        </pools>
+        <size>1</size>
+        <dedup_option_id>1</dedup_option_id>
+    </group>
+    <dedup_checked>0</dedup_checked>
+    <method>GET</method>
+</searchresponse>

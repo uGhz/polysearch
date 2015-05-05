@@ -634,6 +634,7 @@ $(document).ready(function () {
         _convertDetailPageIntoCatalogItem: function (rawXmlData) {
 
             var copies = [];
+            var directAccesses = [];
             var tempString = "";
 
             /**
@@ -655,45 +656,85 @@ $(document).ready(function () {
             // item.publishedDate  = rawXmlData.find('PUBDATE>data>text').text();
             item.issn           = generalDataRoot.find('issn').text();
             
-            var tempNode = generalDataRoot.find('PPN>data>text');
+            var tempNode        = generalDataRoot.find('PPN>data>text');
             item.catalogUrl     = (tempNode) ? "http://www.biusante.parisdescartes.fr/" + tempNode.text().replace(/ppn\s/g, "ppn?") : "";
             
             var vLocalisation   = null;
             var ic              = null;
-            
+            var tempTab         = null;
+            // Trouver les éventuelles localisations physiques
             generalDataRoot.find('cell:nth-of-type(75)>data').each(function () {
                 
-                ic              = new ItemCopy();
                 vLocalisation       = $(this).children('text').text();
-                console.log("vLocalisation set !");
-                console.log("Raw Localisation : " + vLocalisation);
-                vLocalisation = vLocalisation.split("$html$")[1];
+                if (vLocalisation !== undefined && vLocalisation !== null & vLocalisation.length > 0) {
+                    
 
-                var tempTab = vLocalisation.split("Cote : ");
-                ic.callNumber = tempTab[1];
+                    console.log("vLocalisation set !");
+                    console.log("Raw Localisation : " + vLocalisation);
+                    tempTab = vLocalisation.split("$html$");
+                    if (tempTab.length > 1) {
+                        
+                        ic            = new ItemCopy();
+                        vLocalisation = tempTab[1];
 
-                tempTab = tempTab[0].split("collection : ");
-                vLocalisation = tempTab[1];
-                ic.holdings = vLocalisation;
+                        tempTab = vLocalisation.split("Cote : ");
+                        ic.callNumber = tempTab[1];
 
-                tempString = tempTab[0];
-                if (tempString.indexOf("Médecine") != -1) {
-                    tempString = "Médecine";
-                } else if (tempString.indexOf("Pharmacie") != -1) {
-                    tempString = "Pharmacie";
-                } else {
-                    tempString = "";
+                        tempTab = tempTab[0].split("collection : ");
+                        vLocalisation = tempTab[1];
+                        ic.holdings = vLocalisation;
+
+                        tempString = tempTab[0];
+                        if (tempString.indexOf("Médecine") != -1) {
+                            tempString = "Médecine";
+                        } else if (tempString.indexOf("Pharmacie") != -1) {
+                            tempString = "Pharmacie";
+                        } else {
+                            tempString = "";
+                        }
+                        ic.library = tempString;
+
+
+                        console.log("Raw Localisation : " + vLocalisation);
+
+                        copies.push(ic);
+                    }
                 }
-                ic.library = tempString;
-
-
-                console.log("Raw Localisation : " + vLocalisation);
-
-                copies.push(ic);
-                
             });
             
+            var vDirectAccess = "";
+            var da = null;
+            var regexResult = null;
+            
+            // Trouver les éventuels liens d'accès en ligne
+            generalDataRoot.find('cell:nth-of-type(6)>data').each(function () {
+                
+                vDirectAccess       = $(this).children('text').text();
+                if (vDirectAccess !== undefined && vDirectAccess !== null & vDirectAccess.length > 0) {
+                    console.log("vDirectAccess is defined !");
+                    tempTab = vDirectAccess.split("$html$");
+                    if (tempTab.length > 1) {
+                        console.log("vDirectAccess has been splitted !");
+                        vDirectAccess = tempTab[1];
+                        da = new DirectAccess();
+                        
+                       regexResult = /href="(.+?)"/g.exec(vDirectAccess);
+                        if (regexResult) {
+                            console.log("regex successful !");
+                            // = parseInt(regexResult[1], 10) + 1;
+                            da.url = regexResult[1];
+                            directAccesses.push(da);
+                        }
+                         
+                    }
+                }
+            });
+            
+            item.directAccesses = directAccesses;
             item.copies = copies;
+            
+            console.log("item.directAccesses.length : " + item.directAccesses.length);
+            console.log("item.copies.length : " + item.copies.length);
             
             return item;
 
