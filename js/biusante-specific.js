@@ -445,7 +445,6 @@ $(document).ready(function () {
 
             var copies = [];
             var directAccesses = [];
-            var currentCopy = null;
             var tempString = "";
             var tempTab = null;
 
@@ -709,7 +708,6 @@ $(document).ready(function () {
         },
 
         _buildResultSet: function () {
-          // console.log("Beginning of _buildResultSet. Results set building !");
             var $rawData = this._data;
             
             var resultSet = new CatalogResultSet();
@@ -738,7 +736,7 @@ $(document).ready(function () {
             tempItems.pop();
 
             resultSet.results = tempItems;
-          // console.log("Results set is built !");
+
             this._resultingResultSet = resultSet;
         },
 
@@ -999,29 +997,60 @@ $(document).ready(function () {
         this._statsContainer        = this._form.find(".statistic");
         
         this._currentRequest        = "";
-        this._resultAreas           = [];
+        this._activeResultAreasSet  = [];
+        this._resultAreasSets       = [];
         
         // Créer et attacher les ResultAreas
         var dpf = new DataProviderFactory();
         
-        this._resultAreas.push(
+        var tempResultAreasSet = [];
+        tempResultAreasSet.push(
                 new ResultsArea("Thèses anciennes", "Catalogue général (1800&nbsp;-&nbsp;1951)", "student", this, dpf.getInstance("HipThesis"))
         );
-        this._resultAreas.push(
+        tempResultAreasSet.push(
                 new ResultsArea("Thèses récentes", "Catalogue spécifique (1985&nbsp;-&nbsp;&hellip;)", "student", this, dpf.getInstance("ThesisSpecific"))
         );
-        this._resultAreas.push(
+        tempResultAreasSet.push(
                 new ResultsArea("Ouvrages", "Catalogue général", "book", this, dpf.getInstance("HipBook"))
         );
-        this._resultAreas.push(
+        tempResultAreasSet.push(
                 new ResultsArea("Livres électroniques", "Catalogue spécifique", "tablet", this, dpf.getInstance("EBookSpecific"))
         );
-        this._resultAreas.push(
+        
+        this._resultAreasSets["monographies"] = tempResultAreasSet;
+        tempResultAreasSet = [];
+        
+        tempResultAreasSet.push(
                 new ResultsArea("Périodiques", "Catalogue général", "newspaper", this, dpf.getInstance("HipPeriodical"))
         );
         
+        this._resultAreasSets["periodiques"] = tempResultAreasSet;
+        
+        this._activateResultAreasSet("monographies");
+        
         // Attacher les gestionnaires d'évènements
         this._form.submit($.proxy(this._updateCurrentRequest, this));
+        
+        // Initialiser les champs de formulaire
+        var _self = this;
+        $("#search-extension-selection").on(
+            "click",
+            function () {
+                var selected = "Unknown";
+                $("#search-extension-selection :checkbox")
+                .each(
+                    function () {
+                        this.checked = !this.checked;
+                        if (this.checked) {
+                            selected = $(this).val();
+                        }
+                        
+                    }
+                );
+                console.log("selected : " + selected);
+                _self._activateResultAreasSet(selected);
+            }
+        );
         
         // Activer le formulaire de recherche
         this._form.find("input").removeAttr("disabled");
@@ -1039,12 +1068,25 @@ $(document).ready(function () {
             return this._searchResultsContainer;
         },
         
+        _activateResultAreasSet: function (setName) {
+            var resultAreasSet = this._resultAreasSets[setName];
+            // Détacher les précédentes ResultAreas.
+            this._searchResultsContainer.empty();
+            // Attacher les ResultAreas sélectionnées.
+            for (var i = 0, len = resultAreasSet.length ; i < len ; i++) {
+                resultAreasSet[i].activate();
+            }
+            this._setStats(0);
+            this._form.find("input[type=text]").val("");
+            this._activeResultAreasSet = resultAreasSet;
+        },
+        
         _updateStats: function () {
             var totalOfResults = 0;
             var tempResultArea = null;
 
-            for(var i=0, len=this._resultAreas.length ; i < len ; i++) {
-                tempResultArea = this._resultAreas[i];
+            for(var i=0, len=this._activeResultAreasSet.length ; i < len ; i++) {
+                tempResultArea = this._activeResultAreasSet[i];
                 if (tempResultArea) {
                     totalOfResults += tempResultArea.getStats();
                 }
@@ -1069,8 +1111,8 @@ $(document).ready(function () {
             
             var updateStatsFunction = function () {_self._updateStats();};
             
-            for(var i=0, len=this._resultAreas.length; i < len ; i++) {
-                tempResultArea = this._resultAreas[i];
+            for(var i=0, len=this._activeResultAreasSet.length; i < len ; i++) {
+                tempResultArea = this._activeResultAreasSet[i];
                 if (tempResultArea) {
                     tempPromise = tempResultArea.handleQueryUpdate();
                     tempPromise.done(updateStatsFunction);
@@ -1080,7 +1122,6 @@ $(document).ready(function () {
             
             this._updateStats();
             
-            // var promiseOfArray = $.when.apply($, promises);
             $.when.apply($, promises).always(
                 function () {
                     _self._setLoadingStateOff();
@@ -1091,8 +1132,6 @@ $(document).ready(function () {
         
         
         _setStats: function ( nResults ) {
-            // Créer au besoin les éléments nécessaires à l'affichage des stats
-            // Mettre à jour ces éléments
             this._statsContainer.children(".value").text(nResults);
         },
         
@@ -1134,33 +1173,48 @@ $(document).ready(function () {
         this._dataProvider  = dataProvider;
         this._title         = title;
         this._subtitle      = subtitle;
+        this._iconName      = iconName;
         
         // Déclarer les autres propriétés
         this._currentTotalResults   = null;
         this._container             = null;
         this._statsContainer        = null;
-        
+    
         // Construire le balisage HTML/CSS
-        var mustacheRendering = Mustache.render(this.mustacheTemplate, {title: title, subtitle: subtitle, iconName: iconName});
-        this._container = $(mustacheRendering);
-        this._statsContainer = this._container.find("div.statistic");
-        
-        // Attacher les gestionnaires d'évènements à la liste
-        var _self = this;
-        this._container.on("click", "a.header",                     $.proxy(_self._askForItemDetails, _self));
-        this._container.on("click", "button.catalog-link",    function () {
-            window.open($(this).attr("data-catalog-url"));
-        });
-        this._container.on("click", "button.online-access-link",    function () {
-            window.open($(this).attr("data-online-access-url"));
-        });
-        this._container.on("click", "button.more-results",          $.proxy(_self._handleMoreResultsAction, _self));
-        
-        // Attacher la nouvelle zone de recherche au DOM
-        this._container.appendTo(this._searchArea.getResultsContainer());
+        var mustacheRendering   = Mustache.render(
+                                        this.mustacheTemplate,
+                                        {
+                                            title: this._title,
+                                            subtitle: this._subtitle,
+                                            iconName: this._iconName
+                                        });
+        this._container         = $(mustacheRendering);
+        this._statsContainer    = this._container.find("div.statistic");
+    
+        // Activer la ResultArea :
+        // - la vider,
+        // - y attacher les gestionnaires d'évènements,
+        // - la rattacher au conteneur idoine.
+        this.activate();
     }
 
     ResultsArea.prototype = {
+        
+        activate: function () {
+            this._clear();
+            
+            var _self = this;
+            this._container.on("click", "a.header", $.proxy(_self._askForItemDetails, _self));
+            this._container.on("click", "button.catalog-link", function () {
+                window.open($(this).attr("data-catalog-url"));
+            });
+            this._container.on("click", "button.online-access-link", function () {
+                window.open($(this).attr("data-online-access-url"));
+            });
+            this._container.on("click", "button.more-results", $.proxy(_self._handleMoreResultsAction, _self));
+
+            this._container.appendTo(this._searchArea.getResultsContainer());
+        },
         
         // Fonction publique, que les SearchArea sont susceptibles d'appeler.
         handleQueryUpdate: function () {
@@ -1217,7 +1271,6 @@ $(document).ready(function () {
         _askForItemDetails: function ( event ) {
 
             event.preventDefault();
-          // console.log("Inside _askForItemDetails");
 
             var domItem = $(event.currentTarget).closest(".item");
 
@@ -1230,9 +1283,6 @@ $(document).ready(function () {
                 _self._handleNewItemDetails(results, domItem);
                 _self._setItemLoadingStateOff(domItem);
             });
-            
-          // console.log("_askForItemDetails is ending !");
-
         },
         
         _redirectToCatalogDetailPage: function ( event ) {
@@ -1305,7 +1355,6 @@ $(document).ready(function () {
             
             this._container.find(".items").append(listRoot.children(".item"));
             
-            //Mettre à jour le bouton "Plus de résultats"
             // Supprimer le bouton "Plus de résultats".
             this._container.find("button.more-results").remove();
             this._container.find("div.message").remove();
@@ -1363,6 +1412,7 @@ $(document).ready(function () {
         
         _clear: function() {
             this._container.children(".items").empty();
+            this._container.children("button.more-results").remove();
             this._currentTotalResults = 0;
             this._setStats(0);
         }
