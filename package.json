@@ -1,6 +1,6 @@
 {
   "name": "polysearch",
-  "version": "0.0.5",
+  "version": "0.5.0",
   "description": "",
   "main": "gulpfile.js",
   "directories": {
