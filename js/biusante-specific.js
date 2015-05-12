@@ -1,9 +1,15 @@
 /*jslint browser: true*/
 /*global  $, Mustache */
 // Using the module pattern for a jQuery feature
+/*
+var $                   = require('jquery');
+var semantic-ui         = require("../semantic-ui/semantic.min");
+var semantic-ui-popup   = require("../semantic-ui/components/popup");
+var mustache-dependency = require("../mustache/mustache.min");
+*/
 
-$(document).ready(function () {
-    "use strict";
+/*$(document).ready(function () {
+    "use strict";*/
     /*********************************
     *   CLASS GoogleDataProvider
     *
@@ -1634,4 +1640,4 @@ $(document).ready(function () {
     // Lancement du widget
     new SearchArea();
 
-});
+/*});*/
