@@ -168,7 +168,15 @@ $(document).ready(function () {
                         implementation:     new ThesisSpecificDataAnalyzer(),
                         maxResultsPerPage:  25,
                         dataType:           "html"
-                    };                    
+                    };
+                    break;
+                case "EPeriodicalSpecific":
+                    parametersMap = {
+                        implementation:     new EPeriodicalSpecificDataAnalyzer(),
+                        maxResultsPerPage:  100,
+                        dataType:           "html"
+                    };
+                    break;
             }
             
             var fdp = new FacadeDataProvider(parametersMap);
@@ -981,6 +989,208 @@ $(document).ready(function () {
 
     };
     
+    function EPeriodicalSpecificDataAnalyzer() {
+        this._data = null;
+        this._pageNumber = 0;
+        this._numberOfResults = 0;
+        this._resultingResultSet = null;
+    }
+    
+    EPeriodicalSpecificDataAnalyzer.prototype = {
+        
+        // _authorRegex: /Par\s(.*)\s*\.[A-Z]{3,}/g,
+        
+        // Implémentation OK
+        analyze: function (data) {
+            this._data = $(data);
+            this._buildResultSet();
+        },
+        
+        // Implémentation OK
+        unsetData: function () {
+          this._data = null;  
+        },
+    
+        // Implémentation OK
+        getPageNumber: function () {
+            return this._pageNumber;
+        },
+    
+        // Implémentation OK
+        getTotalOfResults: function () {
+            return this._numberOfResults;
+        },
+    
+        // Implémentation OK
+        getResultSet: function () {
+            return this._resultingResultSet;
+        },
+        
+        // Implémentation OK
+        buildRequestUrl: function (searchString, pageNumber) {
+            
+            // http://www2.biusante.parisdescartes.fr/perio/index.las?do=rec&let=0&rch=human+genetics
+            var urlArray = [
+                "proxy-perio.php?do=rec&let=0&rch=",
+                encodeURIComponent(searchString)
+            ];
+            
+            if (pageNumber) {
+                urlArray = urlArray.concat([
+                    "&p=",
+                    encodeURIComponent(pageNumber)
+                ]);
+            }
+            
+            var url = urlArray.join("");
+            
+            return url;
+        },
+        
+        // Implémentation OK
+        buildItemUrl: function () {
+            return null;
+        },
+        
+        // Implémentation OK
+        _extractPageNumber: function () {
+            var result = 1;
+            
+            var wrappingTable = this._data.find("#table242");
+            
+            var $flecheGauche = wrappingTable
+                            .find("tr:nth-child(1)>td")
+                            .find("img[src='http://www.biusante.parisdescartes.fr/imutil/flecheptg.gif'][alt^='page ']");
+            
+            console.log("EBookSpecificDataProvider. $flecheGauche found : " + $flecheGauche.length);
+            if ($flecheGauche.length > 0) {
+                
+                var urlPagePrecedente = $flecheGauche.parent().attr("href");
+                console.log("urlPagePrecedente found : " + urlPagePrecedente);
+                var regexResult = /p=(\d+)/g.exec(urlPagePrecedente);
+                
+                if (regexResult) {
+                    result = parseInt(regexResult[1], 10) + 1;
+                }
+            }
+                
+            console.log("EBook page number : " + result);
+            return result;
+        },
+
+        // Implémentation OK
+        _buildResultSet: function () {
+            var $rawData = this._data;
+            
+            var resultSet = new CatalogResultSet();
+            var wrappingTable = $rawData.find("#table242");
+            
+            // Récupérer le nombre de résultats
+            var tempText = wrappingTable.find('tr:nth-child(1)>td>p').text();
+            var regexResult = /sur\s(\d+)/g.exec(tempText);
+            this._numberOfResults = (regexResult) ? regexResult[1] : 0;
+            
+            // Calculer le numéro de la page courante
+            this._pageNumber = this._extractPageNumber();
+
+            // Récupérer, ligne à ligne, les données, les mettre en forme et les attacher à la liste
+            var tempItems = [];
+            var tempDataItem = null;
+
+            var _self = this;
+            wrappingTable.find('tr').has('table').each(function (index, value) {
+                if (index > 1) { 
+                    tempDataItem = _self._buildDataItem($(value));
+                    tempItems.push(tempDataItem);
+                }
+            });
+            // Il faut aussi exclure le dernier TR
+            tempItems.pop();
+
+            resultSet.results = tempItems;
+
+            this._resultingResultSet = resultSet;
+        },
+
+        
+            /*
+             * 
+             * $("#table247"), 2ème ligne tr, 1er td, 1er p, text, pageNumber après "Nombre de réponses : " et avant le 1er "&"
+             * Si table247 possède moins de 4 lignes tr, la recherche n'a ramené aucun résultat.
+             * #table247, chaque tr[x] (3 < x < tr.length) correspond à une référence d'ouvrage
+             * chaque tr :
+             * - 1er td : Type de document / d'accès
+             * -2ème td :
+             *      - p > a > b.text -> Titre,
+             *      - p> a.href -> URL d'accès en ligne
+             *      - div > i.text -> Description, commentaire
+             *      - div.text -> Auteurs, entre "Par " et " . " (?)
+             *      - div > font.text -> Tag (plusieurs occurrences)
+             *
+            */
+        _buildDataItem: function ($htmlData) {
+            var item = new CatalogItem();
+            var directAccesses = [];
+            //var cell2 = rawXmlData.find('td > b > span');
+            // 
+            item.title          = $htmlData.find('td > b > span').text();
+            
+            var siblings = $htmlData.nextUntil('tr:has(table)');
+            
+            var da = null;
+            var tempNode = null;
+            var tempString = "";
+            var regexResult = null;
+            siblings.each(function () {
+                tempNode = $(this);
+                da = new DirectAccess();
+                da.url = "http://www2.biusante.parisdescartes.fr/perio/index.las" + tempNode.find('td > a').attr('href');
+                console.log("da.url : " + da.url);
+                tempString = tempNode.find('td:nth-child(3)').text();
+                console.log("tempString : " + tempString);
+                regexResult = /\s+-\s+(.+?)[\s.]+$/g.exec(tempString);
+                if (regexResult) {
+                    //da.provider = regexResult[1];
+                    da.holdings = regexResult[1];
+                    console.log("da.holdings : " + da.holdings);
+                } else {
+                    console.log("RegEx failed !");
+                }
+                directAccesses.push(da);
+            });
+            
+            item.directAccesses = directAccesses;
+            /*
+            // Récupération de l'auteur
+            var tempText = cell2.find('div').text();
+            var regexResult = /Par\s(.*?)\s?\.?(PAYS|LANGUE)/g.exec(tempText);
+
+            item.author         = (regexResult) ? regexResult[1] : "";
+            item.publisher      = cell2.find('div > a').text();
+            item.description    = cell2.find('div > i').text();
+            
+            // Récupération de la date de publication
+            regexResult = /(\d{4})\.?/g.exec(tempText);
+            item.publishedDate  = (regexResult) ? regexResult[1] : "";
+            
+            var directAccess = new DirectAccess();
+            directAccess.url = cell2.find('p > a').attr("href");
+            item.directAccesses.push(directAccess);
+
+            var vDocumentType   = rawXmlData.find('cell:nth-of-type(14)>data>text').text();
+            if (vDocumentType) {
+                item.documentType = vDocumentType.slice(vDocumentType.lastIndexOf(' ') + 1, vDocumentType.length - "$html$".length);
+            }
+            */
+            return item;
+        },
+
+        getAsCatalogItem: function () {
+            throw "Exception : UnsupportedOperationException";
+        }
+
+    };
+    
     /*********************************
     *   CLASS SearchArea
     *
@@ -1023,10 +1233,13 @@ $(document).ready(function () {
         tempResultAreasSet.push(
                 new ResultsArea("Périodiques", "Catalogue général", "newspaper", this, dpf.getInstance("HipPeriodical"))
         );
+        tempResultAreasSet.push(
+                new ResultsArea("Périodiques", "Catalogue spécifique", "tablet", this, dpf.getInstance("EPeriodicalSpecific"))
+        );
         
         this._resultAreasSets["periodiques"] = tempResultAreasSet;
         
-        this._activateResultAreasSet("monographies");
+        this._activateResultAreasSet("periodiques");
         
         // Attacher les gestionnaires d'évènements
         this._form.submit($.proxy(this._updateCurrentRequest, this));
