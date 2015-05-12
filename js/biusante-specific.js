@@ -361,13 +361,13 @@ var mustache-dependency = require("../mustache/mustache.min");
         },
         
         buildItemUrl: function (identifier) {
-            return "proxy.php?DonneXML=true&" + identifier;
+            return "php/proxy.php?DonneXML=true&" + identifier;
         },
         
         buildRequestUrl: function (searchString, pageNumber) {
             
             var urlArray = [
-                "proxy.php?DonneXML=true&index=",
+                "php/proxy.php?DonneXML=true&index=",
                 encodeURIComponent(".GK"),
                 "&limitbox_1=",
                 encodeURIComponent(this._SEARCH_RESTRICTION),
@@ -673,7 +673,7 @@ var mustache-dependency = require("../mustache/mustache.min");
         buildRequestUrl: function (searchString, pageNumber) {
             
             var urlArray = [
-                "proxy-signets.php?specif=",
+                "php/proxy-signets.php?specif=",
                 encodeURIComponent("livelec"),
                 "&tri=alp&form=o",
                 "&tout=",
@@ -892,7 +892,7 @@ var mustache-dependency = require("../mustache/mustache.min");
             
             // http://www2.biusante.parisdescartes.fr/theses/index.las?toutindex=victor&p=2
             var urlArray = [
-                "proxy-theses.php?",
+                "php/proxy-theses.php?",
                 "toutindex=",
                 encodeURIComponent(searchString)
             ];
@@ -1037,7 +1037,7 @@ var mustache-dependency = require("../mustache/mustache.min");
             
             // http://www2.biusante.parisdescartes.fr/perio/index.las?do=rec&let=0&rch=human+genetics
             var urlArray = [
-                "proxy-perio.php?do=rec&let=0&rch=",
+                "php/proxy-perio.php?do=rec&let=0&rch=",
                 encodeURIComponent(searchString)
             ];
             
