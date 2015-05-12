@@ -5,14 +5,16 @@ var gulp        = require("gulp"),
     buffer      = require('vinyl-buffer'),
     uglify      = require('gulp-uglify'),
     minifyCss   = require('gulp-minify-css'),
+    concat      = require('gulp-concat'),
     sourcemaps  = require('gulp-sourcemaps');
  
-gulp.task('minify-css', function() {
-  return gulp.src('./src/*.css')
-    .pipe(sourcemaps.init())
+gulp.task('build-css', function() {
+  return gulp.src('./css/*.css')
+    // .pipe(sourcemaps.init())
     .pipe(minifyCss())
-    .pipe(sourcemaps.write())
-    .pipe(gulp.dest('dist'));
+    // .pipe(sourcemaps.write())
+    .pipe(concat("styles.css"))
+    .pipe(gulp.dest('./dist/css'));
 });
 
 
