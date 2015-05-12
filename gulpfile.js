@@ -3,8 +3,17 @@ var gulp        = require("gulp"),
     transform   = require("vinyl-transform"),
     source      = require('vinyl-source-stream'),
     buffer      = require('vinyl-buffer'),
-    uglify      = require('gulp-uglify');
-
+    uglify      = require('gulp-uglify'),
+    minifyCss   = require('gulp-minify-css'),
+    sourcemaps  = require('gulp-sourcemaps');
+ 
+gulp.task('minify-css', function() {
+  return gulp.src('./src/*.css')
+    .pipe(sourcemaps.init())
+    .pipe(minifyCss())
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest('dist'));
+});
 
 
 gulp.task('default', function() {
@@ -12,7 +21,7 @@ gulp.task('default', function() {
     console.log('Hello Gulp.js!');
 });
 
-gulp.task('uglify', function () {
+gulp.task('build', function () {
     return browserify([__dirname + '/js/main.js']).bundle()
         .pipe(source('main.js'))
         .pipe(buffer())
@@ -20,10 +29,10 @@ gulp.task('uglify', function () {
         .pipe(gulp.dest(__dirname + '/dist/js'));
 });
 
-gulp.task('copy', function(){
+/*gulp.task('copy', function(){
   gulp.src('./js/main.js')
     .pipe(gulp.dest('./dist/js'));
-});
+});*/
 
 gulp.task("browserify", function () {
   var browserified = transform(function(filename) {
