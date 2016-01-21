@@ -1413,6 +1413,7 @@ $(document).ready(function () {
         _clear: function() {
             this._container.children(".items").empty();
             this._container.children("button.more-results").remove();
+            this._container.children(".message").remove();
             this._currentTotalResults = 0;
             this._setStats(0);
         }
