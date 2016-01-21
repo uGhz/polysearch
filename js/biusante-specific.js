@@ -257,9 +257,10 @@ $(document).ready(function () {
             
             var promisedResults = $.Deferred();
             
+            console.log("About to request : " + queryUrl);
             var ajaxPromise = $.ajax({
                 // The URL for the request
-                // url: "proxy.php?index=.GK&limitbox_1=%24LAB7+%3D+s+or+%24LAB7+%3D+i&limitbox_3=&term=neurology&DonneXML=true",
+                
                 url: queryUrl,
                 dataType: this._DATA_TYPE,
             });
@@ -271,7 +272,7 @@ $(document).ready(function () {
                     _self._currentTotalOfResults    = _self._analyzer.getTotalOfResults();
                     var resultSet                   = _self._analyzer.getResultSet();
                 
-                    console.log("_sendRequest. Records found !");
+                    console.log("_sendRequest. Data found !");
                     console.log("_self._currentPageNumber : " + _self._currentPageNumber);
                     console.log("_self._currentTotalOfResults : " + _self._currentTotalOfResults);
                 
@@ -1059,14 +1060,14 @@ $(document).ready(function () {
             var wrappingTable = this._data.find("#table242");
             
             var $flecheGauche = wrappingTable
-                            .find("tr:nth-child(1)>td")
-                            .find("img[src='http://www.biusante.parisdescartes.fr/imutil/flecheptg.gif'][alt^='page ']");
+                            // .find("tr:nth-child(1)>td")
+                            .find("img[src$='flecheptg.gif'][alt^='page ']");
             
-            console.log("EBookSpecificDataProvider. $flecheGauche found : " + $flecheGauche.length);
+            console.log("EPeriodicalSpecificDataAnalyzer. $flecheGauche found : " + $flecheGauche.length);
             if ($flecheGauche.length > 0) {
                 
                 var urlPagePrecedente = $flecheGauche.parent().attr("href");
-                console.log("urlPagePrecedente found : " + urlPagePrecedente);
+                console.log("EPeriodical. urlPagePrecedente found : " + urlPagePrecedente);
                 var regexResult = /p=(\d+)/g.exec(urlPagePrecedente);
                 
                 if (regexResult) {
@@ -1074,19 +1075,33 @@ $(document).ready(function () {
                 }
             }
                 
-            console.log("EBook page number : " + result);
+            console.log("EPeriodical page number : " + result);
             return result;
         },
 
         // Implémentation OK
         _buildResultSet: function () {
-            var $rawData = this._data;
+        	
+        	console.log("EPeriodical. Construction des résultats Pério. électr...");
+        	
+            var $rawData = $("<html></html>").append($("<body></body>")).append(this._data);
+            // console.log("EPeriodical. $rawData : " + $rawData);
+            // console.log("EPeriodical. $rawData HTML : " + $rawData.html());
             
             var resultSet = new CatalogResultSet();
-            var wrappingTable = $rawData.find("#table242");
+            
+            var wrappingTable = $rawData.find('#table242').first();
+            // console.log("Tables in $rawData : " + $rawData.find('table').length);
+            
+            // console.log("TBODY in $rawData : " + $rawData.find('tbody').length);
+            // console.log(".table-resultats-periodiques in $rawData : " + $rawData.find('.table-resultats-periodiques').length);
+            // console.log("Tables in $rawData : " + $rawData.find('table').length);
+            // console.log("EPeriodical. wrappingTable Text : " + wrappingTable.text());
             
             // Récupérer le nombre de résultats
-            var tempText = wrappingTable.find('tr:nth-child(1)>td>p').text();
+            var tempText = wrappingTable.find('thead>tr:nth-child(1)>td').text();
+            console.log("EPeriodical. tempText 2 : " + tempText);
+            
             var regexResult = /sur\s(\d+)/g.exec(tempText);
             this._numberOfResults = (regexResult) ? regexResult[1] : 0;
             
@@ -1098,14 +1113,21 @@ $(document).ready(function () {
             var tempDataItem = null;
 
             var _self = this;
+            /*
             wrappingTable.find('tr').has('table').each(function (index, value) {
                 if (index > 1) { 
                     tempDataItem = _self._buildDataItem($(value));
                     tempItems.push(tempDataItem);
                 }
             });
+            */
+            $rawData.find('.ligne-titre').each(function (index, value) {
+                    tempDataItem = _self._buildDataItem($(value));
+                    tempItems.push(tempDataItem);
+            });
+            
             // Il faut aussi exclure le dernier TR
-            tempItems.pop();
+            // tempItems.pop();
 
             resultSet.results = tempItems;
 
@@ -1129,59 +1151,44 @@ $(document).ready(function () {
              *
             */
         _buildDataItem: function ($htmlData) {
+        	console.log("EPeriodical. Analyse d'un périodique électronique...");
+        	
             var item = new CatalogItem();
             var directAccesses = [];
             //var cell2 = rawXmlData.find('td > b > span');
             // 
-            item.title          = $htmlData.find('td > b > span').text();
+            item.title          = $htmlData.find('.titre').text();
+            item.publisher      = $htmlData.find('.editeur').text();
             
-            var siblings = $htmlData.nextUntil('tr:has(table)');
+            var siblings = $htmlData.nextUntil('tr.ligne-titre');
+            console.log("Current title : " + item.title);
+            console.log("siblings : " + siblings.length);
             
+            /* WORK IN PROGRESS */
             var da = null;
             var tempNode = null;
             var tempString = "";
             var regexResult = null;
+            
             siblings.each(function () {
+            	
                 tempNode = $(this);
                 da = new DirectAccess();
-                da.url = "http://www2.biusante.parisdescartes.fr/perio/index.las" + tempNode.find('td > a').attr('href');
+                
+                da.url = "http://www.biusante.parisdescartes.fr/chercher/revues.php" + tempNode.find('.lien-acces-direct').attr('href');
                 console.log("da.url : " + da.url);
-                tempString = tempNode.find('td:nth-child(3)').text();
-                console.log("tempString : " + tempString);
-                regexResult = /\s+-\s+(.+?)[\s.]+$/g.exec(tempString);
-                if (regexResult) {
-                    //da.provider = regexResult[1];
-                    da.holdings = regexResult[1];
-                    console.log("da.holdings : " + da.holdings);
-                } else {
-                    console.log("RegEx failed !");
-                }
+
+                da.provider = tempNode.find('.fournisseur-acces').text();
+                console.log("da.provider : " + da.provider);
+                
+                da.holdings = tempNode.find('.etat-collection').text();
+                console.log("da.holdings : " + da.holdings);
+                
                 directAccesses.push(da);
             });
             
             item.directAccesses = directAccesses;
-            /*
-            // Récupération de l'auteur
-            var tempText = cell2.find('div').text();
-            var regexResult = /Par\s(.*?)\s?\.?(PAYS|LANGUE)/g.exec(tempText);
-
-            item.author         = (regexResult) ? regexResult[1] : "";
-            item.publisher      = cell2.find('div > a').text();
-            item.description    = cell2.find('div > i').text();
-            
-            // Récupération de la date de publication
-            regexResult = /(\d{4})\.?/g.exec(tempText);
-            item.publishedDate  = (regexResult) ? regexResult[1] : "";
-            
-            var directAccess = new DirectAccess();
-            directAccess.url = cell2.find('p > a').attr("href");
-            item.directAccesses.push(directAccess);
-
-            var vDocumentType   = rawXmlData.find('cell:nth-of-type(14)>data>text').text();
-            if (vDocumentType) {
-                item.documentType = vDocumentType.slice(vDocumentType.lastIndexOf(' ') + 1, vDocumentType.length - "$html$".length);
-            }
-            */
+           
             return item;
         },
 

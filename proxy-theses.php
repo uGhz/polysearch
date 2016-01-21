@@ -1,7 +1,9 @@
 <?php 
 
 
-$catalogBaseUrl = "http://www2.biusante.parisdescartes.fr/theses/index.las";
+// $catalogBaseUrl = "http://www2.biusante.parisdescartes.fr/theses/index.las";
+$catalogBaseUrl = "http://www.biusante.parisdescartes.fr/chercher/theses/medecine.php";
+
 
 $url = $catalogBaseUrl . '?' . $_SERVER['QUERY_STRING'];
 
