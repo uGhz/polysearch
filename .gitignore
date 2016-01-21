@@ -1,6 +1,24 @@
 # https://git-scm.com/docs/gitignore
 # https://help.github.com/articles/ignoring-files
 # Example .gitignore files: https://github.com/github/gitignore
+### Metadonnées des éditeurs Microsoft.
+**/_vti_cnf/**
+**/_vti_pvt/**
+
+### Fichiers système Windows et IIS.
+**/Thumbs.db
+**/desktop.ini
+
+### Metadonnées de l'éditeur Eclipse.
+.buildpath
+.project
+.settings/**
+
+### Fichiers liés à l'indexation et à l'authentification auprès des moteurs de recherche.
+robots.txt
+/*sitemap*
+/BingSiteAuth.xml
+
 /bower_components/
 /node_modules/
 /tests/
