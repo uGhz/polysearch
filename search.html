@@ -85,13 +85,13 @@
                         <!-- <h5 class="ui header"><i class="configure icon"></i>Extension de la recherche</h5> -->
                         <div class="field">
                             <div class="ui toggle checkbox">
-                                <input type="checkbox" name="search-extension" value="monographies" checked="checked">
+                                <input type="checkbox" name="search-extension" value="monographies">
                                 <label>Rechercher parmi nos <b>ouvrages</b> (monographies)</label>
                             </div>
                         </div>
                         <div class="field">
                             <div class="ui toggle checkbox">
-                                <input type="checkbox" name="search-extension" value="periodiques">
+                                <input type="checkbox" name="search-extension" value="periodiques" checked="checked">
                                 <label>Rechercher parmi nos <b>périodiques</b></label>
                             </div>
                         </div>
@@ -192,6 +192,14 @@
                     <div class="ui divided selection list">
                     {{ #directAccesses }}
                         <div class="item">
+                            <div class="content">
+                                {{ #provider }}
+                                    <div class="header">{{ provider }}</div>
+                                {{ /provider }}
+                                {{ #holdings }}
+                                    <div class="description">{{ holdings }}</div>
+                                {{ /holdings }}
+                            </div>
                             <button class="right floated compact ui button online-access-link" data-online-access-url="{{ url }}">En ligne<i class="right chevron icon"></i></button>
                         </div>
                     {{ /directAccesses }}
