@@ -297,9 +297,11 @@ $(document).ready(function () {
             
             
             // console.log("Query String : " + queryString);
+            var queryUrl = _self._analyzer.buildItemUrl(itemIdentifier);
+            console.log("About to request : " + queryUrl);
             
             var ajaxPromise = $.ajax({
-                url: _self._analyzer.buildItemUrl(itemIdentifier),
+                url: queryUrl,
                 dataType: _self._DATA_TYPE
             });
             
@@ -451,7 +453,7 @@ $(document).ready(function () {
         },
         
         _convertDetailPageIntoCatalogItem: function (rawXmlData) {
-
+        	console.log("_convertDetailPageIntoCatalogItem called.");
             var copies = [];
             var directAccesses = [];
             var tempString = "";
@@ -482,41 +484,21 @@ $(document).ready(function () {
             item.thumbnailUrl   = "images/image.png";
             
             var ic              = null;
-            // Trouver les éventuelles localisations de monographies
-            $(rawXmlData).find('searchresponse>items>searchresults>results>row').each(function () {
-                
-                var currentNode = $(this);
-
-                tempString = currentNode.find('LOCALLOCATION>data>text').text();
- 
-                if (tempString.indexOf("Médecine") != -1) {
-                    tempString = "Médecine";
-                } else if (tempString.indexOf("Pharmacie") != -1) {
-                    tempString = "Pharmacie";
-                } else {
-                    tempString = "";
-                }
-                
-                if (tempString.length > 0) {
-                    ic = new ItemCopy();
-                    ic.library = tempString;
-
-                    ic.precisePlace    = currentNode.find('TEMPORARYLOCATION:first-of-type>data>text').text();
-                    ic.callNumber      = currentNode.find('CALLNUMBER>data>text').text();
-                    ic.conditions      = currentNode.find('cell:nth-of-type(5)>data>text').text();
-
-                    copies.push(ic);
-                }
-                // console.log("Details added !");
-            });
             
+            
+            // Trouver les éventuelles localisations physiques de périodique
             var vLocalisation   = null;
             tempTab         = null;
-            // Trouver les éventuelles localisations physiques de périodique
-            generalDataRoot.find('cell:nth-of-type(75)>data').each(function () {
+            var $tempData = null;
+            
+            generalDataRoot.find('cell:nth-of-type(76)>data').each(function () {
                 
-                vLocalisation       = $(this).children('text').text();
-                if (vLocalisation !== undefined && vLocalisation !== null & vLocalisation.length > 0) {
+            	$tempData = $(this);
+            	
+                vLocalisation       = $tempData.children('text').text();
+                console.log("Raw Localisation : " + vLocalisation);
+                
+                if (vLocalisation !== undefined && vLocalisation !== null && vLocalisation.length > 0) {
                     
 
                     console.log("vLocalisation set !");
@@ -550,6 +532,35 @@ $(document).ready(function () {
                         copies.push(ic);
                     }
                 }
+            });
+            
+            
+            // Trouver les éventuelles localisations de monographies
+            $(rawXmlData).find('searchresponse>items>searchresults>results>row').each(function () {
+                
+                var currentNode = $(this);
+
+                tempString = currentNode.find('LOCALLOCATION>data>text').text();
+ 
+                if (tempString.indexOf("Médecine") != -1) {
+                    tempString = "Médecine";
+                } else if (tempString.indexOf("Pharmacie") != -1) {
+                    tempString = "Pharmacie";
+                } else {
+                    tempString = "";
+                }
+                
+                if (tempString.length > 0) {
+                    ic = new ItemCopy();
+                    ic.library = tempString;
+
+                    ic.precisePlace    = currentNode.find('TEMPORARYLOCATION:first-of-type>data>text').text();
+                    ic.callNumber      = currentNode.find('CALLNUMBER>data>text').text();
+                    ic.conditions      = currentNode.find('cell:nth-of-type(5)>data>text').text();
+
+                    copies.push(ic);
+                }
+                // console.log("Details added !");
             });
             
             var vDirectAccess = "";
@@ -1220,6 +1231,7 @@ $(document).ready(function () {
         tempResultAreasSet.push(
                 new ResultsArea("Périodiques", "Catalogue général", "newspaper", this, dpf.getInstance("HipPeriodical"))
         );
+        
         tempResultAreasSet.push(
                 new ResultsArea("Périodiques", "Catalogue spécifique", "tablet", this, dpf.getInstance("EPeriodicalSpecific"))
         );

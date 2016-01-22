@@ -1,0 +1,6664 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<searchresponse>
+	<version>3.20c_75.00</version>
+	<session>1453I7P02X929.507</session>
+	<profile>biusante2</profile>
+	<lang>fre</lang>
+	<expirepage>300</expirepage>
+	<illurl></illurl>
+	<httpserver>
+		<servername>catalogue.biusante.parisdescartes.fr</servername>
+		<host>catalogue.biusante.parisdescartes.fr</host>
+		<port>80</port>
+	</httpserver>
+	<browser>
+		<type>unknown</type>
+		<majorversion></majorversion>
+		<minorversion></minorversion>
+		<os>unknown</os>
+		<addr>172.22.100.115</addr>
+	</browser>
+	<bookbag>
+		<size>0</size>
+	</bookbag>
+	<security>
+		<auth>false</auth>
+		<name></name>
+	</security>
+	<toolbar>
+		<active_tab>search</active_tab>
+		<bgcolor>F7F7E7</bgcolor>
+		<bg>null</bg>
+		<userlimits>
+			<aspectentry>
+				<aspectlabel>Date de publication</aspectlabel>
+				<aspectnumber>3100035</aspectnumber>
+				<shortcut>$DA</shortcut>
+				<keywordbrowseview></keywordbrowseview>
+			</aspectentry>
+		</userlimits>
+		<tab>
+			<name>Catalogue </name>
+			<alt>Catalogue</alt>
+			<value>search</value>
+			<active>true</active>
+		</tab>
+		<tab>
+			<name>Revues en ligne</name>
+			<alt>Revues en ligne</alt>
+			<value>tab58</value>
+			<href>http://www2.biusante.parisdescartes.fr/perio/</href>
+			<active>false</active>
+		</tab>
+		<tab>
+			<name>Th&#232;ses M&#233;d./Ch.dent.</name>
+			<alt>Th&#232;ses Bib. M&#233;decine et Odontologie</alt>
+			<value>tab46</value>
+			<href>http://www2.biusante.parisdescartes.fr/theses/theses_rech.htm
+			</href>
+			<active>false</active>
+		</tab>
+		<tab>
+			<name>Manuscrits</name>
+			<alt>Manuscrits</alt>
+			<value>tab62</value>
+			<active>false</active>
+		</tab>
+		<tab>
+			<name>Images</name>
+			<alt>Base d'images et portraits</alt>
+			<value>tab59</value>
+			<href>http://www2.biusante.parisdescartes.fr/img/</href>
+			<active>false</active>
+		</tab>
+		<tab>
+			<name>Biographies</name>
+			<alt>Base de biographies</alt>
+			<value>tab60</value>
+			<href>http://www2.biusante.parisdescartes.fr/bio/debut.htm</href>
+			<active>false</active>
+		</tab>
+		<tab>
+			<name>Compte lecteur</name>
+			<alt>Votre compte emprunteur &#224; la Biblioth&#232;que de Pharmacie
+			</alt>
+			<value>account</value>
+			<active>false</active>
+		</tab>
+		<tab>
+			<name>Nouveaut&#233;s</name>
+			<alt>Liste de nouveaut&#233;s </alt>
+			<value>dsiTab</value>
+			<active>false</active>
+		</tab>
+		<submenu>
+			<name>Recherche simple </name>
+			<alt>Recherche simple </alt>
+			<value>subtab98</value>
+			<active>true</active>
+		</submenu>
+		<submenu>
+			<name>Recherche avanc&#233;e</name>
+			<alt>Recherche avanc&#233;e</alt>
+			<value>subtab93</value>
+			<active>false</active>
+		</submenu>
+		<submenu>
+			<name>Feuilletage des index</name>
+			<alt>Feuilletage des index</alt>
+			<value>subtab94</value>
+			<active>false</active>
+		</submenu>
+		<submenu>
+			<name>Recherche sp&#233;cialisee</name>
+			<alt>Recherche pro </alt>
+			<value>subtab104</value>
+			<active>false</active>
+		</submenu>
+		<submenu>
+			<name>Historique</name>
+			<alt>Historique</alt>
+			<value>history</value>
+			<active>false</active>
+		</submenu>
+		<submenu>
+			<name>Contenu du catalogue</name>
+			<alt>Contenu du catalogue</alt>
+			<value>subtab134</value>
+			<active>false</active>
+		</submenu>
+		<bestseller></bestseller>
+		<help>help.html</help>
+		<logoinfo>
+			<logo>/hipres/images/rien.gif</logo>
+			<homepageurl>http://www.biusante.parisdescartes.fr/</homepageurl>
+			<homepagelinktext></homepagelinktext>
+		</logoinfo>
+	</toolbar>
+	<active_aspect>subtab98</active_aspect>
+	<active_menu>
+		<simple>
+			<value>simple</value>
+			<desc>Recherche simple </desc>
+			<explanation></explanation>
+		</simple>
+	</active_menu>
+	<aspectlist>
+		<aspectentry>
+			<aspectlabel>Tous les mots</aspectlabel>
+			<aspectnumber>3100029</aspectnumber>
+			<shortcut>.GK</shortcut>
+			<keywordbrowseview></keywordbrowseview>
+		</aspectentry>
+		<aspectentry>
+			<aspectlabel>Mots cl&#233;s (titre, sujet, r&#233;sum&#233;)
+			</aspectlabel>
+			<aspectnumber>3100049</aspectnumber>
+			<shortcut>.KW</shortcut>
+			<keywordbrowseview></keywordbrowseview>
+		</aspectentry>
+		<aspectentry>
+			<aspectlabel>Auteur/Titre</aspectlabel>
+			<aspectnumber>3100050</aspectnumber>
+			<shortcut>.AT</shortcut>
+			<keywordbrowseview></keywordbrowseview>
+		</aspectentry>
+		<aspectentry>
+			<aspectlabel>Auteur</aspectlabel>
+			<aspectnumber>3100030</aspectnumber>
+			<shortcut>.AU</shortcut>
+			<keywordbrowseview></keywordbrowseview>
+		</aspectentry>
+		<aspectentry>
+			<aspectlabel>Titre</aspectlabel>
+			<aspectnumber>3100031</aspectnumber>
+			<shortcut>.TI</shortcut>
+			<keywordbrowseview></keywordbrowseview>
+		</aspectentry>
+		<aspectentry>
+			<aspectlabel>Editeur et lieu d'&#233;dition</aspectlabel>
+			<aspectnumber>3100047</aspectnumber>
+			<shortcut>.EDI</shortcut>
+			<keywordbrowseview></keywordbrowseview>
+		</aspectentry>
+		<aspectentry>
+			<aspectlabel>Collection</aspectlabel>
+			<aspectnumber>3100033</aspectnumber>
+			<shortcut>.CO</shortcut>
+			<keywordbrowseview></keywordbrowseview>
+		</aspectentry>
+		<aspectentry>
+			<aspectlabel>Th&#232;ses (type,discipl., &#233;tabl.,no,dir.)
+			</aspectlabel>
+			<aspectnumber>3100048</aspectnumber>
+			<shortcut>.THE</shortcut>
+			<keywordbrowseview></keywordbrowseview>
+		</aspectentry>
+		<aspectentry>
+			<aspectlabel>Sujet </aspectlabel>
+			<aspectnumber>3100032</aspectnumber>
+			<shortcut>.SU</shortcut>
+			<keywordbrowseview></keywordbrowseview>
+		</aspectentry>
+		<aspectentry>
+			<aspectlabel>ISBN</aspectlabel>
+			<aspectnumber>3100020</aspectnumber>
+			<shortcut>ISBN</shortcut>
+			<keywordbrowseview></keywordbrowseview>
+		</aspectentry>
+		<aspectentry>
+			<aspectlabel>ISSN</aspectlabel>
+			<aspectnumber>3100021</aspectnumber>
+			<shortcut>ISSN</shortcut>
+			<keywordbrowseview></keywordbrowseview>
+		</aspectentry>
+	</aspectlist>
+	<operators>
+		<op_and>AND</op_and>
+		<op_or>OR</op_or>
+		<op_not>NOT</op_not>
+		<op_xor>XOR</op_xor>
+	</operators>
+	<predefsortlist>
+		<sortentry>
+			<label>date (du plus r&#233;cent au plus ancien)</label>
+			<sortview>3100024</sortview>
+		</sortentry>
+		<sortentry>
+			<label>date (du plus ancien au plus r&#233;cent)</label>
+			<sortview>3100014</sortview>
+		</sortentry>
+		<sortentry>
+			<label>auteur</label>
+			<sortview>3100013</sortview>
+		</sortentry>
+		<sortentry>
+			<label>titre</label>
+			<sortview>3100012</sortview>
+		</sortentry>
+	</predefsortlist>
+	<predefinedlimits>
+		<limitbox>
+			<desc>Type de document</desc>
+			<predeflimitentry>
+				<label>Tous </label>
+				<limit>$LAB = *</limit>
+			</predeflimitentry>
+			<predeflimitentry>
+				<label>Livres (tous supports)</label>
+				<limit>$LAB7 = a or $LAB7 = c or $LAB7 = i or $LAB7 = m not $TH = *
+				</limit>
+			</predeflimitentry>
+			<predeflimitentry>
+				<label>Th&#232;ses (tous supports)</label>
+				<limit>$TH = *</limit>
+			</predeflimitentry>
+			<predeflimitentry>
+				<label>Revues (tous supports)</label>
+				<limit>$LAB7 = s or $LAB7 = i</limit>
+			</predeflimitentry>
+			<predeflimitentry>
+				<label>Audiovisuel/Multimedia</label>
+				<limit>$LAB6 = g or $LAB6 = i or $LAB6 = j or $LAB6 = m</limit>
+			</predeflimitentry>
+			<predeflimitentry>
+				<label>Doc. en ligne (tous types)</label>
+				<limit>IT01 = WEL</limit>
+			</predeflimitentry>
+		</limitbox>
+		<limitbox>
+			<desc>Langue</desc>
+			<predeflimitentry>
+				<label>Toutes </label>
+				<limit>$LAB = *</limit>
+			</predeflimitentry>
+			<predeflimitentry>
+				<label>fran&#231;ais</label>
+				<limit>$LANG = fre</limit>
+			</predeflimitentry>
+			<predeflimitentry>
+				<label>anglais</label>
+				<limit>$LANG = eng</limit>
+			</predeflimitentry>
+			<predeflimitentry>
+				<label>allemand</label>
+				<limit>$LANG = ger</limit>
+			</predeflimitentry>
+			<predeflimitentry>
+				<label>espagnol</label>
+				<limit>$LANG = spa</limit>
+			</predeflimitentry>
+			<predeflimitentry>
+				<label>italien</label>
+				<limit>$LANG = ita</limit>
+			</predeflimitentry>
+			<predeflimitentry>
+				<label>latin</label>
+				<limit>$LANG = lat</limit>
+			</predeflimitentry>
+			<predeflimitentry>
+				<label>grec anc.</label>
+				<limit>$LANG = grc</limit>
+			</predeflimitentry>
+		</limitbox>
+		<limitbox>
+			<desc>Biblioth&#232;que</desc>
+			<predeflimitentry>
+				<label>Les 2 biblioth&#232;ques</label>
+				<limit>$LAB = *</limit>
+			</predeflimitentry>
+			<predeflimitentry>
+				<label>Bib. M&#233;decine/Odonto.</label>
+				<limit>$930B = bibmed</limit>
+			</predeflimitentry>
+			<predeflimitentry>
+				<label>Bib. Pharmacie</label>
+				<limit>$930B = bibpharma or LO01 = BIUP or $990B = bibpharma</limit>
+			</predeflimitentry>
+		</limitbox>
+		<limitbox>
+			<desc>Fonds</desc>
+			<predeflimitentry>
+				<label>Tous</label>
+				<limit>$LAB = *</limit>
+			</predeflimitentry>
+			<predeflimitentry>
+				<label>M&#233;d. Salle Actualit&#233;</label>
+				<limit>CO01 = MEDACTU or $930C = MEDPACTU</limit>
+			</predeflimitentry>
+			<predeflimitentry>
+				<label>Odonto. Salle Landouzy</label>
+				<limit>CO01 = MEDLAN or $930C = MEDPLAN</limit>
+			</predeflimitentry>
+			<predeflimitentry>
+				<label>Histoire M&#233;d. Usuels</label>
+				<limit>CO01 = MEDSALHM or $930C = MEDPSALHM</limit>
+			</predeflimitentry>
+			<predeflimitentry>
+				<label>M&#233;d. Magasins</label>
+				<limit>CO01 = MEDMAG</limit>
+			</predeflimitentry>
+			<predeflimitentry>
+				<label>Pharma. Manuels </label>
+				<limit>CO01 = SLEML or CO01 = SLML</limit>
+			</predeflimitentry>
+			<predeflimitentry>
+				<label>Pharma. Usuels </label>
+				<limit>CO01 = PHAUSU or $856X = p or $930E = p or $999U = p</limit>
+			</predeflimitentry>
+			<predeflimitentry>
+				<label>Pharma. Libre acc&#232;s </label>
+				<limit>CO01 = PHASLAC</limit>
+			</predeflimitentry>
+			<predeflimitentry>
+				<label>Pharma. Magasins</label>
+				<limit>CO01 = PHAMAG</limit>
+			</predeflimitentry>
+		</limitbox>
+	</predefinedlimits>
+	<reservelocations></reservelocations>
+	<viewingbooklist>false</viewingbooklist>
+	<subscriptionsummary>
+		<header>
+			<col>
+				<label>Biblioth&#232;que</label>
+			</col>
+			<col>
+				<label>Emplacement</label>
+			</col>
+			<col>
+				<label>Abonnement</label>
+			</col>
+			<col>
+				<label>Notes</label>
+			</col>
+		</header>
+		<itemsheader>
+			<col>
+				<label>Bibliothèque</label>
+			</col>
+			<col>
+				<label>Emplacement</label>
+			</col>
+			<col>
+				<label>Fascicule</label>
+			</col>
+			<col>
+				<label>Cote </label>
+			</col>
+			<col>
+				<label>Consultation</label>
+			</col>
+			<col>
+				<label>Disponibilité </label>
+			</col>
+			<col>
+				<label>Date de retour</label>
+			</col>
+			<col>
+				<label>Note</label>
+			</col>
+			<col>
+				<label>(Inventaire)</label>
+			</col>
+			<col>
+				<label>(Provenance)</label>
+			</col>
+		</itemsheader>
+		<serial>
+			<location>Bib. Pharmacie (D)</location>
+			<copykey>625</copykey>
+			<copy>
+				<cell>
+					<data>
+						<text>Bib. Pharmacie (D)</text>
+					</data>
+				</cell>
+				<cell>
+					<data>
+						<text>Magasins</text>
+					</data>
+				</cell>
+				<cell>
+					<data>
+						<text>Non actuellement re&#231;u</text>
+					</data>
+				</cell>
+				<cell>
+					<data>
+						<text></text>
+					</data>
+				</cell>
+				<LOCALLOCATION>
+					<data>
+						<text>Bib. Pharmacie (D)</text>
+					</data>
+				</LOCALLOCATION>
+				<SHELVINGLOCATION>
+					<data>
+						<text>Magasins</text>
+					</data>
+				</SHELVINGLOCATION>
+				<CALLNUMBER>
+					<data>
+						<text>P 10247</text>
+					</data>
+				</CALLNUMBER>
+				<COPYNUMBER>
+					<data>
+						<text></text>
+					</data>
+				</COPYNUMBER>
+				<RECEIPTACQSTATUS>
+					<data>
+						<text>Non actuellement re&#231;u</text>
+					</data>
+				</RECEIPTACQSTATUS>
+				<FORMAT>
+					<data>
+						<text>news</text>
+					</data>
+				</FORMAT>
+				<PUBLICNOTE>
+					<data>
+						<text></text>
+					</data>
+				</PUBLICNOTE>
+			</copy>
+			<itemresults>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 122 Number 3 (March 2000)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>205182</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 122 Number 4 (April 2000)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>206234</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 123 Number 1 (May 2000)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>208045</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 123 Number 2 (June 2000)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>209197</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 123 Number 3 (July 2000)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>210425</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 123 Number 4 (August 2000)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>211401</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 124 Number 1 (September 2000)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>215545</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 124 Number 2 (October 2000)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>216739</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 124 Number 3 (November 2000)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>217947</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 124 Number 4 (December 2000)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>219099</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 125 Number 1 (January 2001)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>220445</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 125 Number 2 (February 2001)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>221097</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 125 Number 3 (March 2001)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>222238</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 125 Number 4 (April 2001)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>223655</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 126 Number 1 (May 2001)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>224548</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 126 Number 2 (June 2001)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>225537</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 126 Number 3 (July 2001)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>226490</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 126 Number 4 (August 2001)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>226928</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 127 Number 1 (September 2001)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>228042</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 127 Number 2 (October 2001)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>228941</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 127 Number 3 (November 2001)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>230336</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 127 Number 4 (December 2001)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>231429</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 128 Number 1 (January 2002)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>233284</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 128 Number 2 (February 2002)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>233612</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 128 Number 3 (March 2002)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>234550</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 128 Number 4 (April 2002)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>236074</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 129 Number 1 (May 2002)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>236667</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 129 Number 2 (June 2002)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>237908</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 129 Number 3 (July 2002)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>238536</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 129 Number 4 (August 2002)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>239575</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 130 Number 1 (September 2002)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>240255</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 130 Number 2 (October 2002)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>241772</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 130 Number 3 (November 2002)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>242520</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 130 Number 4 (December 2002)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>243243</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 131 Number 1 (January 2003)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>244495</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 131 Number 2 (February 2003)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>244856</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 131 Number 3 (March 2003)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>247617</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 131 Number 4 (April 2003)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>247618</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 132 Number 1 (May 2003)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>247340</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 132 Number 2 (June 2003)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>247960</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 132 Number 3 (July 2003)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>249380</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 132 Number 4 (August 2003)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>250096</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 133 Number 1 (September 2003)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>251384</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 133 Number 2 (October 2003)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>252807</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 133 Number 3 (November 2003)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>253877</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 133 Number 4 (December 2003)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>254984</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 134 Number 1 (January 2004)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>256198</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 134 Number 2 (February 2004)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>256742</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 134 Number 3 (March 2004)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>258128</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 134 Number 4 (April 2004)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>259214</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 135 Number 1 (May 2004)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>260113</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 135 Number 2 (June 2004)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>262019</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 135 Number 3 (July 2004)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>263470</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 135 Number 4 (August 2004)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>264095</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 136 Number 1 (September 2004)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>264627</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 136 Number 2 (October 2004)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>265916</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 136 Number 3 (November 2004)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>267240</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 136 Number 4 (December 2004)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>268098</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 137 Number 1 (January 2005)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>273488</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 137 Number 2 (February 2005)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>270324</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 137 Number 3 (March 2005)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>270966</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 137 Number 4 (April 2005)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>271918</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 138 Number 1 (May 2005)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>273392</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 138 Number 2 (June 2005)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>274620</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 138 Number 3 (July 2005)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>275078</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 138 Number 4 (August 2005)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>275561</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 139 Number 1 (September 2005)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>277092</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 139 Number 2 (October 2005)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>278212</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 139 Number 3 (November 2005)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>279066</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 139 Number 4 (December 2005)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>280105</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 140 Number 1 (January 2006)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>281061</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 140 Number 2 (February 2006)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>281927</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 140 Number 3 (March 2006)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>282692</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 140 Number 4 (April 2006)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>283668</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 141 Number 1 (May 2006)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>284508</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 141 Number 2 (June 2006)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>286465</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 141 Number 3 (July 2006)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>287473</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 141 Number 4 (August 2006)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>288679</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 142 Number 1 (September 2006)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>289353</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 142 Number 2 (October 2006)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>290510</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text> Volume 142 Number 3 (November 2006)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>291740</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Volume 142 Number 4 (December 2006)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>292549</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Volume 143 Number 1 (January 2007)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>293486</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Volume 143 Number 2 (February 2007)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>294675</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Volume 143 Number 3 (March 2007)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>296011</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Volume 143 Number 4 (April 2007)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>296680</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Volume 144 Number 1 (May 2007)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>297874</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Volume 144 Number 2 (June 2007)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>300199</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Volume 144 Number 3 (July 2007)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>301080</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Volume 144 Number 4 (August 2007)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>301965</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Volume 145 Number 1 (September 2007)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>303046</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Volume 145 Number 2 (October 2007)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>304512</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Volume 145 Number 3 (November 2007)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>305838</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Volume 145 Number 4 (December 2007)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>307260</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Volume 146 Number 1 (January 2008)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>306894</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Volume 146 Number 2 (February 2008)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>307932</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Volume 146 Number 3 (March 2008)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>309183</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Volume 146 Number 4 (April 2008)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>310181</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Volume 147 Number 1 (May 2008)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>311592</key>
+				</row>
+				<row>
+					<cell>
+						<data>
+							<text>Bib. Pharmacie (A)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Magasins</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Volume 147 Number 2 (June 2008)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P&#233;rio (pr&#234;t sous conditions)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>En rayon</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>P 10247</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<key>311928</key>
+				</row>
+				<moreitems>true</moreitems>
+				<hits>100</hits>
+			</itemresults>
+			<runlist>
+				<run>
+					<runlabel>Derniers num&#233;ros re&#231;us (de, &#224;)</runlabel>
+					<data>
+						<rundata>
+							<text>Volume 122 Number 3 (March 2000) - Volume 163 Number 4
+								(December 2013)</text>
+						</rundata>
+					</data>
+				</run>
+			</runlist>
+		</serial>
+		<numserials>1</numserials>
+		<serialitems>0</serialitems>
+		<error></error>
+	</subscriptionsummary>
+	<yourserials>
+		<serhits>1</serhits>
+		<view>
+			<spp>10</spp>
+			<scurrpage>0</scurrpage>
+			<serstart>1</serstart>
+			<serend>1</serend>
+		</view>
+		<pagenumbers>
+			<group>0</group>
+		</pagenumbers>
+	</yourserials>
+	<view>subscriptionsummary</view>
+	<yoursearch>
+		<searchdata></searchdata>
+		<sources>
+			<source>
+				<id>~!apothicat</id>
+			</source>
+		</sources>
+		<sorts>
+			<sort>3100024</sort>
+		</sorts>
+		<searchdata>
+			<link>full%3D3100001%7E%2132692%7E%210</link>
+		</searchdata>
+		<searchdata>
+			<link>full%3D3100001%7E%2132692%7E%210</link>
+		</searchdata>
+		<hits>1</hits>
+		<totalhits>1</totalhits>
+		<view>
+			<npp>10</npp>
+			<currpage>0</currpage>
+			<start>1</start>
+			<end>1</end>
+		</view>
+		<pagenumbers>
+			<group>0</group>
+		</pagenumbers>
+	</yoursearch>
+	<lang>eng</lang>
+	<fullnonmarc>
+		<searchresults>
+			<parenttype>1</parenttype>
+			<header>
+				<col>
+					<label>Type de document</label>
+				</col>
+				<col>
+					<label>Type de document</label>
+				</col>
+				<col>
+					<label>Type de document</label>
+				</col>
+				<col>
+					<label>Type de document</label>
+				</col>
+				<col>
+					<label>Acc&#232;s web libre</label>
+				</col>
+				<col>
+					<label>Acc&#232;s web libre</label>
+				</col>
+				<col>
+					<label>Acc&#232;s web r&#233;serv&#233;</label>
+				</col>
+				<col>
+					<label>Acc&#232;s web r&#233;serv&#233;</label>
+				</col>
+				<col>
+					<label>Collection en ligne</label>
+				</col>
+				<col>
+					<label>Fournisseur</label>
+				</col>
+				<col>
+					<label>Consultation de la th&#232;se</label>
+				</col>
+				<col>
+					<label>Auteur(s)</label>
+				</col>
+				<col>
+					<label>Edition</label>
+				</col>
+				<col>
+					<label>Adr. biblio.</label>
+				</col>
+				<col>
+					<label>Description</label>
+				</col>
+				<col>
+					<label>Collection</label>
+				</col>
+				<col>
+					<label>Titre de l'ensemble</label>
+				</col>
+				<col>
+					<label>Res. &#233;lectronique</label>
+				</col>
+				<col>
+					<label>Notes</label>
+				</col>
+				<col>
+					<label>Notes</label>
+				</col>
+				<col>
+					<label>Notes</label>
+				</col>
+				<col>
+					<label>P&#233;riodicit&#233;</label>
+				</col>
+				<col>
+					<label>P&#233;riodicit&#233;</label>
+				</col>
+				<col>
+					<label>Contient</label>
+				</col>
+				<col>
+					<label>Reproduction de</label>
+				</col>
+				<col>
+					<label>Reproduction Medic@ de</label>
+				</col>
+				<col>
+					<label>LIen vers cette r&#233;f&#233;rence</label>
+				</col>
+				<col>
+					<label>Reproduction</label>
+				</col>
+				<col>
+					<label>Autre &#233;dition</label>
+				</col>
+				<col>
+					<label>En ligne dans Medic@</label>
+				</col>
+				<col>
+					<label>Sujet</label>
+				</col>
+				<col>
+					<label>Notes sujets</label>
+				</col>
+				<col>
+					<label>Indice(s) Dewey</label>
+				</col>
+				<col>
+					<label>Indice(s) NLM</label>
+				</col>
+				<col>
+					<label>ISBN / ISSN</label>
+				</col>
+				<col>
+					<label>R&#233;sum&#233;</label>
+				</col>
+				<col>
+					<label>Contient</label>
+				</col>
+				<col>
+					<label>Table mati&#232;res</label>
+				</col>
+				<col>
+					<label>Titre pr&#233;c&#233;dent</label>
+				</col>
+				<col>
+					<label>Autre(s) forme(s) du titre</label>
+				</col>
+				<col>
+					<label>Traduction du titre</label>
+				</col>
+				<col>
+					<label>Collection</label>
+				</col>
+				<col>
+					<label>Tir&#233; &#224; part ou extrait de</label>
+				</col>
+				<col>
+					<label>A pour tir&#233; &#224; part ou extrait</label>
+				</col>
+				<col>
+					<label>Contenu dans</label>
+				</col>
+				<col>
+					<label>A pour suppl&#233;ment</label>
+				</col>
+				<col>
+					<label>Est suppl&#233;ment de</label>
+				</col>
+				<col>
+					<label>Publi&#233; avec</label>
+				</col>
+				<col>
+					<label>Titre en relation</label>
+				</col>
+				<col>
+					<label>Titre en relation</label>
+				</col>
+				<col>
+					<label>Mis &#224; jour par</label>
+				</col>
+				<col>
+					<label>Met &#224; jour</label>
+				</col>
+				<col>
+					<label>Suite de</label>
+				</col>
+				<col>
+					<label>Suite partielle de</label>
+				</col>
+				<col>
+					<label>Suite de</label>
+				</col>
+				<col>
+					<label>Suite partielle de</label>
+				</col>
+				<col>
+					<label>Absorbe</label>
+				</col>
+				<col>
+					<label>Absorb&#233; partiellement</label>
+				</col>
+				<col>
+					<label>Titre(s) avant fusion</label>
+				</col>
+				<col>
+					<label>Suite partielle de</label>
+				</col>
+				<col>
+					<label>Devient</label>
+				</col>
+				<col>
+					<label>Devient partiellement</label>
+				</col>
+				<col>
+					<label>Devient</label>
+				</col>
+				<col>
+					<label>Devient partiellement</label>
+				</col>
+				<col>
+					<label>Absorb&#233; par</label>
+				</col>
+				<col>
+					<label>Absorb&#233; partiellement par</label>
+				</col>
+				<col>
+					<label>Devient apr&#232;s scission</label>
+				</col>
+				<col>
+					<label>Fusionne </label>
+				</col>
+				<col>
+					<label>Redevient</label>
+				</col>
+				<col>
+					<label>Identifiant de la notice</label>
+				</col>
+				<col>
+					<label>Provenance des exemplaires</label>
+				</col>
+				<col>
+					<label>Note sur l'(es) exemplaire(s)</label>
+				</col>
+				<col>
+					<label>
+					</label>
+				</col>
+				<col>
+					<label>Commander une reproduction </label>
+				</col>
+				<col>
+					<label>Consultation de la th&#232;se</label>
+				</col>
+				<col>
+					<label>Localisation</label>
+				</col>
+				<col>
+					<label>Lacunes</label>
+				</col>
+			</header>
+			<results>
+				<row>
+					<sourceid>~!apothicat</sourceid>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>American society of plant biologists</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>[Rockville, MD] , American Society of Plant Physiologists
+								-- 1926-2014</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Mensuel</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+							<link>
+								<func>search=.GK~!</func>
+							</link>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Plant physiology (Online) , 1532-2548</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+							<link>
+								<func>search=.GK~!</func>
+							</link>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Physiologie v&#233;g&#233;tale -- P&#233;riodiques</text>
+						</data>
+						<data>
+							<text>Biologie mol&#233;culaire v&#233;g&#233;tale --
+								P&#233;riodiques</text>
+						</data>
+						<data>
+							<text>Plantes -- Anatomie -- P&#233;riodiques</text>
+						</data>
+						<data>
+							<text>Botanique</text>
+						</data>
+						<data>
+							<text>Botanique -- P&#233;riodiques</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>580.5</text>
+						</data>
+						<data>
+							<text>581</text>
+						</data>
+						<data>
+							<text>581.1/05</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>0032-0889</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Plant physiology</text>
+						</data>
+						<data>
+							<text>Plant physiol. (Bethesda)</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>Plant physiology. Supplement (Bethesda) , 0079-2241</text>
+							<link>
+								<func>search=.TI~!Plant physiology. Supplement (Bethesda) ,
+									0079-2241</func>
+							</link>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+							<link>
+								<func>search=.TI~!</func>
+							</link>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+							<link>
+								<func>search=.TI~!</func>
+							</link>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+							<link>
+								<func>search=.TI~!</func>
+							</link>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+							<link>
+								<func>search=.TI~!</func>
+							</link>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+							<link>
+								<func>search=.TI~!</func>
+							</link>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+							<link>
+								<func>search=.TI~!</func>
+							</link>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+							<link>
+								<func>search=.TI~!</func>
+							</link>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+							<link>
+								<func>search=.TI~!</func>
+							</link>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+							<link>
+								<func>search=.TI~!</func>
+							</link>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+							<link>
+								<func>search=.TI~!</func>
+							</link>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+							<link>
+								<func>search=.TI~!</func>
+							</link>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+							<link>
+								<func>search=.TI~!</func>
+							</link>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+							<link>
+								<func>search=.TI~!</func>
+							</link>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+							<link>
+								<func>search=.TI~!</func>
+							</link>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+							<link>
+								<func>search=.TI~!</func>
+							</link>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+							<link>
+								<func>search=.TI~!</func>
+							</link>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+							<link>
+								<func>search=.TI~!</func>
+							</link>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+							<link>
+								<func>search=.TI~!</func>
+							</link>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+							<link>
+								<func>search=.TI~!</func>
+							</link>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+							<link>
+								<func>search=.TI~!</func>
+							</link>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+							<link>
+								<func>search=.TI~!</func>
+							</link>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>http://www.biusante.parisdescartes.fr/ppn?038773058</text>
+							<link>
+								<url>http://www.biusante.parisdescartes.fr/ppn?038773058</url>
+							</link>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+							<link>
+								<url></url>
+							</link>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text>$html$&lt;b&gt;Biblioth&#232;que Pharmacie&lt;/b&gt; Etat
+								de collection : vol. 1 (1926) - vol. 163 (2013) Cote : P
+								10247$html$</text>
+						</data>
+					</cell>
+					<cell>
+						<data>
+							<text></text>
+						</data>
+					</cell>
+					<error></error>
+					<issn>00320889</issn>
+					<key>32692</key>
+					<marcleader7>s</marcleader7>
+					<displayRequestButton>true</displayRequestButton>
+					<showCopyLink>false</showCopyLink>
+					<TITLE>
+						<data>
+							<text>Plant physiology</text>
+						</data>
+					</TITLE>
+					<SUBJECT>
+						<data>
+							<text>Physiologie v&#233;g&#233;tale -- P&#233;riodiques</text>
+						</data>
+						<data>
+							<text>Biologie mol&#233;culaire v&#233;g&#233;tale --
+								P&#233;riodiques</text>
+						</data>
+						<data>
+							<text>Plantes -- Anatomie -- P&#233;riodiques</text>
+						</data>
+						<data>
+							<text>Botanique</text>
+						</data>
+						<data>
+							<text>Botanique -- P&#233;riodiques</text>
+						</data>
+					</SUBJECT>
+					<EOD>
+						<data>
+							<text></text>
+						</data>
+					</EOD>
+					<SERIES>
+						<data>
+							<text></text>
+						</data>
+					</SERIES>
+					<AUTHOR>
+						<data>
+							<text>American society of plant biologists</text>
+						</data>
+					</AUTHOR>
+					<PPN>
+						<data>
+							<text>ppn&#032;038773058</text>
+						</data>
+					</PPN>
+					<dimrow>true</dimrow>
+					<tablename>BIB</tablename>
+					<my_list>true</my_list>
+				</row>
+			</results>
+			<hitcount></hitcount>
+			<resultid>1</resultid>
+			<error></error>
+		</searchresults>
+	</fullnonmarc>
+	<OpenURL>
+		<no_links />
+	</OpenURL>
+	<CommercialStore>
+		<no_links />
+	</CommercialStore>
+	<bibinfo>
+		<subscriptionsummary>true</subscriptionsummary>
+		<volumes>false</volumes>
+		<closedstack>false</closedstack>
+		<items>true</items>
+		<error></error>
+	</bibinfo>
+	<group>
+		<pools>
+			<id>biusante2</id>
+			<datapool>
+				<emailreplyto>cat@biusante.parisdescartes.fr</emailreplyto>
+				<emailpostmaster>cat@biusante.parisdescartes.fr</emailpostmaster>
+				<source>
+					<sourcelabel>BIU Sant&#233;</sourcelabel>
+					<id>~!apothicat</id>
+					<type>200</type>
+					<requesttype>0</requesttype>
+					<loginrequired>false</loginrequired>
+					<maxhitlimit>5000</maxhitlimit>
+					<sortviewnum>3100024</sortviewnum>
+					<sourcenum>3100001</sourcenum>
+				</source>
+				<opensource>
+					<source>
+						<sorthitlimit>2000</sorthitlimit>
+						<limitmaxhitlimit>0</limitmaxhitlimit>
+						<sortviewnum>3100024</sortviewnum>
+						<id>~!apothicat</id>
+						<opened>true</opened>
+						<error></error>
+					</source>
+				</opensource>
+			</datapool>
+		</pools>
+		<size>1</size>
+		<dedup_option_id>1</dedup_option_id>
+	</group>
+	<dedup_checked>0</dedup_checked>
+	<method>GET</method>
+</searchresponse>
