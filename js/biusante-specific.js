@@ -1093,11 +1093,6 @@ $(document).ready(function () {
             var wrappingTable = $rawData.find('#table242').first();
             // console.log("Tables in $rawData : " + $rawData.find('table').length);
             
-            // console.log("TBODY in $rawData : " + $rawData.find('tbody').length);
-            // console.log(".table-resultats-periodiques in $rawData : " + $rawData.find('.table-resultats-periodiques').length);
-            // console.log("Tables in $rawData : " + $rawData.find('table').length);
-            // console.log("EPeriodical. wrappingTable Text : " + wrappingTable.text());
-            
             // Récupérer le nombre de résultats
             var tempText = wrappingTable.find('thead>tr:nth-child(1)>td').text();
             console.log("EPeriodical. tempText 2 : " + tempText);
@@ -1113,21 +1108,11 @@ $(document).ready(function () {
             var tempDataItem = null;
 
             var _self = this;
-            /*
-            wrappingTable.find('tr').has('table').each(function (index, value) {
-                if (index > 1) { 
-                    tempDataItem = _self._buildDataItem($(value));
-                    tempItems.push(tempDataItem);
-                }
-            });
-            */
+
             $rawData.find('.ligne-titre').each(function (index, value) {
                     tempDataItem = _self._buildDataItem($(value));
                     tempItems.push(tempDataItem);
             });
-            
-            // Il faut aussi exclure le dernier TR
-            // tempItems.pop();
 
             resultSet.results = tempItems;
 
