@@ -723,9 +723,12 @@ $(document).ready(function () {
             var wrappingTable = $rawData.find("#table247");
             
             // Récupérer le nombre de résultats
-            var tempText = wrappingTable.find('tr:nth-child(2)>td>p').text();
-            var regexResult = /:\s(\d+)\s/g.exec(tempText);
-            this._numberOfResults = (regexResult) ? regexResult[1] : 0;
+            var tempVar = parseInt($rawData.find(".nombre-resultats").text(), 10);
+            if (isNaN(tempVar)) {
+            	tempVar = 0;
+            }
+            console.log("EBook. nombre-resultats : '" + tempVar + "'");
+            this._numberOfResults = tempVar;
             
             // Calculer le numéro de la page courante
             this._pageNumber = this._extractPageNumber();
@@ -841,6 +844,7 @@ $(document).ready(function () {
             return result;
         },
         
+        /*
         _extractNumberOfResults: function () {
             var wrappingTable = this._data.find("#table245");
             var result = 0;
@@ -871,6 +875,7 @@ $(document).ready(function () {
             
             return result;
         },
+        */
         
         buildRequestUrl: function (searchString, pageNumber) {
             
@@ -900,17 +905,24 @@ $(document).ready(function () {
         _buildResultSet: function () {
             console.log("ThesisSpecificDataProvider... Beginning of _buildResultSet. Results set building !");
             
-            var $rawXmlData = this._data;
+            var $rawData = this._data;
             
             var resultSet = new CatalogResultSet();
 
             // Récupérer le nombre de résultats
-            this._numberOfResults = this._extractNumberOfResults();
+            // Récupérer le nombre de résultats
+            var tempVar = parseInt($rawData.find(".nombre-resultats").text(), 10);
+            if (isNaN(tempVar)) {
+            	tempVar = 0;
+            }
+            console.log("EBoThesisSpecificDataProviderok. nombre-resultats : '" + tempVar + "'");
+            this._numberOfResults = tempVar;
+            // this._numberOfResults = $rawXmlData.find(".nombre-resultats").text();
             
             // Calculer le numéro de la page courante
             this._pageNumber = this._extractPageNumber();
             
-            var wrappingTable = $rawXmlData.find("#table245");
+            var wrappingTable = $rawData.find("#table245");
             
             // S'il y a des résultats, les analyser et alimenter le CatalogResultSet
             if (wrappingTable.length > 0) {
@@ -928,7 +940,7 @@ $(document).ready(function () {
                 resultSet.results = tempItems;
             } else {
               // console.log("ThesisSpecificDataProvider... #table245 not found !");
-                wrappingTable = $rawXmlData.find("#table241");
+                wrappingTable = $rawData.find("#table241");
                 
                 var messageCell = wrappingTable.find("tr:nth-child(2) > td:nth-child(1)");
                 
@@ -1074,11 +1086,12 @@ $(document).ready(function () {
             // console.log("Tables in $rawData : " + $rawData.find('table').length);
             
             // Récupérer le nombre de résultats
-            var tempText = wrappingTable.find('thead>tr:nth-child(1)>td').text();
-            console.log("EPeriodical. tempText 2 : " + tempText);
-            
-            var regexResult = /sur\s(\d+)/g.exec(tempText);
-            this._numberOfResults = (regexResult) ? regexResult[1] : 0;
+            var tempVar = parseInt($rawData.find(".nombre-resultats").text(), 10);
+            if (isNaN(tempVar)) {
+            	tempVar = 0;
+            }
+            console.log("EPeriodical. nombre-resultats : '" + tempVar + "'");
+            this._numberOfResults = tempVar;
             
             // Calculer le numéro de la page courante
             this._pageNumber = this._extractPageNumber();
