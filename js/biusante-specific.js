@@ -694,11 +694,13 @@ $(document).ready(function () {
         _extractPageNumber: function () {
             var result = 1;
             
-            var wrappingTable = this._data.find("#table247");
+            var $rawData = $("<html></html>").append($("<body></body>")).append(this._data);
+            
+            var wrappingTable = $rawData.find("#table247");
             
             var $flecheGauche = wrappingTable
-                            .find("tr:nth-child(2)>td")
-                            .find("img[src='http://www.biusante.parisdescartes.fr/imutil/flecheptg.gif'][alt^='page ']");
+                            .find("tr:nth-child(1)>td")
+                            .find("img[src$='flecheptg.gif'][alt^='page ']");
             
             console.log("EBookSpecificDataProvider. $flecheGauche found : " + $flecheGauche.length);
             if ($flecheGauche.length > 0) {
@@ -827,7 +829,7 @@ $(document).ready(function () {
         _extractPageNumber: function () {
             var result = 1;
             
-            var $flecheGauche = this._data.find("img[src='http://www.biusante.parisdescartes.fr/imutil/flecheptg.gif'][alt^='page ']");
+            var $flecheGauche = this._data.find("img[src$='flecheptg.gif'][alt^='page ']");
             console.log("$flecheGauche found : " + $flecheGauche);
             if ($flecheGauche.length > 0) {
                 
