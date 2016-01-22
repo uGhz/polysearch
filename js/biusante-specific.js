@@ -1213,10 +1213,10 @@ $(document).ready(function () {
         
         var tempResultAreasSet = [];
         tempResultAreasSet.push(
-                new ResultsArea("Thèses anciennes", "Catalogue général (1800&nbsp;-&nbsp;1951)", "student", this, dpf.getInstance("HipThesis"))
+                new ResultsArea("Thèses récentes en médecine", "Catalogue spécifique (1985&nbsp;-&nbsp;&hellip;)", "student", this, dpf.getInstance("ThesisSpecific"))
         );
         tempResultAreasSet.push(
-                new ResultsArea("Thèses récentes", "Catalogue spécifique (1985&nbsp;-&nbsp;&hellip;)", "student", this, dpf.getInstance("ThesisSpecific"))
+                new ResultsArea("Autres thèses", "Catalogue général", "student", this, dpf.getInstance("HipThesis"))
         );
         tempResultAreasSet.push(
                 new ResultsArea("Ouvrages", "Catalogue général", "book", this, dpf.getInstance("HipBook"))
