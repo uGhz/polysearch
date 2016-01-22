@@ -1048,12 +1048,12 @@ $(document).ready(function () {
         },
         
         // Implémentation OK
-        _extractPageNumber: function () {
+        _extractPageNumber: function ($searchScope) {
             var result = 1;
             
-            var wrappingTable = this._data.find("#table242");
+            // var wrappingTable = this._data.find("#table242");
             
-            var $flecheGauche = wrappingTable
+            var $flecheGauche = $searchScope
                             // .find("tr:nth-child(1)>td")
                             .find("img[src$='flecheptg.gif'][alt^='page ']");
             
@@ -1096,7 +1096,7 @@ $(document).ready(function () {
             this._numberOfResults = tempVar;
             
             // Calculer le numéro de la page courante
-            this._pageNumber = this._extractPageNumber();
+            this._pageNumber = this._extractPageNumber(wrappingTable);
 
             // Récupérer, ligne à ligne, les données, les mettre en forme et les attacher à la liste
             var tempItems = [];
