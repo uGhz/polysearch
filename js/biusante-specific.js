@@ -668,7 +668,7 @@ $(document).ready(function () {
         buildRequestUrl: function (searchString, pageNumber) {
             
             var urlArray = [
-                "proxy-signets.php?specif=",
+                "proxy-signets.php?do=page&specif=",
                 encodeURIComponent("livelec"),
                 "&tri=alp&form=o",
                 "&tout=",
@@ -736,7 +736,7 @@ $(document).ready(function () {
 
             var _self = this;
             wrappingTable.find('tr').each(function (index, value) {
-                if (index > 6) { 
+                if (index > 2) { 
                     tempDataItem = _self._buildDataItem($(value));
                     tempItems.push(tempDataItem);
                 }
@@ -751,7 +751,7 @@ $(document).ready(function () {
 
         
             /*
-             * 
+             * TODO. A METTRE A JOUR.
              * $("#table247"), 2ème ligne tr, 1er td, 1er p, text, pageNumber après "Nombre de réponses : " et avant le 1er "&"
              * Si table247 possède moins de 4 lignes tr, la recherche n'a ramené aucun résultat.
              * #table247, chaque tr[x] (3 < x < tr.length) correspond à une référence d'ouvrage
@@ -770,28 +770,17 @@ $(document).ready(function () {
             
             var cell2 = rawXmlData.find('td:nth-child(2)');
             
-            item.title          = cell2.find('p>a>b').text();
-            
+            item.title          	= rawXmlData.find('.titre').text();
             // Récupération de l'auteur
-            var tempText = cell2.find('div').text();
-            var regexResult = /Par\s(.*?)\s?\.?(PAYS|LANGUE)/g.exec(tempText);
-
-            item.author         = (regexResult) ? regexResult[1] : "";
-            item.publisher      = cell2.find('div > a').text();
-            item.description    = cell2.find('div > i').text();
-            
+            item.author          	= rawXmlData.find('.auteur').text();
             // Récupération de la date de publication
-            regexResult = /(\d{4})\.?/g.exec(tempText);
-            item.publishedDate  = (regexResult) ? regexResult[1] : "";
+            item.publishedDate		= rawXmlData.find('.date-publication').text();
+            
+            // item.description    = cell2.find('div > i').text();
             
             var directAccess = new DirectAccess();
-            directAccess.url = cell2.find('p > a').attr("href");
+            directAccess.url = rawXmlData.find('.titre').closest('a').attr("href");
             item.directAccesses.push(directAccess);
-
-            var vDocumentType   = rawXmlData.find('cell:nth-of-type(14)>data>text').text();
-            if (vDocumentType) {
-                item.documentType = vDocumentType.slice(vDocumentType.lastIndexOf(' ') + 1, vDocumentType.length - "$html$".length);
-            }
 
             return item;
         },
@@ -1121,7 +1110,7 @@ $(document).ready(function () {
 
         
             /*
-             * 
+             * TODO. A METTRE A JOUR.
              * $("#table247"), 2ème ligne tr, 1er td, 1er p, text, pageNumber après "Nombre de réponses : " et avant le 1er "&"
              * Si table247 possède moins de 4 lignes tr, la recherche n'a ramené aucun résultat.
              * #table247, chaque tr[x] (3 < x < tr.length) correspond à une référence d'ouvrage
