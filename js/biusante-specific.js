@@ -944,31 +944,22 @@ $(document).ready(function () {
         _buildDataItem: function (rawXmlData) {
             var item = new CatalogItem();
             
+            // Récupération du titre
+            item.title          = rawXmlData.find('.titre').text();
             // Récupération de l'auteur
-            item.author          = rawXmlData.find('tr:nth-child(1)>td:nth-child(1)>b').text();
+            item.author          = rawXmlData.find('.auteur').text();
+            // Récupération de la date de publication.
+            item.publishedDate          = rawXmlData.find('.date-publication').text();
             
-            // Récupération de la cote et de la date.
-            var tempText = rawXmlData.find('tr:nth-child(1)>td:nth-child(2)>p>i').text();
-            // console.log("tempText : " + tempText);
-            var regexResult = /^(\d+)\s/g.exec(tempText);
-            if (regexResult !== null) {
-                item.publishedDate = regexResult[1];
-            }
             var ic = new ItemCopy();
-            ic.callNumber = tempText;
+            // Récupération de la cote.
+            ic.callNumber = rawXmlData.find('.cote').text();;
             ic.library      = "Médecine";
             item.copies.push(ic);
             
-            // Récupération du titre
-            item.title          = rawXmlData.find('tr:nth-child(2)>td').text();
-            
             // Récupération du type et de la discipline de thèse.
-            var tempElements = rawXmlData.find('tr:nth-child(3)>td').contents()
-                .filter(function() {
-                  return this.nodeType === 3;
-                });
-            item.discipline = tempElements.first().text();
-            item.thesisType = tempElements.eq(1).text();
+            item.discipline = rawXmlData.find('.discipline-these').text();
+            item.thesisType = rawXmlData.find('.type-these').text();
             
             return item;
         },
@@ -1220,7 +1211,7 @@ $(document).ready(function () {
         
         this._resultAreasSets["periodiques"] = tempResultAreasSet;
         
-        this._activateResultAreasSet("periodiques");
+        this._activateResultAreasSet("monographies");
         
         // Attacher les gestionnaires d'évènements
         this._form.submit($.proxy(this._updateCurrentRequest, this));
