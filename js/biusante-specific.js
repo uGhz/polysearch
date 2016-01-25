@@ -857,39 +857,6 @@ $(document).ready(function () {
             return result;
         },
         
-        /*
-        _extractNumberOfResults: function () {
-            var wrappingTable = this._data.find("#table245");
-            var result = 0;
-            
-            // S'il y a des résultats, les analyser et alimenter le CatalogResultSet
-            if (wrappingTable.length) {
-                var tempText = wrappingTable.find('tr:nth-child(1)>td>p').text();
-
-                var regexResult = /:\s(\d+)\s/g.exec(tempText);
-                result   = (regexResult) ? regexResult[1] : 0;
-
-            } else {
-
-                wrappingTable = this._data.find("#table241");
-                
-                var messageCell = wrappingTable.find("tr:nth-child(2) > td:nth-child(1)");
-                
-                if (messageCell.text().indexOf("aucune réponse") !== -1) {
-                    // La requête ne renvoie aucun résultat.
-                    result = 0;
-                } else {
-
-                    result = messageCell.find("b").text();
-
-                }
-                
-            }
-            
-            return result;
-        },
-        */
-        
         buildRequestUrl: function (searchString, pageNumber) {
             
             // http://www2.biusante.parisdescartes.fr/theses/index.las?toutindex=victor&p=2
@@ -923,7 +890,6 @@ $(document).ready(function () {
             var resultSet = new CatalogResultSet();
 
             // Récupérer le nombre de résultats
-            // Récupérer le nombre de résultats
             var tempVar = parseInt($rawData.find(".nombre-resultats").text(), 10);
             if (isNaN(tempVar)) {
             	tempVar = 0;
@@ -952,12 +918,8 @@ $(document).ready(function () {
 
                 resultSet.results = tempItems;
             } else {
-              // console.log("ThesisSpecificDataProvider... #table245 not found !");
-                wrappingTable = $rawData.find("#table241");
                 
-                var messageCell = wrappingTable.find("tr:nth-child(2) > td:nth-child(1)");
-                
-                if (messageCell.text().indexOf("aucune réponse") === -1) {
+                if ($rawData.text().indexOf("aucune réponse à votre question") === -1) {
                     resultSet.warningMessage = resultSet.WARNING_MESSAGE.TOO_MUCH_RESULTS;
                 }
                 
